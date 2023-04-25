@@ -1,10 +1,43 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class frmPatientSign {
+public class frmPatientSign extends JFrame {
     private JButton goBackButton;
     private JButton continueButton;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JComboBox comboBox1;
+    private JTextField firstNameField;
+    private JTextField dobField;
+    private JTextField lastNameField;
+    private JLabel titleLabel;
+    private JLabel lastNameLabel;
+    private JLabel genderLabel;
+    private JLabel insLabel;
+    private JLabel firstNameLabel;
+    private JLabel dobLabel;
+    private JPanel panel;
+    private JTextField genderField;
+
+    public frmPatientSign() {
+        setContentPane(panel);
+        setTitle("mindfulNESS - Patient signup");
+        setSize(700, 700);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        goBackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmRoles roles = new frmRoles();
+                roles.setVisible(true);
+                setVisible(false);
+            }
+        });
+        continueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmSignDone signDone = new frmSignDone();
+                signDone.setVisible(true);
+                setVisible(false);
+            }
+        });
+    }
 }
