@@ -1,208 +1,246 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="frmBooking">
-  <grid id="27dc6" layout-manager="GridLayoutManager" row-count="17" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="15" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="620" height="574"/>
+      <xy x="20" y="20" width="962" height="602"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <component id="d90dc" class="javax.swing.JLabel">
+      <component id="d90dc" class="javax.swing.JLabel" binding="titleLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="26" style="1"/>
           <text value="mindfulNESS"/>
         </properties>
       </component>
-      <component id="7ec70" class="javax.swing.JLabel">
+      <component id="7ec70" class="javax.swing.JLabel" binding="insLabel">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="22" style="2"/>
           <text value="book a specialist!"/>
         </properties>
       </component>
-      <component id="307f7" class="javax.swing.JLabel">
+      <component id="307f7" class="javax.swing.JLabel" binding="firstNameLabel">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="20" style="0"/>
           <text value="first name"/>
         </properties>
       </component>
-      <component id="df4b1" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="df4b1" class="javax.swing.JTextField" binding="firstNameField">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="Google Sans" size="20" style="0"/>
+        </properties>
       </component>
-      <component id="6c7c8" class="javax.swing.JLabel">
+      <component id="6c7c8" class="javax.swing.JLabel" binding="pronounLabel">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="20" style="0"/>
           <text value="pronouns"/>
         </properties>
       </component>
-      <component id="1f9c6" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+      <component id="85ac3" class="javax.swing.JLabel" binding="specialistLabel">
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="85ac3" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="20" style="0"/>
           <text value="choose a specialist"/>
         </properties>
       </component>
       <component id="e8d36" class="javax.swing.JButton" binding="autoSelectButton" default-binding="true">
         <constraints>
-          <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="18" style="1"/>
           <text value="Auto select"/>
         </properties>
       </component>
-      <component id="9dac0" class="javax.swing.JLabel">
+      <component id="9dac0" class="javax.swing.JLabel" binding="diagLabel">
         <constraints>
-          <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="20" style="0"/>
           <text value="send your self-diagnosis result"/>
         </properties>
       </component>
-      <component id="483b5" class="javax.swing.JTextField" binding="textField6" default-binding="true">
+      <component id="483b5" class="javax.swing.JTextField" binding="diagField">
         <constraints>
-          <grid row="12" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="11" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="Google Sans" size="20" style="0"/>
+        </properties>
       </component>
       <component id="d0364" class="javax.swing.JButton" binding="takeATestButton" default-binding="true">
         <constraints>
-          <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="18" style="1"/>
           <text value="Take a test"/>
         </properties>
       </component>
-      <component id="1b0ba" class="javax.swing.JLabel">
+      <component id="1b0ba" class="javax.swing.JLabel" binding="symptomLabel">
         <constraints>
-          <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="20" style="0"/>
           <text value="provide specific symptoms"/>
         </properties>
       </component>
-      <component id="5a58a" class="javax.swing.JTextField" binding="textField7" default-binding="true">
+      <component id="5a58a" class="javax.swing.JTextField" binding="symptomField">
         <constraints>
-          <grid row="14" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="13" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="Google Sans" size="20" style="0"/>
+        </properties>
       </component>
-      <component id="6e3dc" class="javax.swing.JButton" binding="LOGOUTButton" default-binding="true">
+      <component id="6e3dc" class="javax.swing.JButton" binding="logOutButton">
         <constraints>
-          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="18" style="1"/>
           <text value="LOG OUT"/>
         </properties>
       </component>
-      <component id="53244" class="javax.swing.JLabel">
+      <component id="53244" class="javax.swing.JLabel" binding="lastNameLabel">
         <constraints>
-          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="20" style="0"/>
           <text value="last name"/>
         </properties>
       </component>
-      <component id="febf1" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+      <component id="febf1" class="javax.swing.JTextField" binding="lastNameField">
         <constraints>
-          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="Google Sans" size="20" style="0"/>
+        </properties>
       </component>
-      <component id="8cbb" class="javax.swing.JLabel">
+      <component id="8cbb" class="javax.swing.JLabel" binding="dateLabel">
         <constraints>
-          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="20" style="0"/>
           <text value="specify date"/>
         </properties>
       </component>
-      <component id="8271d" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+      <component id="8271d" class="javax.swing.JTextField" binding="dateField">
         <constraints>
-          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
-      </component>
-      <component id="7cb6e" class="javax.swing.JButton" binding="submitBOOKINGButton" default-binding="true">
-        <constraints>
-          <grid row="16" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
         <properties>
-          <text value="Submit BOOKING"/>
+          <font name="Google Sans" size="20" style="0"/>
         </properties>
       </component>
-      <component id="9cc70" class="javax.swing.JButton" binding="accountSettingButton" default-binding="true">
+      <component id="ba9aa" class="javax.swing.JLabel" binding="clinicLabel">
         <constraints>
-          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Account Setting"/>
+          <font name="Google Sans" size="20" style="0"/>
+          <text value="address of the clinic"/>
         </properties>
       </component>
-      <component id="dfb63" class="javax.swing.JButton" binding="RESETALLButton" default-binding="true">
+      <component id="aebe2" class="javax.swing.JTextField" binding="clinicField">
         <constraints>
-          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
         </constraints>
         <properties>
+          <font name="Google Sans" size="20" style="0"/>
+        </properties>
+      </component>
+      <hspacer id="d0456">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <hspacer id="6968c">
+        <constraints>
+          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <component id="747ca" class="javax.swing.JTextField" binding="pronounField">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Google Sans" size="20" style="0"/>
+        </properties>
+      </component>
+      <component id="8acc2" class="javax.swing.JTextField" binding="specialistField">
+        <constraints>
+          <grid row="9" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Google Sans" size="20" style="0"/>
+        </properties>
+      </component>
+      <component id="dfb63" class="javax.swing.JButton" binding="resetAllButton">
+        <constraints>
+          <grid row="14" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Google Sans" size="18" style="1"/>
           <text value="RESET ALL"/>
         </properties>
       </component>
       <component id="a37d6" class="javax.swing.JButton" binding="goBackButton" default-binding="true">
         <constraints>
-          <grid row="15" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="14" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Google Sans" size="18" style="1"/>
           <text value="Go back"/>
         </properties>
       </component>
-      <component id="5bfaa" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
+      <component id="7cb6e" class="javax.swing.JButton" binding="submitBookingButton">
         <constraints>
-          <grid row="10" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="ba9aa" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="14" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="address of the clinic"/>
+          <font name="Google Sans" size="18" style="1"/>
+          <text value="Submit booking"/>
         </properties>
-      </component>
-      <component id="aebe2" class="javax.swing.JTextField" binding="textField5" default-binding="true">
-        <constraints>
-          <grid row="8" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
       </component>
     </children>
   </grid>
