@@ -10,20 +10,21 @@ public class frmTest extends JFrame {
     private JButton answerCButton;
     private JButton answerBButton;
     private JButton answerDButton;
-    private JComboBox questionBox;
     private JPanel panel;
     private JLabel titleLabel;
     private JLabel insLabel;
     private JPanel questionnairePanel;
     private JButton goBackButton;
     private JButton clearAllButton;
+    private JComboBox questionCombo;
+    private JLabel questionLabel;
 
     public frmTest() {
         setContentPane(panel);
         setTitle("mindfulNESS - Testing in progress");
         setSize(800, 800);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         answerAButton.addActionListener(new ActionListener() {
             @Override
@@ -70,6 +71,14 @@ public class frmTest extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+            }
+        });
+        questionCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                questionArea.selectAll();
+                questionArea.replaceSelection("");
+                questionArea.setText(ConnectSQL.showQuestionQuery(questionCombo.getSelectedItem().toString()));
             }
         });
     }

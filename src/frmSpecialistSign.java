@@ -28,7 +28,7 @@ public class frmSpecialistSign extends JFrame {
         setTitle("mindfulNESS - Specialist signup");
         setSize(800, 800);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         goBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

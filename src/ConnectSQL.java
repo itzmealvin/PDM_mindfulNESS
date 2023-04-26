@@ -1,24 +1,9 @@
-import javax.swing.*;
 import java.sql.*;
 
 public class ConnectSQL {
     static String connectionUrl = "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=congbang0711_;user=congbang0711_;password=mindfulness;encrypt=true;trustServerCertificate=true;";
 
-    public static void closeConnect(ResultSet rs, Statement stmt, Connection con) {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                System.out.println("Error closing result set");
-            }
-        }
-        if (stmt != null) {
-            try {
-                stmt.close();
-            } catch (SQLException e) {
-                System.out.println("Error closing statement");
-            }
-        }
+    public static void closeConnect(Connection con) {
         if (con != null) {
             try {
                 con.close();
@@ -28,7 +13,7 @@ public class ConnectSQL {
         }
     }
 
-    public static String showSearchQuery(JTextField txtQuery) {
+    public static String showSearchQuery(String txtQuery) {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -41,7 +26,7 @@ public class ConnectSQL {
                     "INNER JOIN [Solution].[CureOneByOne] C ON S.Symptom_ID = C.SymptomID\n" +
                     "INNER JOIN [Solution].[Solution] So ON C.SolutionID = So.Solution_ID  WHERE D.Name = ? ";
             stmt = con.prepareStatement(preparedQuery);
-            stmt.setString(1, txtQuery.getText());
+            stmt.setString(1, txtQuery);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 result.append("Possible symptom: ").append(rs.getString("symptom"))
@@ -53,7 +38,7 @@ public class ConnectSQL {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            closeConnect(rs, stmt, con);
+            closeConnect(con);
         }
         return result.toString();
 
@@ -80,7 +65,7 @@ public class ConnectSQL {
             stmt.setString(1, patientID);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                result.append("Date:").append(rs.getString("date")).append("\n")
+                result.append("Date: ").append(rs.getString("date")).append("\n")
                         .append("Place: ").append(rs.getString("place")).append("\n")
                         .append("Specialist name: ").append(rs.getString("fullname")).append("\n")
                         .append("Phone: ").append(rs.getString("phone")).append("\n")
@@ -89,9 +74,101 @@ public class ConnectSQL {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            closeConnect(rs, stmt, con);
+            closeConnect(con);
         }
         return result.toString();
+    }
+
+    public static boolean submitBooking(String patientID, String healingID) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        int rs = 0;
+        boolean isUpdated = false;
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            con.setAutoCommit(false);
+            String updateString = "INSERT INTO [Booking].[Booking] ([PatientID], [HealingInformationID])\n" +
+                    "     VALUES (?,?)";
+            stmt = con.prepareStatement(updateString);
+            stmt.setString(1, patientID);
+            stmt.setString(2, healingID);
+            rs = stmt.executeUpdate();
+            if (rs > 0) {
+                isUpdated = true;
+            }
+            con.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return isUpdated;
+    }
+
+    public static String showSpecialistBooking(String specialistID) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        StringBuilder result = new StringBuilder();
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery = "SELECT TOP 5 H.HealingInformation_ID AS ID, CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date, H.Place, H.Fee, P.FullName, P.Sex, P.Email\n" +
+                    "FROM [Account].[Specialist] S\n" +
+                    "INNER JOIN [Booking].[HealingInformation] H\n" +
+                    "N S.Specialist_ID = H.SpecialistID\n" +
+                    "INNER JOIN [Booking].[Booking] B\n" +
+                    "ON H.HealingInformation_ID = B.HealingInformationID\n" +
+                    "INNER JOIN [Account].[Patient] P\n" +
+                    "ON B.PatientID = P.Patient_ID\n" +
+                    "WHERE S.[Specialist_ID] = 1 ORDER BY H.Date";
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, specialistID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.append("ID: ").append(rs.getString("id")).append("\n")
+                        .append("Date: ").append(rs.getString("date")).append("\n")
+                        .append("Place: ").append(rs.getString("place")).append("\n")
+                        .append("Fee: ").append(rs.getString("fee")).append("\n")
+                        .append("Patient name: ").append(rs.getString("fullname")).append("\n")
+                        .append("Sex: ").append(rs.getString("sex")).append("\n")
+                        .append("Email: ").append(rs.getString("email")).append("\n")
+                        .append("\n");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return result.toString();
+    }
+
+    public static boolean submitHealing(String patientID, String healingID) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        int rs = 0;
+        boolean isUpdated = false;
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            con.setAutoCommit(false);
+            String updateString = "INSERT INTO [Booking].[Booking] ([PatientID], [HealingInformationID])\n" +
+                    "     VALUES (?,?)";
+            stmt = con.prepareStatement(updateString);
+            stmt.setString(1, patientID);
+            stmt.setString(2, healingID);
+            rs = stmt.executeUpdate();
+            if (rs > 0) {
+                isUpdated = true;
+            }
+            con.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return isUpdated;
     }
 
     public static String showAvailableBooking() {
@@ -124,36 +201,36 @@ public class ConnectSQL {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            closeConnect(rs, stmt, con);
+            closeConnect(con);
         }
         return result.toString();
     }
 
 
-    public static String showQuestionQuery(JTextArea txtQuery) {
+    public static String showQuestionQuery(String txtQuery) {
         Connection con = null;
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
-        StringBuilder result = new StringBuilder();
+        String result = "";
         try {
             con = DriverManager.getConnection(connectionUrl);
-            stmt = con.createStatement();
             System.out.println("Connected to the Database");
-            String preparedQuery = "SELECT Title FROM [Test].[Question] WHERE Question_ID =" + txtQuery;
-            PreparedStatement query = con.prepareStatement(preparedQuery);
-            rs = stmt.executeQuery(txtQuery.getText());
+            String preparedQuery = "SELECT *\n" +
+                    "FROM [Test].[Question] \n" +
+                    "WHERE TestID = ?";
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, txtQuery);
+            rs = stmt.executeQuery();
             while (rs.next()) {
-                result.append(rs);
+                result = rs.getString("title");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            closeConnect(rs, stmt, con);
+            closeConnect(con);
         }
-        return result.toString();
-
+        return result;
     }
-
 
 }
 

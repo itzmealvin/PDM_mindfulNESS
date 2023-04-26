@@ -38,5 +38,14 @@ public class frmIndex extends JFrame {
                 setVisible(false);
             }
         });
+
+    }
+
+    public String getAccField() {
+        return accField.getText();
+    }
+
+    public String getPwdField() {
+        return String.valueOf(pwdField.getPassword());
     }
 }

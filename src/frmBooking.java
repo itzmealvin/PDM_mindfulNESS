@@ -21,7 +21,7 @@ public class frmBooking extends JFrame {
         setTitle("mindfulNESS - Make a booking");
         setSize(800, 800);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
         if (ConnectSQL.showAvailableBooking().length() == 0) {
@@ -51,8 +51,16 @@ public class frmBooking extends JFrame {
         submitBookingButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
+                if (idField.getText().length() == 0) {
+                    JOptionPane.showMessageDialog(null, "Please input possible ID!", "Warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if (ConnectSQL.submitBooking("1", idField.getText()) == true) {
+                    JOptionPane.showMessageDialog(null, "Booked! Please come on time.", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Something went wrong! Please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+                return;
             }
         });
         refreshButton.addActionListener(new ActionListener() {
@@ -65,7 +73,6 @@ public class frmBooking extends JFrame {
                 bookingArea.selectAll();
                 bookingArea.replaceSelection("");
                 bookingArea.setText(ConnectSQL.showAvailableBooking());
-
             }
         });
     }

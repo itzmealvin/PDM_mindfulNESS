@@ -8,7 +8,6 @@ public class frmPatientDashboard extends JFrame {
     private JTextField searchField;
     private JButton searchButton;
     private JTextArea resultArea;
-    private JButton accountSettingButton;
     private JPanel panel;
     private JPanel searchPanel;
     private JPanel recentPanel;
@@ -23,7 +22,7 @@ public class frmPatientDashboard extends JFrame {
         setTitle("mindfulNESS - Dashboard");
         setSize(800, 800);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         logOutButton.addActionListener(new ActionListener() {
             @Override
@@ -43,8 +42,8 @@ public class frmPatientDashboard extends JFrame {
                 }
                 resultArea.selectAll();
                 resultArea.replaceSelection("");
-                resultArea.setText(ConnectSQL.showSearchQuery(searchField));
-                if (ConnectSQL.showSearchQuery(searchField).length() == 0) {
+                resultArea.setText(ConnectSQL.showSearchQuery(searchField.getText()));
+                if (ConnectSQL.showSearchQuery(searchField.getText()).length() == 0) {
                     JOptionPane.showMessageDialog(null, "Invalid disease!", "Warning", JOptionPane.WARNING_MESSAGE);
                     return;
                 }

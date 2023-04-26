@@ -7,7 +7,7 @@ public class frmSpecialistDashboard extends JFrame {
     private JTextField searchFIeld;
     private JButton searchButton;
     private JTextArea resultArea;
-    private JTextArea textArea2;
+    private JTextArea recentArea;
     private JButton postButton;
     private JLabel titleLabel;
     private JPanel panel;
@@ -20,7 +20,7 @@ public class frmSpecialistDashboard extends JFrame {
         setTitle("mindfulNESS - Dashboard");
         setSize(800, 800);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         logOutButton.addActionListener(new ActionListener() {
             @Override
@@ -42,5 +42,9 @@ public class frmSpecialistDashboard extends JFrame {
 
             }
         });
+
+        recentArea.selectAll();
+        recentArea.replaceSelection("");
+        recentArea.setText(ConnectSQL.showSpecialistBooking("1"));
     }
 }

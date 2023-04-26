@@ -22,7 +22,7 @@ public class frmPatientSign extends JFrame {
         setTitle("mindfulNESS - Patient signup");
         setSize(700, 700);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         goBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

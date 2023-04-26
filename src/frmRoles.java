@@ -15,7 +15,7 @@ public class frmRoles extends JFrame {
         setTitle("mindfulNESS - Choose your role");
         setSize(500, 500);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
         patientButton.addActionListener(new ActionListener() {
