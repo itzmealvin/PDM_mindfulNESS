@@ -17,7 +17,7 @@ public class frmPatientDashboard extends JFrame {
     private JLabel insLabel;
     private JLabel titleLabel;
     private JLabel recentLabel;
-    private JButton BOOKButton;
+    private JButton bookButton;
 
     public frmPatientDashboard() {
         setContentPane(panel);
@@ -38,6 +38,13 @@ public class frmPatientDashboard extends JFrame {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (searchField.getText().length() == 0) {
+                    JOptionPane.showMessageDialog(null, "Please input any disease name!", "Message", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                resultArea.selectAll();
+                resultArea.replaceSelection("");
+                resultArea.setText(ConnectSQL.showSearchQuery(searchField));
 
             }
         });
@@ -49,7 +56,7 @@ public class frmPatientDashboard extends JFrame {
                 setVisible(false);
             }
         });
-        BOOKButton.addActionListener(new ActionListener() {
+        bookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frmBooking booking = new frmBooking();
