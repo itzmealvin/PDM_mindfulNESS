@@ -12,8 +12,7 @@ public class frmPatientDashboard extends JFrame {
     private JPanel panel;
     private JPanel searchPanel;
     private JPanel recentPanel;
-    private JTextArea recent1Area;
-    private JTextArea recent2Area;
+    private JTextArea recentArea;
     private JLabel insLabel;
     private JLabel titleLabel;
     private JLabel recentLabel;
@@ -39,13 +38,16 @@ public class frmPatientDashboard extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (searchField.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Please input any disease name!", "Message", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please input any disease name!", "Warning", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 resultArea.selectAll();
                 resultArea.replaceSelection("");
                 resultArea.setText(ConnectSQL.showSearchQuery(searchField));
-
+                if (ConnectSQL.showSearchQuery(searchField).length() == 0) {
+                    JOptionPane.showMessageDialog(null, "Invalid disease!", "Warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
             }
         });
         startSelfDiagButton.addActionListener(new ActionListener() {
@@ -64,5 +66,10 @@ public class frmPatientDashboard extends JFrame {
                 setVisible(false);
             }
         });
+
+        recentArea.selectAll();
+        recentArea.replaceSelection("");
+        recentArea.setText(ConnectSQL.showPatientBooking("1"));
+        ;
     }
 }

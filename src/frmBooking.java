@@ -4,31 +4,17 @@ import java.awt.event.ActionListener;
 
 public class frmBooking extends JFrame {
     private JButton logOutButton;
-    private JButton accountSettingButton;
-    private JTextField firstNameField;
-    private JTextField lastNameField;
-    private JTextField dateField;
-    private JButton autoSelectButton;
-    private JTextField clinicField;
-    private JTextField diagField;
-    private JButton takeATestButton;
-    private JTextField symptomField;
-    private JButton resetAllButton;
     private JButton submitBookingButton;
     private JButton goBackButton;
     private JPanel panel;
     private JLabel titleLabel;
     private JLabel insLabel;
-    private JLabel firstNameLabel;
-    private JLabel pronounLabel;
-    private JTextField pronounField;
-    private JLabel specialistLabel;
-    private JLabel diagLabel;
-    private JLabel symptomLabel;
-    private JLabel lastNameLabel;
-    private JLabel dateLabel;
-    private JTextField specialistField;
+    private JLabel idLabel;
+    private JTextField idField;
     private JLabel clinicLabel;
+    private JButton refreshButton;
+    private JTextArea bookingArea;
+
 
     public frmBooking() {
         setContentPane(panel);
@@ -36,6 +22,15 @@ public class frmBooking extends JFrame {
         setSize(800, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+
+        if (ConnectSQL.showAvailableBooking().length() == 0) {
+            JOptionPane.showMessageDialog(null, "No available booking found! Please try again later", "Message", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        bookingArea.selectAll();
+        bookingArea.replaceSelection("");
+        bookingArea.setText(ConnectSQL.showAvailableBooking());
 
         logOutButton.addActionListener(new ActionListener() {
             @Override
@@ -45,36 +40,31 @@ public class frmBooking extends JFrame {
                 setVisible(false);
             }
         });
-
-        resetAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        autoSelectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        takeATestButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmTest test = new frmTest();
-                test.setVisible(true);
-                setVisible(false);
-            }
-        });
         goBackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                frmPatientDashboard patientDashboard = new frmPatientDashboard();
+                patientDashboard.setVisible(true);
+                setVisible(false);
             }
         });
         submitBookingButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
+            }
+        });
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (ConnectSQL.showAvailableBooking().length() == 0) {
+                    JOptionPane.showMessageDialog(null, "No available booking found! Please try again later", "Warning!", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                bookingArea.selectAll();
+                bookingArea.replaceSelection("");
+                bookingArea.setText(ConnectSQL.showAvailableBooking());
 
             }
         });

@@ -8,7 +8,6 @@ public class frmSpecialistDashboard extends JFrame {
     private JButton searchButton;
     private JTextArea resultArea;
     private JTextArea textArea2;
-    private JTextArea textArea3;
     private JButton postButton;
     private JLabel titleLabel;
     private JPanel panel;
