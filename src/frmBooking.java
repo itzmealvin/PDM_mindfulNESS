@@ -51,6 +51,7 @@ public class frmBooking extends JFrame {
             if (option == JOptionPane.YES_OPTION) {
                 if (ConnectSQL.submitBooking("1", idField.getText())) {
                     JOptionPane.showMessageDialog(null, "Booked! Please come on time.", "Warning", JOptionPane.WARNING_MESSAGE);
+                    ConnectSQL.showAvailableBooking(resultTable);
                 } else {
                     JOptionPane.showMessageDialog(null, "Something went wrong! Please try again", "Warning", JOptionPane.WARNING_MESSAGE);
                 }

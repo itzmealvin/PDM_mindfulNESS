@@ -122,9 +122,10 @@
           <component id="639b3" class="javax.swing.JTable" binding="resultTable">
             <constraints/>
             <properties>
+              <autoCreateRowSorter value="true"/>
               <font name="Google Sans" size="15" style="0"/>
               <intercellSpacing width="1" height="1"/>
-              <minimumSize width="50" height="70"/>
+              <minimumSize width="500" height="40"/>
             </properties>
           </component>
         </children>

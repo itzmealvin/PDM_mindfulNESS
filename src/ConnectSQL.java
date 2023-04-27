@@ -2,6 +2,7 @@ import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ConnectSQL {
     static final String connectionUrl = "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=congbang0711_;user=congbang0711_;password=mindfulness;encrypt=true;trustServerCertificate=true;";
@@ -104,7 +105,7 @@ public class ConnectSQL {
             }
             con.commit();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return isUpdated;
         } finally {
             closeConnect(con);
         }
@@ -205,8 +206,31 @@ public class ConnectSQL {
         }
     }
 
+    public static ArrayList<Integer> showTestQuery() {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        ArrayList<Integer> results = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery = """
+                    SELECT DISTINCT TestID
+                    FROM [Test].[Question]""";
+            stmt = con.prepareStatement(preparedQuery);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                results.add(rs.getInt("testID"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return results;
+    }
 
-    public static String showQuestionQuery(String txtQuery) {
+    public static  showQuestionQuery(String testID) {
         Connection con = null;
         PreparedStatement stmt;
         ResultSet rs;
@@ -215,14 +239,15 @@ public class ConnectSQL {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
             String preparedQuery = """
-                    SELECT *
+                    SELECT Question_ID AS question, Title
                     FROM [Test].[Question]\s
                     WHERE TestID = ?""";
             stmt = con.prepareStatement(preparedQuery);
-            stmt.setString(1, txtQuery);
+            stmt.setString(1, testID);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                result = rs.getString("title");
+                rs.getInt("question");
+                rs.getString("title");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
