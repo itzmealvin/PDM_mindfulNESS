@@ -21,22 +21,16 @@ public class frmIndex extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
-        signUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmRoles roles = new frmRoles();
-                roles.setVisible(true);
-                setVisible(false);
-            }
+        signUpButton.addActionListener(e -> {
+            frmRoles roles = new frmRoles();
+            roles.setVisible(true);
+            setVisible(false);
         });
 
-        logInButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmPatientDashboard patientDashboard = new frmPatientDashboard();
-                patientDashboard.setVisible(true);
-                setVisible(false);
-            }
+        logInButton.addActionListener(e -> {
+            frmPatientDashboard patientDashboard = new frmPatientDashboard();
+            patientDashboard.setVisible(true);
+            setVisible(false);
         });
 
     }

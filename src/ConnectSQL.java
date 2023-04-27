@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.sql.*;
 
 public class ConnectSQL {
-    static String connectionUrl = "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=congbang0711_;user=congbang0711_;password=mindfulness;encrypt=true;trustServerCertificate=true;";
+    static final String connectionUrl = "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=congbang0711_;user=congbang0711_;password=mindfulness;encrypt=true;trustServerCertificate=true;";
 
     public static void closeConnect(Connection con) {
         if (con != null) {
@@ -18,25 +18,26 @@ public class ConnectSQL {
 
     public static String showSearchQuery(String txtQuery) {
         Connection con = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement stmt;
+        ResultSet rs;
         StringBuilder result = new StringBuilder();
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = "SELECT TOP 5 S.Name AS symptom, So.Name AS solution, So.Platform, So.Description FROM [Disease].[Disease] D INNER JOIN [Disease].[DiseaseSymptom] DS ON D.Disease_ID = DS.DiseaseID\n" +
-                    "INNER JOIN [Disease].[Symptom] S ON DS.SymptomID = S.Symptom_ID\n" +
-                    "INNER JOIN [Solution].[CureOneByOne] C ON S.Symptom_ID = C.SymptomID\n" +
-                    "INNER JOIN [Solution].[Solution] So ON C.SolutionID = So.Solution_ID  WHERE D.Name = ? ";
+            String preparedQuery = """
+                    SELECT TOP 5 S.Name AS symptom, So.Name AS solution, So.Platform, So.Description FROM [Disease].[Disease] D INNER JOIN [Disease].[DiseaseSymptom] DS ON D.Disease_ID = DS.DiseaseID
+                    INNER JOIN [Disease].[Symptom] S ON DS.SymptomID = S.Symptom_ID
+                    INNER JOIN [Solution].[CureOneByOne] C ON S.Symptom_ID = C.SymptomID
+                    INNER JOIN [Solution].[Solution] So ON C.SolutionID = So.Solution_ID  WHERE D.Name = ?\s""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, txtQuery);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 result.append("Possible symptom: ").append(rs.getString("symptom"))
                         .append(" has the solution of: ").append(rs.getString("solution"))
-                        .append(". Please view more at: ").append(rs.getString("platform"))
-                        .append(" on the article: ").append(rs.getString("description"))
-                        .append("\n");
+                        .append(". Please see at: ").append(rs.getString("platform"))
+                        .append(", more details: ").append(rs.getString("description"))
+                        .append("\n\n");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -49,21 +50,22 @@ public class ConnectSQL {
 
     public static String showPatientBooking(String patientID) {
         Connection con = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement stmt;
+        ResultSet rs;
         StringBuilder result = new StringBuilder();
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = "SELECT TOP 3 CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date , H.Place, S.FullName, S.Phone\n" +
-                    "FROM [Account].[Specialist] S\n" +
-                    "INNER JOIN [Booking].[HealingInformation] H\n" +
-                    "ON S.Specialist_ID = H.SpecialistID\n" +
-                    "INNER JOIN [Booking].[Booking] B\n" +
-                    "ON H.HealingInformation_ID = B.HealingInformationID\n" +
-                    "INNER JOIN [Account].[Patient] P\n" +
-                    "ON B.PatientID = P.Patient_ID\n" +
-                    "WHERE P.Patient_ID = ? ORDER BY H.Date";
+            String preparedQuery = """
+                    SELECT TOP 3 CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date , H.Place, S.FullName, S.Phone
+                    FROM [Account].[Specialist] S
+                    INNER JOIN [Booking].[HealingInformation] H
+                    ON S.Specialist_ID = H.SpecialistID
+                    INNER JOIN [Booking].[Booking] B
+                    ON H.HealingInformation_ID = B.HealingInformationID
+                    INNER JOIN [Account].[Patient] P
+                    ON B.PatientID = P.Patient_ID
+                    WHERE P.Patient_ID = ? ORDER BY H.Date""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, patientID);
             rs = stmt.executeQuery();
@@ -84,8 +86,8 @@ public class ConnectSQL {
 
     public static boolean submitBooking(String patientID, String healingID) {
         Connection con = null;
-        PreparedStatement stmt = null;
-        int rs = 0;
+        PreparedStatement stmt;
+        int rs;
         boolean isUpdated = false;
         try {
             con = DriverManager.getConnection(connectionUrl);
@@ -111,21 +113,22 @@ public class ConnectSQL {
 
     public static String showSpecialistBooking(String specialistID) {
         Connection con = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement stmt;
+        ResultSet rs;
         StringBuilder result = new StringBuilder();
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = "SELECT TOP 5 H.HealingInformation_ID AS ID, CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date, H.Place, H.Fee, P.FullName, P.Sex, P.Email\n" +
-                    "FROM [Account].[Specialist] S\n" +
-                    "INNER JOIN [Booking].[HealingInformation] H\n" +
-                    "N S.Specialist_ID = H.SpecialistID\n" +
-                    "INNER JOIN [Booking].[Booking] B\n" +
-                    "ON H.HealingInformation_ID = B.HealingInformationID\n" +
-                    "INNER JOIN [Account].[Patient] P\n" +
-                    "ON B.PatientID = P.Patient_ID\n" +
-                    "WHERE S.[Specialist_ID] = 1 ORDER BY H.Date";
+            String preparedQuery = """
+                    SELECT TOP 5 H.HealingInformation_ID AS ID, CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date, H.Place, H.Fee, P.FullName, P.Sex, P.Email
+                    FROM [Account].[Specialist] S
+                    INNER JOIN [Booking].[HealingInformation] H
+                    N S.Specialist_ID = H.SpecialistID
+                    INNER JOIN [Booking].[Booking] B
+                    ON H.HealingInformation_ID = B.HealingInformationID
+                    INNER JOIN [Account].[Patient] P
+                    ON B.PatientID = P.Patient_ID
+                    WHERE S.[Specialist_ID] = 1 ORDER BY H.Date""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, specialistID);
             rs = stmt.executeQuery();
@@ -147,10 +150,10 @@ public class ConnectSQL {
         return result.toString();
     }
 
-    public static boolean submitHealing(String patientID, String healingID) {
+    public static boolean submitHealing(String specialistID, String healingID) {
         Connection con = null;
-        PreparedStatement stmt = null;
-        int rs = 0;
+        PreparedStatement stmt;
+        int rs;
         boolean isUpdated = false;
         try {
             con = DriverManager.getConnection(connectionUrl);
@@ -159,7 +162,7 @@ public class ConnectSQL {
             String updateString = "INSERT INTO [Booking].[Booking] ([PatientID], [HealingInformationID])\n" +
                     "     VALUES (?,?)";
             stmt = con.prepareStatement(updateString);
-            stmt.setString(1, patientID);
+            stmt.setString(1, specialistID);
             stmt.setString(2, healingID);
             rs = stmt.executeUpdate();
             if (rs > 0) {
@@ -176,24 +179,23 @@ public class ConnectSQL {
 
     public static void showAvailableBooking(JTable resultTable) {
         Connection con = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement stmt;
+        ResultSet rs;
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = "SELECT H.HealingInformation_ID AS ID, H.Date, H.Place, CAST(H.Fee AS INT) AS Fee, S.FullName, S.Sex\n" +
-                    "FROM [Booking].[HealingInformation] H\n" +
-                    "INNER JOIN [Account].[Specialist] S\n" +
-                    "\tON S.Specialist_ID = H.SpecialistID\n" +
-                    "WHERE H.HealingInformation_ID NOT IN (SELECT DISTINCT B.HealingInformationID\n" +
-                    "FROM [Booking].[Booking] B) ORDER BY H.Date";
+            String preparedQuery = """
+                    SELECT H.HealingInformation_ID AS ID, H.Date, H.Place, CAST(H.Fee AS INT) AS Fee, S.FullName, S.Sex
+                    FROM [Booking].[HealingInformation] H
+                    INNER JOIN [Account].[Specialist] S
+                    \tON S.Specialist_ID = H.SpecialistID
+                    WHERE H.HealingInformation_ID NOT IN (SELECT DISTINCT B.HealingInformationID
+                    FROM [Booking].[Booking] B) ORDER BY H.Date""";
             stmt = con.prepareStatement(preparedQuery);
             rs = stmt.executeQuery();
             if (!rs.next()) {
                 JOptionPane.showMessageDialog(null, "No available booking found! Please try again later", "Message", JOptionPane.WARNING_MESSAGE);
-                return;
             } else {
-
                 resultTable.setModel(DbUtils.resultSetToTableModel(rs));
             }
         } catch (SQLException e) {
@@ -206,15 +208,16 @@ public class ConnectSQL {
 
     public static String showQuestionQuery(String txtQuery) {
         Connection con = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement stmt;
+        ResultSet rs;
         String result = "";
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = "SELECT *\n" +
-                    "FROM [Test].[Question] \n" +
-                    "WHERE TestID = ?";
+            String preparedQuery = """
+                    SELECT *
+                    FROM [Test].[Question]\s
+                    WHERE TestID = ?""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, txtQuery);
             rs = stmt.executeQuery();

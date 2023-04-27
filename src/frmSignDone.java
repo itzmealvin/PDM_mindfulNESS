@@ -14,13 +14,10 @@ public class frmSignDone extends JFrame {
         setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        goToDashboardButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmIndex indexPage = new frmIndex();
-                indexPage.setVisible(true);
-                setVisible(false);
-            }
+        goToDashboardButton.addActionListener(e -> {
+            frmIndex indexPage = new frmIndex();
+            indexPage.setVisible(true);
+            setVisible(false);
         });
 
     }

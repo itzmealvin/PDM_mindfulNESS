@@ -26,60 +26,42 @@ public class frmTest extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        answerAButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        answerAButton.addActionListener(e -> {
 
-            }
         });
-        answerBButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        answerBButton.addActionListener(e -> {
 
-            }
         });
-        answerCButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        answerCButton.addActionListener(e -> {
 
-            }
         });
-        answerDButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        answerDButton.addActionListener(e -> {
 
-            }
         });
-        logOutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        logOutButton.addActionListener(e -> {
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
                 frmIndex indexPage = new frmIndex();
                 indexPage.setVisible(true);
                 setVisible(false);
+                JOptionPane.showMessageDialog(null, "Logged out!", "Success!", JOptionPane.WARNING_MESSAGE);
             }
         });
-        goBackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        goBackButton.addActionListener(e -> {
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
                 frmSpecialistDashboard specialistDashboard= new frmSpecialistDashboard();
                 specialistDashboard.setVisible(true);
                 setVisible(false);
-
             }
         });
-        clearAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        clearAllButton.addActionListener(e -> {
 
-            }
         });
-        questionCombo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                questionArea.selectAll();
-                questionArea.replaceSelection("");
-                questionArea.setText(ConnectSQL.showQuestionQuery(questionCombo.getSelectedItem().toString()));
-            }
+        questionCombo.addActionListener(e -> {
+            questionArea.selectAll();
+            questionArea.replaceSelection("");
+            questionArea.setText(ConnectSQL.showQuestionQuery(questionCombo.getSelectedItem().toString()));
         });
     }
 }

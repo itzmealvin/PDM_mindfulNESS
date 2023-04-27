@@ -29,21 +29,15 @@ public class frmSpecialistSign extends JFrame {
         setSize(800, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        goBackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmRoles roles = new frmRoles();
-                roles.setVisible(true);
-                setVisible(false);
-            }
+        goBackButton.addActionListener(e -> {
+            frmRoles roles = new frmRoles();
+            roles.setVisible(true);
+            setVisible(false);
         });
-        continueButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmSignDone signDone = new frmSignDone();
-                signDone.setVisible(true);
-                setVisible(false);
-            }
+        continueButton.addActionListener(e -> {
+            frmSignDone signDone = new frmSignDone();
+            signDone.setVisible(true);
+            setVisible(false);
         });
     }
 }
