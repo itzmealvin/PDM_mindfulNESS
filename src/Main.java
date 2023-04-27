@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
-        frmIndex indexPage = new frmIndex();
-        indexPage.setVisible(true);
+        frmBooking booking = new frmBooking();
+        booking.setVisible(true);
 
     }
 }

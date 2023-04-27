@@ -100,17 +100,6 @@
           <text value="refresh"/>
         </properties>
       </component>
-      <component id="cca1" class="javax.swing.JTextArea" binding="bookingArea">
-        <constraints>
-          <grid row="3" column="1" row-span="1" col-span="5" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
-        </constraints>
-        <properties>
-          <font name="Google Sans" size="20" style="0"/>
-          <lineWrap value="true"/>
-        </properties>
-      </component>
       <hspacer id="a9944">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -121,6 +110,25 @@
           <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
+      <scrollpane id="faced">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="5" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Google Sans" size="20" style="1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="639b3" class="javax.swing.JTable" binding="resultTable">
+            <constraints/>
+            <properties>
+              <font name="Google Sans" size="15" style="0"/>
+              <intercellSpacing width="1" height="1"/>
+              <minimumSize width="50" height="70"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>

@@ -1,3 +1,6 @@
+import net.proteanit.sql.DbUtils;
+
+import javax.swing.*;
 import java.sql.*;
 
 public class ConnectSQL {
@@ -171,15 +174,14 @@ public class ConnectSQL {
         return isUpdated;
     }
 
-    public static String showAvailableBooking() {
+    public static void showAvailableBooking(JTable resultTable) {
         Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        StringBuilder result = new StringBuilder();
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = "SELECT H.HealingInformation_ID AS ID, H.Date, H.Place, H.Fee, S.FullName, S.Sex\n" +
+            String preparedQuery = "SELECT H.HealingInformation_ID AS ID, H.Date, H.Place, CAST(H.Fee AS INT) AS Fee, S.FullName, S.Sex\n" +
                     "FROM [Booking].[HealingInformation] H\n" +
                     "INNER JOIN [Account].[Specialist] S\n" +
                     "\tON S.Specialist_ID = H.SpecialistID\n" +
@@ -187,23 +189,18 @@ public class ConnectSQL {
                     "FROM [Booking].[Booking] B) ORDER BY H.Date";
             stmt = con.prepareStatement(preparedQuery);
             rs = stmt.executeQuery();
-            int numOfCols = rs.getMetaData().getColumnCount();
-            for (int i = 1; i <= numOfCols; i++) {
-                result.append(rs.getMetaData().getColumnName(i)).append("\t");
-            }
-            result.append("\n");
-            while (rs.next()) {
-                for (int i = 1; i <= numOfCols; i++) {
-                    result.append(rs.getObject(i)).append("\t");
-                }
-                result.append("\n");
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(null, "No available booking found! Please try again later", "Message", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else {
+
+                resultTable.setModel(DbUtils.resultSetToTableModel(rs));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             closeConnect(con);
         }
-        return result.toString();
     }
 
 
