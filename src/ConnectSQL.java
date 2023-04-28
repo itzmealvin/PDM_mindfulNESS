@@ -58,7 +58,7 @@ public class ConnectSQL {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
             String preparedQuery = """
-                    SELECT TOP 3 CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date , H.Place, S.FullName, S.Phone
+                    SELECT CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date , H.Place, S.FullName, S.Phone
                     FROM [Account].[Specialist] S
                     INNER JOIN [Booking].[HealingInformation] H
                     ON S.Specialist_ID = H.SpecialistID
@@ -121,15 +121,15 @@ public class ConnectSQL {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
             String preparedQuery = """
-                    SELECT TOP 5 H.HealingInformation_ID AS ID, CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date, H.Place, H.Fee, P.FullName, P.Sex, P.Email
+                    SELECT H.HealingInformation_ID AS ID, CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date, H.Place, H.Fee, P.FullName, P.Sex, P.Email
                     FROM [Account].[Specialist] S
                     INNER JOIN [Booking].[HealingInformation] H
-                    N S.Specialist_ID = H.SpecialistID
+                    ON S.Specialist_ID = H.SpecialistID
                     INNER JOIN [Booking].[Booking] B
                     ON H.HealingInformation_ID = B.HealingInformationID
                     INNER JOIN [Account].[Patient] P
                     ON B.PatientID = P.Patient_ID
-                    WHERE S.[Specialist_ID] = 1 ORDER BY H.Date""";
+                    WHERE S.[Specialist_ID] = ? ORDER BY H.Date""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, specialistID);
             rs = stmt.executeQuery();
@@ -151,7 +151,7 @@ public class ConnectSQL {
         return result.toString();
     }
 
-    public static boolean submitHealing(String specialistID, String healingID) {
+    public static boolean submitHealing(String specialistID, String place, String date, String fee, String desc, String extra) {
         Connection con = null;
         PreparedStatement stmt;
         int rs;
@@ -160,18 +160,22 @@ public class ConnectSQL {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
             con.setAutoCommit(false);
-            String updateString = "INSERT INTO [Booking].[Booking] ([PatientID], [HealingInformationID])\n" +
-                    "     VALUES (?,?)";
+            String updateString = "INSERT INTO [Booking].[HealingInformation] ([SpecialistID], [Place], [Date], [Fee], [Description], [Extra_Information])\n" +
+                    "     VALUES (?,?,?,?,?,?)";
             stmt = con.prepareStatement(updateString);
             stmt.setString(1, specialistID);
-            stmt.setString(2, healingID);
+            stmt.setString(2, place);
+            stmt.setString(3, date);
+            stmt.setString(4, fee);
+            stmt.setString(5, desc);
+            stmt.setString(6, extra);
             rs = stmt.executeUpdate();
             if (rs > 0) {
                 isUpdated = true;
             }
             con.commit();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return isUpdated;
         } finally {
             closeConnect(con);
         }
@@ -230,7 +234,33 @@ public class ConnectSQL {
         return results;
     }
 
-    public static String showQuestionQuery(String testID) {
+    public static ArrayList<Integer> showQuestionQuery(String testID) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        ArrayList<Integer> results = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery = """
+                    SELECT Question_ID AS questionID
+                    FROM [Test].[Question]
+                    WHERE TestID = ?""";
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, testID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                results.add(rs.getInt("questionID"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return results;
+    }
+
+    public static String showQuestionContentQuery(String testID, String questionID) {
         Connection con = null;
         PreparedStatement stmt;
         ResultSet rs;
@@ -239,15 +269,15 @@ public class ConnectSQL {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
             String preparedQuery = """
-                    SELECT Question_ID AS question, Title
+                    SELECT Title
                     FROM [Test].[Question]\s
-                    WHERE TestID = ?""";
+                    WHERE TestID = ? AND Question_ID = ?""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, testID);
+            stmt.setString(2, questionID);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                rs.getInt("question");
-                rs.getString("title");
+                result = rs.getString("title");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

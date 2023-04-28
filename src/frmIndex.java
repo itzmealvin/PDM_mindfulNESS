@@ -1,7 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class frmIndex extends JFrame {
     private JButton logInButton;
     private JPasswordField pwdField;
@@ -12,8 +9,15 @@ public class frmIndex extends JFrame {
     private JTextField accField;
     private JLabel titleLabel;
     private JLabel insLabel;
+    private static frmIndex instance;
+    public static synchronized frmIndex getInstance(){
+        if(instance == null){
+            instance = new frmIndex();
+        }
+        return instance;
+    }
 
-    public frmIndex() {
+    private frmIndex() {
         setContentPane(panel);
         setTitle("mindfulNESS - Homepage");
         setSize(500, 500);
@@ -22,24 +26,15 @@ public class frmIndex extends JFrame {
 
 
         signUpButton.addActionListener(e -> {
-            frmRoles roles = new frmRoles();
-            roles.setVisible(true);
+            frmRoles.getInstance().setVisible(true);
             setVisible(false);
         });
 
         logInButton.addActionListener(e -> {
-            frmPatientDashboard patientDashboard = new frmPatientDashboard();
-            patientDashboard.setVisible(true);
+            frmPatientDashboard.getInstance().setVisible(true);
             setVisible(false);
         });
 
     }
 
-    public String getAccField() {
-        return accField.getText();
-    }
-
-    public String getPwdField() {
-        return String.valueOf(pwdField.getPassword());
-    }
 }

@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class frmPatientDashboard extends JFrame {
     private JButton logOutButton;
@@ -10,14 +8,22 @@ public class frmPatientDashboard extends JFrame {
     private JTextArea resultArea;
     private JPanel panel;
     private JPanel searchPanel;
-    private JPanel recentPanel;
     private JTextArea recentArea;
     private JLabel insLabel;
     private JLabel titleLabel;
     private JLabel recentLabel;
     private JButton bookButton;
+    private JScrollPane recentPane;
+    private JLabel copyrightLabel;
+    private static frmPatientDashboard instance;
+    public static synchronized frmPatientDashboard getInstance(){
+        if(instance== null){
+            instance = new frmPatientDashboard();
+        }
+        return instance;
+    }
 
-    public frmPatientDashboard() {
+    private frmPatientDashboard() {
         setContentPane(panel);
         setTitle("mindfulNESS - Dashboard");
         setSize(1200, 800);
@@ -27,10 +33,14 @@ public class frmPatientDashboard extends JFrame {
         logOutButton.addActionListener(e -> {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
-                frmIndex indexPage = new frmIndex();
-                indexPage.setVisible(true);
-                setVisible(false);
-                JOptionPane.showMessageDialog(null, "Logged out!", "Success!", JOptionPane.WARNING_MESSAGE);
+                try {
+                    setVisible(false);
+                    JOptionPane.showMessageDialog(null, "Logged out! See you again", "Success!", JOptionPane.WARNING_MESSAGE);
+                    Thread.sleep(3000);
+                    System.exit(0);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -45,20 +55,17 @@ public class frmPatientDashboard extends JFrame {
             resultArea.setEditable(false);
 
             if (ConnectSQL.showSearchQuery(searchField.getText()).length() == 0) {
-                JOptionPane.showMessageDialog(null, "Invalid disease!", "Warning", JOptionPane.WARNING_MESSAGE);
-                return;
+                JOptionPane.showMessageDialog(null, "Cannot find the disease with name: " + searchField.getText() + " . Please search again!", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         });
 
         startSelfDiagButton.addActionListener(e -> {
-            frmTest test = new frmTest();
-            test.setVisible(true);
+            frmTest.getInstance().setVisible(true);
             setVisible(false);
         });
 
         bookButton.addActionListener(e -> {
-            frmBooking booking = new frmBooking();
-            booking.setVisible(true);
+            frmBooking.getInstance().setVisible(true);
             setVisible(false);
         });
 

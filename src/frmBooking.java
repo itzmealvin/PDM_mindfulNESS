@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class frmBooking extends JFrame {
     private JButton logOutButton;
@@ -14,10 +12,15 @@ public class frmBooking extends JFrame {
     private JLabel clinicLabel;
     private JButton refreshButton;
     private JTable resultTable;
-    private JScrollPane bookedList;
+    private static frmBooking instance;
+    public static synchronized frmBooking getInstance(){
+        if(instance == null){
+            instance = new frmBooking();
+        }
+        return instance;
+    }
 
-
-    public frmBooking() {
+    private frmBooking() {
         setContentPane(panel);
         setTitle("mindfulNESS - Make a booking");
         setSize(1200, 800);
@@ -29,17 +32,20 @@ public class frmBooking extends JFrame {
         logOutButton.addActionListener(e -> {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
-                frmIndex indexPage = new frmIndex();
-                indexPage.setVisible(true);
-                setVisible(false);
-                JOptionPane.showMessageDialog(null, "Logged out!", "Success!", JOptionPane.WARNING_MESSAGE);
+                try {
+                    setVisible(false);
+                    JOptionPane.showMessageDialog(null, "Logged out! See you again", "Success!", JOptionPane.WARNING_MESSAGE);
+                    Thread.sleep(3000);
+                    System.exit(0);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         goBackButton.addActionListener(e -> {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
-                frmPatientDashboard patientDashboard = new frmPatientDashboard();
-                patientDashboard.setVisible(true);
+                frmPatientDashboard.getInstance().setVisible(true);
                 setVisible(false);
             }
         });
@@ -54,7 +60,7 @@ public class frmBooking extends JFrame {
                     JOptionPane.showMessageDialog(null, "Booked! Please come on time.", "Warning", JOptionPane.WARNING_MESSAGE);
                     ConnectSQL.showAvailableBooking(resultTable);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Something went wrong! Please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, idField.getText() + " is already booked! Please try again", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });

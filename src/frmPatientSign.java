@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class frmPatientSign extends JFrame {
     private JButton goBackButton;
@@ -16,21 +14,26 @@ public class frmPatientSign extends JFrame {
     private JLabel dobLabel;
     private JPanel panel;
     private JTextField genderField;
+    private static frmPatientSign instance;
+    public static synchronized frmPatientSign getInstance(){
+        if(instance == null){
+            instance = new frmPatientSign();
+        }
+        return instance;
+    }
 
-    public frmPatientSign() {
+    private frmPatientSign() {
         setContentPane(panel);
         setTitle("mindfulNESS - Patient signup");
         setSize(700, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         goBackButton.addActionListener(e -> {
-            frmRoles roles = new frmRoles();
-            roles.setVisible(true);
+            frmRoles.getInstance().setVisible(true);
             setVisible(false);
         });
         continueButton.addActionListener(e -> {
-            frmSignDone signDone = new frmSignDone();
-            signDone.setVisible(true);
+            frmSignDone.getInstance().setVisible(true);
             setVisible(false);
         });
     }

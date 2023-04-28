@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class frmSpecialistSign extends JFrame {
     private JTextField firstNameField;
@@ -22,21 +20,27 @@ public class frmSpecialistSign extends JFrame {
     private JLabel certiLabel;
     private JLabel graduateLabel;
     private JTextField genderField;
+    private static frmSpecialistSign instance;
 
-    public frmSpecialistSign() {
+    public static synchronized frmSpecialistSign getInstance() {
+        if (instance == null) {
+            instance = new frmSpecialistSign();
+        }
+        return instance;
+    }
+
+    private frmSpecialistSign() {
         setContentPane(panel);
         setTitle("mindfulNESS - Specialist signup");
         setSize(800, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         goBackButton.addActionListener(e -> {
-            frmRoles roles = new frmRoles();
-            roles.setVisible(true);
+            frmRoles.getInstance().setVisible(true);
             setVisible(false);
         });
         continueButton.addActionListener(e -> {
-            frmSignDone signDone = new frmSignDone();
-            signDone.setVisible(true);
+            frmSignDone.getInstance().setVisible(true);
             setVisible(false);
         });
     }

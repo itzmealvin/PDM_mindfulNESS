@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class frmRoles extends JFrame {
     private JButton patientButton;
@@ -9,8 +7,15 @@ public class frmRoles extends JFrame {
     private JLabel titleLabel;
     private JPanel panel;
     private JButton goBackButton;
+    private static frmRoles instance;
+    public static synchronized frmRoles getInstance(){
+        if(instance == null){
+            instance = new frmRoles();
+        }
+        return instance;
+    }
 
-    public frmRoles() {
+    private frmRoles() {
         setContentPane(panel);
         setTitle("mindfulNESS - Choose your role");
         setSize(500, 500);
@@ -19,19 +24,16 @@ public class frmRoles extends JFrame {
 
 
         patientButton.addActionListener(e -> {
-            frmPatientSign patientSign = new frmPatientSign();
-            patientSign.setVisible(true);
+            frmPatientSign.getInstance().setVisible(true);
             setVisible(false);
 
         });
         specialistButton.addActionListener(e -> {
-            frmSpecialistSign specialistSign = new frmSpecialistSign();
-            specialistSign.setVisible(true);
+            frmSpecialistSign.getInstance().setVisible(true);
             setVisible(false);
         });
         goBackButton.addActionListener(e -> {
-            frmIndex indexPage = new frmIndex();
-            indexPage.setVisible(true);
+            frmIndex.getInstance().setVisible(true);
             setVisible(false);
         });
     }
