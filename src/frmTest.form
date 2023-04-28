@@ -87,7 +87,17 @@
             </constraints>
             <properties>
               <font name="Google Sans" size="20" style="0"/>
-              <model/>
+              <model>
+                <item value="1"/>
+                <item value="2"/>
+                <item value="3"/>
+                <item value="4"/>
+                <item value="5"/>
+                <item value="6"/>
+                <item value="7"/>
+                <item value="8"/>
+                <item value="9"/>
+              </model>
             </properties>
           </component>
           <component id="49f2d" class="javax.swing.JTextArea" binding="questionArea">

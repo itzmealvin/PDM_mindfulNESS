@@ -230,7 +230,7 @@ public class ConnectSQL {
         return results;
     }
 
-    public static  showQuestionQuery(String testID) {
+    public static String showQuestionQuery(String testID) {
         Connection con = null;
         PreparedStatement stmt;
         ResultSet rs;

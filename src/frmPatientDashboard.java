@@ -42,16 +42,20 @@ public class frmPatientDashboard extends JFrame {
             resultArea.selectAll();
             resultArea.replaceSelection("");
             resultArea.setText(ConnectSQL.showSearchQuery(searchField.getText()));
+            resultArea.setEditable(false);
+
             if (ConnectSQL.showSearchQuery(searchField.getText()).length() == 0) {
                 JOptionPane.showMessageDialog(null, "Invalid disease!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
         });
+
         startSelfDiagButton.addActionListener(e -> {
             frmTest test = new frmTest();
             test.setVisible(true);
             setVisible(false);
         });
+
         bookButton.addActionListener(e -> {
             frmBooking booking = new frmBooking();
             booking.setVisible(true);
@@ -61,5 +65,6 @@ public class frmPatientDashboard extends JFrame {
         recentArea.selectAll();
         recentArea.replaceSelection("");
         recentArea.setText(ConnectSQL.showPatientBooking("1"));
+        recentArea.setEditable(false);
     }
 }

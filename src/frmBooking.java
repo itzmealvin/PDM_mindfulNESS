@@ -14,6 +14,7 @@ public class frmBooking extends JFrame {
     private JLabel clinicLabel;
     private JButton refreshButton;
     private JTable resultTable;
+    private JScrollPane bookedList;
 
 
     public frmBooking() {
@@ -56,7 +57,6 @@ public class frmBooking extends JFrame {
                     JOptionPane.showMessageDialog(null, "Something went wrong! Please try again", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
             }
-
         });
         refreshButton.addActionListener(e -> ConnectSQL.showAvailableBooking(resultTable));
     }
