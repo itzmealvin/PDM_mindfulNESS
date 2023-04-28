@@ -54,9 +54,9 @@ public class frmTest extends JFrame {
                 int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (option == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(null, "Your score is: " + totalWeight, "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your desease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your disease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (dialogResult == JOptionPane.YES_OPTION) {
-                        JOptionPane.showMessageDialog(null, "You get stressful desease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "You get stressful disease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
                 frmIndex indexPage = new frmIndex();
@@ -81,9 +81,9 @@ public class frmTest extends JFrame {
                 int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (option == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(null, "Your score is: " + totalWeight, "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your desease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your disease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (dialogResult == JOptionPane.YES_OPTION) {
-                        JOptionPane.showMessageDialog(null, "You get stressful desease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "You get stressful disease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     }
 
                 }
@@ -109,9 +109,9 @@ public class frmTest extends JFrame {
                 int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (option == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(null, "Your score is: " + totalWeight, "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your desease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your disease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (dialogResult == JOptionPane.YES_OPTION) {
-                        JOptionPane.showMessageDialog(null, "You get stressful desease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "You get stressful disease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     }
 
                 }
@@ -137,9 +137,9 @@ public class frmTest extends JFrame {
                 int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (option == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(null, "Your score is: " + totalWeight, "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your desease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your disease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (dialogResult == JOptionPane.YES_OPTION) {
-                        JOptionPane.showMessageDialog(null, "You get stressful desease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "You get stressful disease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     }
 
                 }
