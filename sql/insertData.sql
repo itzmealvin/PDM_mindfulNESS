@@ -1,4 +1,5 @@
-﻿USE [NESS]
+﻿USE
+[NESS]
 GO
 INSERT INTO [Account].[Account] ([User_name],
                                  [Password],
@@ -598,12 +599,12 @@ VALUES (1, 30, 1),
 GO
 
 UPDATE [Test].[Result]
-   SET [Description] = ('Little Severe')
- WHERE [Description] IS NULL
-   AND Weight = 80;
+SET [Description] = ('Little Severe')
+WHERE [Description] IS NULL
+  AND Weight = 80;
 GO
 UPDATE [Test].[Result]
-   SET [Description] = ('Severe')
- WHERE [Description] IS NULL
-   AND Weight = 100;
+SET [Description] = ('Severe')
+WHERE [Description] IS NULL
+  AND Weight = 100;
 GO

@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 public class frmSpecialistDashboard extends JFrame {
+    private static frmSpecialistDashboard instance;
     private JButton logOutButton;
     private JTextArea recentArea;
     private JButton postButton;
@@ -21,14 +22,6 @@ public class frmSpecialistDashboard extends JFrame {
     private JLabel descLabel;
     private JLabel noteLabel;
     private JLabel copyrightLabel;
-    private static frmSpecialistDashboard instance;
-    public static synchronized frmSpecialistDashboard getInstance(){
-        if(instance == null){
-            instance = new frmSpecialistDashboard();
-        }
-        return instance;
-    }
-
     private frmSpecialistDashboard() {
         setContentPane(panel);
         setTitle("mindfulNESS - Dashboard");
@@ -72,5 +65,12 @@ public class frmSpecialistDashboard extends JFrame {
         recentArea.selectAll();
         recentArea.replaceSelection("");
         recentArea.setText(ConnectSQL.showSpecialistBooking("1"));
+    }
+
+    public static synchronized frmSpecialistDashboard getInstance(){
+        if(instance == null){
+            instance = new frmSpecialistDashboard();
+        }
+        return instance;
     }
 }

@@ -1,18 +1,11 @@
 import javax.swing.*;
 
 public class frmSignDone extends JFrame {
+    private static frmSignDone instance;
     private JButton goToLogInButton;
     private JLabel titleLabel;
     private JLabel insLabel;
     private JPanel panel;
-    private static frmSignDone instance;
-    public static synchronized frmSignDone getInstance(){
-        if(instance == null){
-            instance = new frmSignDone();
-        }
-        return instance;
-    }
-
     private frmSignDone() {
         setContentPane(panel);
         setTitle("mindfulNESS - Sign-up completion");
@@ -24,5 +17,12 @@ public class frmSignDone extends JFrame {
             setVisible(false);
         });
 
+    }
+
+    public static synchronized frmSignDone getInstance(){
+        if(instance == null){
+            instance = new frmSignDone();
+        }
+        return instance;
     }
 }
