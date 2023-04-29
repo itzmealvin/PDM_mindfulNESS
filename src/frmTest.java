@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -34,6 +35,7 @@ public class frmTest extends JFrame {
     private static int totalWeight = 0;
     private static int countAnswer = 0;
     private static frmTest instance;
+    ArrayList<String> answers = new ArrayList<String>();
 
     public static synchronized frmTest getInstance() {
         if (instance == null) {
@@ -225,6 +227,12 @@ public class frmTest extends JFrame {
             answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2]);
             answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3]);
 
+            answers = ConnectSQL.showAnswerContentQuery(questionCombo.getSelectedItem().toString());
+            answerAButton.setText(answers.get(0));
+            answerBButton.setText(answers.get(1));
+            answerCButton.setText(answers.get(2));
+            answerDButton.setText(answers.get(3));
+
             boolean answered = false;
             for (int i = 0; i < 4; i++)
                 answered = answered || !buttonStates[questionCombo.getSelectedIndex()][i];
@@ -234,7 +242,8 @@ public class frmTest extends JFrame {
                 answerBButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][1]);
                 answerCButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][2]);
                 answerDButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][3]);
-            } else {
+            }
+            else {
                 answerAButton.setEnabled(true);
                 answerBButton.setEnabled(true);
                 answerCButton.setEnabled(true);

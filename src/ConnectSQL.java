@@ -287,5 +287,38 @@ public class ConnectSQL {
         return result;
     }
 
+    public static ArrayList<String> showAnswerContentQuery(String questionID) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        ArrayList<String> results = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery =
+                    """
+                                SELECT A.Title
+                                FROM [Test].[Question] Q
+                                         INNER JOIN [Test].[AnswerSet] ASET
+                                                    ON Q.AnswerSetID = ASET.AnswerSet_ID
+                                         INNER JOIN [Test].[AnswerSetContent] ASCon
+                                                    ON ASET.AnswerSet_ID = ASCon.AnswerSetID
+                                         INNER JOIN [Test].[Answer] A
+                                                    ON ASCon.AnswerID = A.Answer_ID
+                                WHERE Q.Question_ID = ?""";
+                                
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, questionID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                results.add(rs.getString("title"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return results;
+    }
 }
 
