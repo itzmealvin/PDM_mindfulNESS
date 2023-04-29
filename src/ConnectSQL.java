@@ -1,8 +1,7 @@
-import net.proteanit.sql.DbUtils;
-
-import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.*;
+import net.proteanit.sql.DbUtils;
 
 public class ConnectSQL {
     static final String connectionUrl = "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=congbang0711_;user=congbang0711_;password=mindfulness;encrypt=true;trustServerCertificate=true;";

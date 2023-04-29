@@ -1,5 +1,7 @@
 import javax.swing.*;
+
 public class frmIndex extends JFrame {
+    private static frmIndex instance;
     private JButton logInButton;
     private JPasswordField pwdField;
     private JButton signUpButton;
@@ -9,13 +11,6 @@ public class frmIndex extends JFrame {
     private JTextField accField;
     private JLabel titleLabel;
     private JLabel insLabel;
-    private static frmIndex instance;
-    public static synchronized frmIndex getInstance(){
-        if(instance == null){
-            instance = new frmIndex();
-        }
-        return instance;
-    }
 
     private frmIndex() {
         setContentPane(panel);
@@ -26,15 +21,52 @@ public class frmIndex extends JFrame {
 
 
         signUpButton.addActionListener(e -> {
-            frmRoles.getInstance().setVisible(true);
-            setVisible(false);
+
+        });
+
+        signUpButton.addActionListener(e -> {
+            signUpButton.setEnabled(false);
+            SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                @Override
+                protected Void doInBackground() throws Exception {
+                    frmRoles.getInstance().setVisible(true);
+                    setVisible(false);
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    signUpButton.setEnabled(true);
+                }
+            };
+            worker.execute();
         });
 
         logInButton.addActionListener(e -> {
-            frmPatientDashboard.getInstance().setVisible(true);
-            setVisible(false);
+            logInButton.setEnabled(false);
+            SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                @Override
+                protected Void doInBackground() throws Exception {
+                    frmPatientDashboard.getInstance().setVisible(true);
+                    setVisible(false);
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    logInButton.setEnabled(true);
+                }
+            };
+            worker.execute();
         });
 
+    }
+
+    public static synchronized frmIndex getInstance() {
+        if (instance == null) {
+            instance = new frmIndex();
+        }
+        return instance;
     }
 
 }

@@ -2,8 +2,11 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import javax.swing.*;
 
 public class frmTest extends JFrame {
+    private static int totalWeight = 0;
+    private static int countAnswer = 0;
     private JButton logOutButton;
     private JTextArea questionArea;
     private JButton answerAButton;
@@ -32,8 +35,7 @@ public class frmTest extends JFrame {
             {true, true, true, true},
             {true, true, true, true},
             {true, true, true, true}};
-    private static int totalWeight = 0;
-    private static int countAnswer = 0;
+
     private static frmTest instance;
     ArrayList<String> answers = new ArrayList<String>();
 
@@ -44,7 +46,7 @@ public class frmTest extends JFrame {
         return instance;
     }
 
-    private frmTest() {
+    public frmTest() {
         setContentPane(panel);
         setTitle("mindfulNESS - Testing in progress");
         setSize(800, 800);
@@ -220,7 +222,7 @@ public class frmTest extends JFrame {
         testCombo.addActionListener(a -> questionCombo.setModel(new DefaultComboBoxModel(ConnectSQL.showQuestionQuery(testCombo.getSelectedItem().toString()).toArray()) {
         }));
         questionCombo.addActionListener(e -> {
-            System.out.println(Objects.requireNonNull(questionCombo.getSelectedItem()).toString());
+            System.out.println(Objects.requireNonNull(questionCombo.getSelectedItem()));
             questionArea.setText(ConnectSQL.showQuestionContentQuery(Objects.requireNonNull(testCombo.getSelectedItem()).toString(), questionCombo.getSelectedItem().toString()));
             answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0]);
             answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1]);
