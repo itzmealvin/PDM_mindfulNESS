@@ -9,7 +9,7 @@ public class frmPatientDashboard extends JFrame {
     private JTextArea resultArea;
     private JPanel panel;
     private JTextArea recentArea;
-    private JButton bookButton;
+    private JButton healButton;
     private JButton resetPwdButton;
     private JPanel searchPanel;
     private JLabel recentLabel;
@@ -17,6 +17,7 @@ public class frmPatientDashboard extends JFrame {
     private JScrollPane recentPane;
     private JLabel copyrightLabel;
     private JLabel insLabel;
+    private JButton cancelHealingButton;
 
     private frmPatientDashboard() {
         setContentPane(panel);
@@ -45,6 +46,38 @@ public class frmPatientDashboard extends JFrame {
                     @Override
                     protected void done() {
                         logOutButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
+            }
+        });
+        resetPwdButton.addActionListener(e -> {
+            JPasswordField oldPwd = new JPasswordField();
+            JPasswordField newPwd = new JPasswordField();
+            Object[] message = {"Old password: ", oldPwd, "New password: ", newPwd};
+            int option = JOptionPane.showConfirmDialog(null, message, "Changing Password!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
+                resetPwdButton.setEnabled(false);
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        if (ConnectSQL.submitPasswordUpdate(frmIndex.getInstance().getCredentials()[0], String.valueOf(oldPwd.getPassword()), String.valueOf(newPwd.getPassword()))) {
+                            JOptionPane.showMessageDialog(null, "Password changed successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                            oldPwd.setText("");
+                            newPwd.setText("");
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "The old password is incorrect!", "Warning", JOptionPane.WARNING_MESSAGE);
+                            oldPwd.setText("");
+                            newPwd.setText("");
+                            resetPwdButton.setEnabled(true);
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        resetPwdButton.setEnabled(true);
                     }
                 };
                 worker.execute();
@@ -98,8 +131,8 @@ public class frmPatientDashboard extends JFrame {
             };
             worker.execute();
         });
-        bookButton.addActionListener(e -> {
-            bookButton.setEnabled(false);
+        healButton.addActionListener(e -> {
+            healButton.setEnabled(false);
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
@@ -111,41 +144,36 @@ public class frmPatientDashboard extends JFrame {
 
                 @Override
                 protected void done() {
-                    bookButton.setEnabled(true);
+                    healButton.setEnabled(true);
                 }
             };
             worker.execute();
         });
-        resetPwdButton.addActionListener(e -> {
-            JPasswordField oldPwd = new JPasswordField();
-            JPasswordField newPwd = new JPasswordField();
-            Object[] message = {"Old password: ", oldPwd, "New password: ", newPwd};
-            int option = JOptionPane.showConfirmDialog(null, message, "Changing Password!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (option == JOptionPane.YES_OPTION) {
-                resetPwdButton.setEnabled(false);
-                SwingWorker<Void, Void> worker = new SwingWorker<>() {
-                    @Override
-                    protected Void doInBackground() {
-                        if (ConnectSQL.updatePwd(frmIndex.getInstance().getID(), String.valueOf(oldPwd.getPassword()), String.valueOf(newPwd.getPassword()))) {
-                            JOptionPane.showMessageDialog(null, "Password changed successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                            oldPwd.setText("");
-                            newPwd.setText("");
-
-                        } else {
-                            JOptionPane.showMessageDialog(null, "The old password is incorrect!", "Warning", JOptionPane.WARNING_MESSAGE);
-                            oldPwd.setText("");
-                            newPwd.setText("");
-                            resetPwdButton.setEnabled(true);
+        cancelHealingButton.addActionListener(e -> {
+            cancelHealingButton.setEnabled(false);
+            String idHeal = JOptionPane.showInputDialog(null, "Enter the healing ID you want to cancel: ", "Cancellation", JOptionPane.INFORMATION_MESSAGE);
+            if (!idHeal.isEmpty()) {
+                int option = JOptionPane.showConfirmDialog(null, "Confirm cancel healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (option == JOptionPane.YES_OPTION) {
+                    SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                        @Override
+                        protected Void doInBackground() {
+                            if (ConnectSQL.cancelHealingUpdate(frmIndex.getInstance().getID(), idHeal)) {
+                                JOptionPane.showMessageDialog(null, "Healing with ID: " + idHeal + " cancelled!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                                ConnectSQL.showPatientBookingQuery(frmIndex.getInstance().getID());
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Cannot cancel healing with ID: " + idHeal + " . Please try again later!", "Warning", JOptionPane.WARNING_MESSAGE);
+                            }
+                            return null;
                         }
-                        return null;
-                    }
 
-                    @Override
-                    protected void done() {
-                        resetPwdButton.setEnabled(true);
-                    }
-                };
-                worker.execute();
+                        @Override
+                        protected void done() {
+                            cancelHealingButton.setEnabled(true);
+                        }
+                    };
+                    worker.execute();
+                }
             }
         });
     }

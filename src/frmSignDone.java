@@ -15,8 +15,22 @@ public class frmSignDone extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         goToLogInButton.addActionListener(e -> {
-            frmIndex.getInstance().setVisible(true);
-            setVisible(false);
+            goToLogInButton.setEnabled(false);
+            SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Void doInBackground() {
+                    frmIndex.getInstance().setVisible(true);
+                    setVisible(false);
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    goToLogInButton.setEnabled(true);
+                }
+            };
+            worker.execute();
+
         });
     }
 

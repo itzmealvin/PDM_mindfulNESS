@@ -3,7 +3,7 @@ import javax.swing.*;
 public class frmPatientSign extends JFrame {
     private static frmPatientSign instance;
     private JButton goBackButton;
-    private JButton continueButton;
+    private JButton confirmButton;
     private JTextField fullNameField;
     private JTextField dobField;
     private JTextField emailField;
@@ -24,22 +24,38 @@ public class frmPatientSign extends JFrame {
         setSize(700, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        goBackButton.addActionListener(e -> {
-            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        clearAllButton.addActionListener(e -> {
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all field(s)?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
-                frmRoles.getInstance().setVisible(true);
-                setVisible(false);
+                clearAllButton.setEnabled(false);
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        fullNameField.setText("");
+                        emailField.setText("");
+                        dobField.setText("");
+                        genderField.setText("");
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        clearAllButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
             }
         });
-        continueButton.addActionListener(e -> {
+        confirmButton.addActionListener(e -> {
             if (fullNameField.getText().isEmpty() || emailField.getText().isEmpty() || dobField.getText().isEmpty() || genderField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
-                continueButton.setEnabled(true);
+                confirmButton.setEnabled(true);
                 return;
             }
             int option = JOptionPane.showConfirmDialog(null, "Please check the information carefully!", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
-                continueButton.setEnabled(false);
+                confirmButton.setEnabled(false);
+                System.out.println(frmIndex.getInstance().getCredentials()[0] + frmIndex.getInstance().getCredentials()[1] + fullNameField.getText() + dobField.getText() + genderField.getText() + emailField.getText());
                 SwingWorker<Void, Void> worker = new SwingWorker<>() {
                     @Override
                     protected Void doInBackground() {
@@ -55,18 +71,34 @@ public class frmPatientSign extends JFrame {
 
                     @Override
                     protected void done() {
-                        continueButton.setEnabled(true);
+                        confirmButton.setEnabled(true);
                     }
                 };
                 worker.execute();
             }
         });
-        clearAllButton.addActionListener(e -> {
-            fullNameField.setText("");
-            emailField.setText("");
-            dobField.setText("");
-            genderField.setText("");
+        goBackButton.addActionListener(e -> {
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
+                goBackButton.setEnabled(false);
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        frmRoles.getInstance().setVisible(true);
+                        setVisible(false);
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        goBackButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
+            }
         });
+
+
     }
 
     public static synchronized frmPatientSign getInstance() {

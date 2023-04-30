@@ -24,6 +24,7 @@ public class frmSpecialistDashboard extends JFrame {
     private JLabel copyrightLabel;
     private JButton resetPwdButton;
     private JButton clearAllButton;
+    private JButton delistHealingButton;
 
     private frmSpecialistDashboard() {
         setContentPane(panel);
@@ -57,37 +58,6 @@ public class frmSpecialistDashboard extends JFrame {
                 worker.execute();
             }
         });
-        postButton.addActionListener(e -> {
-            postButton.setEnabled(false);
-            if (placeField.getText().isEmpty() || dateField.getText().isEmpty() || feeField.getText().isEmpty() || descField.getText().isEmpty() || extraField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
-                postButton.setEnabled(true);
-                return;
-            }
-            int option = JOptionPane.showConfirmDialog(null, "Confirm posting healing information?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (option == JOptionPane.YES_OPTION) {
-                SwingWorker<Void, Void> worker = new SwingWorker<>() {
-                    @Override
-                    protected Void doInBackground() {
-                        if (ConnectSQL.submitHealing(frmIndex.getInstance().getID(), placeField.getText(), dateField.getText(), feeField.getText(), descField.getText(), extraField.getText())) {
-                            JOptionPane.showMessageDialog(null, "Healing information posted! Please check the nearby box for confirmation", "Warning", JOptionPane.WARNING_MESSAGE);
-                            recentArea.selectAll();
-                            recentArea.replaceSelection("");
-                            recentArea.setText(ConnectSQL.showSpecialistBookingQuery(frmIndex.getInstance().getID()));
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Something went wrong! Please try again", "Warning", JOptionPane.WARNING_MESSAGE);
-                        }
-                        return null;
-                    }
-
-                    @Override
-                    protected void done() {
-                        postButton.setEnabled(true);
-                    }
-                };
-                worker.execute();
-            }
-        });
         resetPwdButton.addActionListener(e -> {
             JPasswordField oldPwd = new JPasswordField();
             JPasswordField newPwd = new JPasswordField();
@@ -98,7 +68,7 @@ public class frmSpecialistDashboard extends JFrame {
                 SwingWorker<Void, Void> worker = new SwingWorker<>() {
                     @Override
                     protected Void doInBackground() {
-                        if (ConnectSQL.updatePwd(frmIndex.getInstance().getID(), String.valueOf(oldPwd.getPassword()), String.valueOf(newPwd.getPassword()))) {
+                        if (ConnectSQL.submitPasswordUpdate(frmIndex.getInstance().getCredentials()[0], String.valueOf(oldPwd.getPassword()), String.valueOf(newPwd.getPassword()))) {
                             JOptionPane.showMessageDialog(null, "Password changed successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
                             oldPwd.setText("");
                             newPwd.setText("");
@@ -122,11 +92,87 @@ public class frmSpecialistDashboard extends JFrame {
 
         });
         clearAllButton.addActionListener(e -> {
-            placeField.setText("");
-            dateField.setText("");
-            feeField.setText("");
-            descField.setText("");
-            extraField.setText("");
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all field(s)?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
+                clearAllButton.setEnabled(false);
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        placeField.setText("");
+                        dateField.setText("");
+                        feeField.setText("");
+                        descField.setText("");
+                        extraField.setText("");
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        clearAllButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
+            }
+
+
+        });
+        postButton.addActionListener(e -> {
+            postButton.setEnabled(false);
+            if (placeField.getText().isEmpty() || dateField.getText().isEmpty() || feeField.getText().isEmpty() || descField.getText().isEmpty() || extraField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+                postButton.setEnabled(true);
+                return;
+            }
+            int option = JOptionPane.showConfirmDialog(null, "Confirm posting healing information?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        if (ConnectSQL.submitHealingUpdate(frmIndex.getInstance().getID(), placeField.getText(), dateField.getText(), feeField.getText(), descField.getText(), extraField.getText())) {
+                            JOptionPane.showMessageDialog(null, "Healing information posted! Please check the nearby box for confirmation", "Warning", JOptionPane.WARNING_MESSAGE);
+                            recentArea.selectAll();
+                            recentArea.replaceSelection("");
+                            recentArea.setText(ConnectSQL.showSpecialistBookingQuery(frmIndex.getInstance().getID()));
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Something went wrong! Please try again", "Warning", JOptionPane.WARNING_MESSAGE);
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        postButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
+            }
+        });
+        delistHealingButton.addActionListener(e -> {
+            delistHealingButton.setEnabled(false);
+            String idHeal = JOptionPane.showInputDialog(null, "Enter the healing ID you want to delist: ", "Cancellation", JOptionPane.INFORMATION_MESSAGE);
+            if (!idHeal.isEmpty()) {
+                int option = JOptionPane.showConfirmDialog(null, "Confirm delist healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (option == JOptionPane.YES_OPTION) {
+                    SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                        @Override
+                        protected Void doInBackground() {
+                            if (ConnectSQL.delistHealingUpdate(frmIndex.getInstance().getID(), idHeal)) {
+                                JOptionPane.showMessageDialog(null, "Healing with ID: " + idHeal + " delisted!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                                ConnectSQL.showPatientBookingQuery(frmIndex.getInstance().getID());
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Cannot delist healing with ID: " + idHeal + " . Please try again later!", "Warning", JOptionPane.WARNING_MESSAGE);
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void done() {
+                            delistHealingButton.setEnabled(true);
+                        }
+                    };
+                    worker.execute();
+                }
+            }
         });
     }
 

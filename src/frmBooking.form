@@ -32,7 +32,7 @@
         </constraints>
         <properties>
           <font name="Google Sans" size="20" style="0"/>
-          <text value="id of the booking you want"/>
+          <text value="id of the healing you want"/>
         </properties>
       </component>
       <component id="6e3dc" class="javax.swing.JButton" binding="logOutButton">
@@ -50,7 +50,7 @@
         </constraints>
         <properties>
           <font name="Google Sans" size="20" style="0"/>
-          <text value="available booking(s)"/>
+          <text value="available healing(s)"/>
         </properties>
       </component>
       <hspacer id="d0456">
@@ -73,13 +73,13 @@
           <font name="Google Sans" size="20" style="0"/>
         </properties>
       </component>
-      <component id="7cb6e" class="javax.swing.JButton" binding="submitBookingButton">
+      <component id="7cb6e" class="javax.swing.JButton" binding="submitHealingButton">
         <constraints>
           <grid row="6" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="Google Sans" size="18" style="1"/>
-          <text value="PLACE A BOOKING"/>
+          <text value="PLACE A HEALING"/>
         </properties>
       </component>
       <component id="a37d6" class="javax.swing.JButton" binding="goBackButton" default-binding="true">

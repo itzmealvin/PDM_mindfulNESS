@@ -17,16 +17,65 @@ public class frmRoles extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         patientButton.addActionListener(e -> {
-            frmPatientSign.getInstance().setVisible(true);
-            setVisible(false);
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure your role is PATIENT?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
+                patientButton.setEnabled(false);
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        frmPatientSign.getInstance().setVisible(true);
+                        setVisible(false);
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        patientButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
+            }
         });
         specialistButton.addActionListener(e -> {
-            frmSpecialistSign.getInstance().setVisible(true);
-            setVisible(false);
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure your role is SPECIALIST?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
+                specialistButton.setEnabled(false);
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        frmSpecialistSign.getInstance().setVisible(true);
+                        setVisible(false);
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        patientButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
+            }
         });
         goBackButton.addActionListener(e -> {
-            frmIndex.getInstance().setVisible(true);
-            setVisible(false);
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
+                goBackButton.setEnabled(false);
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        frmIndex.getInstance().setVisible(true);
+                        setVisible(false);
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        goBackButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
+            }
+
         });
     }
 

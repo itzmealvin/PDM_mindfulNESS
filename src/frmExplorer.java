@@ -6,7 +6,7 @@ public class frmExplorer extends JFrame {
     private JButton goBackToLoginButton;
     private JTextField queryField;
     private JTable resultTable;
-    private JButton enterButton;
+    private JButton runQueryButton;
     private JButton clearAllButton;
     private JPanel panel;
     private JLabel titleLabel;
@@ -41,11 +41,11 @@ public class frmExplorer extends JFrame {
                 worker.execute();
             }
         });
-        enterButton.addActionListener(e -> {
-            enterButton.setEnabled(false);
+        runQueryButton.addActionListener(e -> {
+            runQueryButton.setEnabled(false);
             if (queryField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please do not left query blank!", "Warning", JOptionPane.WARNING_MESSAGE);
-                enterButton.setEnabled(true);
+                runQueryButton.setEnabled(true);
                 return;
             }
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
@@ -60,13 +60,13 @@ public class frmExplorer extends JFrame {
 
                 @Override
                 protected void done() {
-                    enterButton.setEnabled(true);
+                    runQueryButton.setEnabled(true);
                 }
             };
             worker.execute();
         });
         clearAllButton.addActionListener(e -> {
-            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all content?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all content?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
                 clearAllButton.setEnabled(false);
                 SwingWorker<Void, Void> worker = new SwingWorker<>() {

@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="6" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="831" height="400"/>
+      <xy x="20" y="20" width="861" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -58,13 +58,13 @@
               <text value="SELF-DIAGNOSIS TEST"/>
             </properties>
           </component>
-          <component id="3bb78" class="javax.swing.JButton" binding="bookButton">
+          <component id="3bb78" class="javax.swing.JButton" binding="healButton">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Google Sans" size="18" style="1"/>
-              <text value="PLACE A BOOKING"/>
+              <text value="PLACE A HEALING"/>
             </properties>
           </component>
           <scrollpane id="f74a3">
@@ -91,7 +91,7 @@
         </constraints>
         <properties>
           <font name="Google Sans" size="18" style="1"/>
-          <text value="RECENT BOOKING"/>
+          <text value="RECENT HEALING"/>
         </properties>
       </component>
       <component id="673b" class="javax.swing.JLabel" binding="titleLabel">
@@ -158,6 +158,15 @@
         <properties>
           <font name="Google Sans" size="22" style="2"/>
           <text value="Welcome back!"/>
+        </properties>
+      </component>
+      <component id="e7a16" class="javax.swing.JButton" binding="cancelHealingButton">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Google Sans" size="18" style="1"/>
+          <text value="CANCEL HEALING"/>
         </properties>
       </component>
     </children>

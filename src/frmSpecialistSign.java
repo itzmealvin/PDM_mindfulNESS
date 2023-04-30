@@ -7,7 +7,7 @@ public class frmSpecialistSign extends JFrame {
     private JTextField idField;
     private JTextField graduateField;
     private JButton goBackButton;
-    private JButton continueButton;
+    private JButton confirmButton;
     private JPanel panel;
     private JLabel titleLabel;
     private JLabel insLabel;
@@ -30,20 +30,41 @@ public class frmSpecialistSign extends JFrame {
         setSize(800, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        goBackButton.addActionListener(e -> {
-            frmRoles.getInstance().setVisible(true);
-            setVisible(false);
+        clearAllButton.addActionListener(e -> {
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all field(s)?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
+                clearAllButton.setEnabled(false);
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        fullNameField.setText("");
+                        emailField.setText("");
+                        dobField.setText("");
+                        genderField.setText("");
+                        idField.setText("");
+                        graduateField.setText("");
+                        phoneField.setText("");
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        clearAllButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
+            }
+
         });
-        continueButton.addActionListener(e -> {
-            continueButton.setEnabled(false);
+        confirmButton.addActionListener(e -> {
             if (fullNameField.getText().isEmpty() || emailField.getText().isEmpty() || dobField.getText().isEmpty() || genderField.getText().isEmpty() || idField.getText().isEmpty() || graduateField.getText().isEmpty() || phoneField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
-                continueButton.setEnabled(true);
+                confirmButton.setEnabled(true);
                 return;
             }
             int option = JOptionPane.showConfirmDialog(null, "Please check the information carefully!", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
-                continueButton.setEnabled(false);
+                confirmButton.setEnabled(false);
                 SwingWorker<Void, Void> worker = new SwingWorker<>() {
                     @Override
                     protected Void doInBackground() {
@@ -59,21 +80,33 @@ public class frmSpecialistSign extends JFrame {
 
                     @Override
                     protected void done() {
-                        continueButton.setEnabled(true);
+                        confirmButton.setEnabled(true);
                     }
                 };
                 worker.execute();
             }
         });
-        clearAllButton.addActionListener(e -> {
-            fullNameField.setText("");
-            emailField.setText("");
-            dobField.setText("");
-            genderField.setText("");
-            idField.setText("");
-            graduateField.setText("");
-            phoneField.setText("");
+        goBackButton.addActionListener(e -> {
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.YES_OPTION) {
+                goBackButton.setEnabled(false);
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() {
+                        frmRoles.getInstance().setVisible(true);
+                        setVisible(false);
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        goBackButton.setEnabled(true);
+                    }
+                };
+                worker.execute();
+            }
         });
+
     }
 
     public static synchronized frmSpecialistSign getInstance() {

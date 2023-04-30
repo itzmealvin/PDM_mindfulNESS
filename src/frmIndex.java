@@ -23,29 +23,6 @@ public class frmIndex extends JFrame {
         setSize(800, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        signUpButton.addActionListener(e -> {
-            signUpButton.setEnabled(false);
-            if (accField.getText().isEmpty() || String.valueOf(pwdField.getPassword()).isEmpty() || ConnectSQL.authenticateQuery(accField.getText(), String.valueOf(pwdField.getPassword()))[1] != null) {
-                JOptionPane.showMessageDialog(null, "Either account has existed or field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
-                pwdField.setText("");
-                signUpButton.setEnabled(true);
-                return;
-            }
-            SwingWorker<Void, Void> worker = new SwingWorker<>() {
-                @Override
-                protected Void doInBackground() {
-                    frmRoles.getInstance().setVisible(true);
-                    setVisible(false);
-                    return null;
-                }
-
-                @Override
-                protected void done() {
-                    signUpButton.setEnabled(true);
-                }
-            };
-            worker.execute();
-        });
         logInButton.addActionListener(e -> {
             logInButton.setEnabled(false);
             if (accField.getText().isEmpty() || String.valueOf(pwdField.getPassword()).isEmpty()) {
@@ -56,7 +33,7 @@ public class frmIndex extends JFrame {
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
-                    results = ConnectSQL.authenticateQuery(accField.getText(), String.valueOf(pwdField.getPassword()));
+                    results = ConnectSQL.showAuthenticateQuery(accField.getText(), String.valueOf(pwdField.getPassword()));
                     if (Objects.equals(results[1], "Patient")) {
                         frmPatientDashboard.getInstance().setVisible(true);
                         setVisible(false);
@@ -77,6 +54,29 @@ public class frmIndex extends JFrame {
             };
             worker.execute();
 
+        });
+        signUpButton.addActionListener(e -> {
+            signUpButton.setEnabled(false);
+            if (accField.getText().isEmpty() || String.valueOf(pwdField.getPassword()).isEmpty() || ConnectSQL.showAuthenticateQuery(accField.getText(), String.valueOf(pwdField.getPassword()))[1] != null) {
+                JOptionPane.showMessageDialog(null, "Either account has existed or field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+                pwdField.setText("");
+                signUpButton.setEnabled(true);
+                return;
+            }
+            SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Void doInBackground() {
+                    frmRoles.getInstance().setVisible(true);
+                    setVisible(false);
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    signUpButton.setEnabled(true);
+                }
+            };
+            worker.execute();
         });
         explorerModeButton.addActionListener(e -> {
             explorerModeButton.setEnabled(false);
