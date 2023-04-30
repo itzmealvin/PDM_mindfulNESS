@@ -6,6 +6,7 @@ public class frmSignDone extends JFrame {
     private JLabel titleLabel;
     private JLabel insLabel;
     private JPanel panel;
+    private JLabel copyrightLabel;
 
     private frmSignDone() {
         setContentPane(panel);
@@ -13,11 +14,10 @@ public class frmSignDone extends JFrame {
         setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        goToLogInButton.addActionListener(
-                e -> {
-                    frmIndex.getInstance().setVisible(true);
-                    setVisible(false);
-                });
+        goToLogInButton.addActionListener(e -> {
+            frmIndex.getInstance().setVisible(true);
+            setVisible(false);
+        });
     }
 
     public static synchronized frmSignDone getInstance() {

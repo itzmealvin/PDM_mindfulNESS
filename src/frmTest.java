@@ -7,7 +7,7 @@ public class frmTest extends JFrame {
     private static int totalWeight = 0;
     private static int countAnswer = 0;
     private static frmTest instance;
-    ArrayList<String> answers = new ArrayList<String>();
+    ArrayList<String> answers = new ArrayList<>();
     private JButton logOutButton;
     private JTextArea questionArea;
     private JButton answerAButton;
@@ -24,20 +24,7 @@ public class frmTest extends JFrame {
     private JComboBox testCombo;
     private JLabel questionLabel;
     private JLabel testLabel;
-    private boolean[][] buttonStates = {
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true},
-            {true, true, true, true}};
+    private boolean[][] buttonStates = {{true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}};
 
     public frmTest() {
         setContentPane(panel);
@@ -47,188 +34,104 @@ public class frmTest extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         testCombo.setModel(new DefaultComboBoxModel(ConnectSQL.showTestQuery().toArray()) {
         });
-        answerAButton.addActionListener(
-                e -> {
-                    System.out.print('A');
-                    countAnswer++;
-                    System.out.print("Count = " + countAnswer);
-                    if (countAnswer == 9) {
-                        int option =
-                                JOptionPane.showConfirmDialog(
-                                        null,
-                                        "Are you sure you want to submit?",
-                                        "Confirmation",
-                                        JOptionPane.YES_NO_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE);
-                        if (option == JOptionPane.YES_OPTION) {
-                            JOptionPane.showMessageDialog(
-                                    null,
-                                    "Your score is: " + totalWeight,
-                                    "Notification",
-                                    JOptionPane.INFORMATION_MESSAGE);
-                            int dialogResult =
-                                    JOptionPane.showConfirmDialog(
-                                            null,
-                                            "Do you want to see your disease level ?",
-                                            "Confirmation",
-                                            JOptionPane.YES_NO_OPTION,
-                                            JOptionPane.QUESTION_MESSAGE);
-                            if (dialogResult == JOptionPane.YES_OPTION) {
-                                JOptionPane.showMessageDialog(
-                                        null,
-                                        "You get stressful disease of level ...",
-                                        "Notification",
-                                        JOptionPane.INFORMATION_MESSAGE);
-                            }
-                        }
-                        frmPatientDashboard.getInstance().setVisible(true);
-                        setVisible(false);
-                        countAnswer = 0;
-                        totalWeight = 0;
+        answerAButton.addActionListener(e -> {
+            System.out.print('A');
+            countAnswer++;
+            System.out.print("Count = " + countAnswer);
+            if (countAnswer == 9) {
+                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (option == JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Your score is: " + totalWeight, "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your disease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        JOptionPane.showMessageDialog(null, "You get stressful disease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     }
-                    answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1] = false);
-                    answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
-                    answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
-                    answerAButton.setEnabled(false);
-                    testCombo.setEnabled(false);
-                });
-        answerBButton.addActionListener(
-                e -> {
-                    System.out.print('B');
-                    totalWeight += 1;
-                    countAnswer++;
-                    System.out.print("Count = " + countAnswer);
-                    if (countAnswer == 9) {
-                        int option =
-                                JOptionPane.showConfirmDialog(
-                                        null,
-                                        "Are you sure you want to submit?",
-                                        "Confirmation",
-                                        JOptionPane.YES_NO_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE);
-                        if (option == JOptionPane.YES_OPTION) {
-                            JOptionPane.showMessageDialog(
-                                    null,
-                                    "Your score is: " + totalWeight,
-                                    "Notification",
-                                    JOptionPane.INFORMATION_MESSAGE);
-                            int dialogResult =
-                                    JOptionPane.showConfirmDialog(
-                                            null,
-                                            "Do you want to see your disease level ?",
-                                            "Confirmation",
-                                            JOptionPane.YES_NO_OPTION,
-                                            JOptionPane.QUESTION_MESSAGE);
-                            if (dialogResult == JOptionPane.YES_OPTION) {
-                                JOptionPane.showMessageDialog(
-                                        null,
-                                        "You get stressful disease of level ...",
-                                        "Notification",
-                                        JOptionPane.INFORMATION_MESSAGE);
-                            }
-                        }
-                        frmPatientDashboard.getInstance().setVisible(true);
-                        setVisible(false);
-                        countAnswer = 0;
-                        totalWeight = 0;
+                }
+                frmPatientDashboard.getInstance().setVisible(true);
+                setVisible(false);
+                countAnswer = 0;
+                totalWeight = 0;
+            }
+            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1] = false);
+            answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
+            answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
+            answerAButton.setEnabled(false);
+            testCombo.setEnabled(false);
+        });
+        answerBButton.addActionListener(e -> {
+            System.out.print('B');
+            totalWeight += 1;
+            countAnswer++;
+            System.out.print("Count = " + countAnswer);
+            if (countAnswer == 9) {
+                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (option == JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Your score is: " + totalWeight, "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your disease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        JOptionPane.showMessageDialog(null, "You get stressful disease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     }
-                    answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0] = false);
-                    answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
-                    answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
-                    answerBButton.setEnabled(false);
-                    testCombo.setEnabled(false);
-                });
-        answerCButton.addActionListener(
-                e -> {
-                    System.out.print('C');
-                    totalWeight += 2;
-                    countAnswer++;
-                    System.out.print("Count = " + countAnswer);
-                    if (countAnswer == 9) {
-                        int option =
-                                JOptionPane.showConfirmDialog(
-                                        null,
-                                        "Are you sure you want to submit?",
-                                        "Confirmation",
-                                        JOptionPane.YES_NO_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE);
-                        if (option == JOptionPane.YES_OPTION) {
-                            JOptionPane.showMessageDialog(
-                                    null,
-                                    "Your score is: " + totalWeight,
-                                    "Notification",
-                                    JOptionPane.INFORMATION_MESSAGE);
-                            int dialogResult =
-                                    JOptionPane.showConfirmDialog(
-                                            null,
-                                            "Do you want to see your disease level ?",
-                                            "Confirmation",
-                                            JOptionPane.YES_NO_OPTION,
-                                            JOptionPane.QUESTION_MESSAGE);
-                            if (dialogResult == JOptionPane.YES_OPTION) {
-                                JOptionPane.showMessageDialog(
-                                        null,
-                                        "You get stressful disease of level ...",
-                                        "Notification",
-                                        JOptionPane.INFORMATION_MESSAGE);
-                            }
-                        }
-                        frmPatientDashboard.getInstance().setVisible(true);
-                        setVisible(false);
-                        countAnswer = 0;
-                        totalWeight = 0;
+                }
+                frmPatientDashboard.getInstance().setVisible(true);
+                setVisible(false);
+                countAnswer = 0;
+                totalWeight = 0;
+            }
+            answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0] = false);
+            answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
+            answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
+            answerBButton.setEnabled(false);
+            testCombo.setEnabled(false);
+        });
+        answerCButton.addActionListener(e -> {
+            System.out.print('C');
+            totalWeight += 2;
+            countAnswer++;
+            System.out.print("Count = " + countAnswer);
+            if (countAnswer == 9) {
+                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (option == JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Your score is: " + totalWeight, "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your disease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        JOptionPane.showMessageDialog(null, "You get stressful disease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     }
-                    answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0] = false);
-                    answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
-                    answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
-                    answerCButton.setEnabled(false);
-                    testCombo.setEnabled(false);
-                });
-        answerDButton.addActionListener(
-                e -> {
-                    System.out.print('D');
-                    totalWeight += 3;
-                    countAnswer++;
-                    System.out.print("Count = " + countAnswer);
-                    if (countAnswer == 9) {
-                        int option =
-                                JOptionPane.showConfirmDialog(
-                                        null,
-                                        "Are you sure you want to submit?",
-                                        "Confirmation",
-                                        JOptionPane.YES_NO_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE);
-                        if (option == JOptionPane.YES_OPTION) {
-                            JOptionPane.showMessageDialog(
-                                    null,
-                                    "Your score is: " + totalWeight,
-                                    "Notification",
-                                    JOptionPane.INFORMATION_MESSAGE);
-                            int dialogResult =
-                                    JOptionPane.showConfirmDialog(
-                                            null,
-                                            "Do you want to see your disease level ?",
-                                            "Confirmation",
-                                            JOptionPane.YES_NO_OPTION,
-                                            JOptionPane.QUESTION_MESSAGE);
-                            if (dialogResult == JOptionPane.YES_OPTION) {
-                                JOptionPane.showMessageDialog(
-                                        null,
-                                        "You get stressful disease of level ...",
-                                        "Notification",
-                                        JOptionPane.INFORMATION_MESSAGE);
-                            }
-                        }
-                        frmPatientDashboard.getInstance().setVisible(true);
-                        setVisible(false);
-                        countAnswer = 0;
-                        totalWeight = 0;
+                }
+                frmPatientDashboard.getInstance().setVisible(true);
+                setVisible(false);
+                countAnswer = 0;
+                totalWeight = 0;
+            }
+            answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0] = false);
+            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
+            answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
+            answerCButton.setEnabled(false);
+            testCombo.setEnabled(false);
+        });
+        answerDButton.addActionListener(e -> {
+            System.out.print('D');
+            totalWeight += 3;
+            countAnswer++;
+            System.out.print("Count = " + countAnswer);
+            if (countAnswer == 9) {
+                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (option == JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Your score is: " + totalWeight, "Notification", JOptionPane.INFORMATION_MESSAGE);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to see your disease level ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        JOptionPane.showMessageDialog(null, "You get stressful disease of level ...", "Notification", JOptionPane.INFORMATION_MESSAGE);
                     }
-                    frmPatientDashboard.getInstance().setVisible(true);
-                    setVisible(false);
-                    countAnswer = 0;
-                    totalWeight = 0;
-                });
+                }
+                frmPatientDashboard.getInstance().setVisible(true);
+                setVisible(false);
+                countAnswer = 0;
+                totalWeight = 0;
+            }
+            frmPatientDashboard.getInstance().setVisible(true);
+            setVisible(false);
+            countAnswer = 0;
+            totalWeight = 0;
+        });
         answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0] = false);
         answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
         answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
@@ -247,30 +150,17 @@ public class frmTest extends JFrame {
                 }
             }
         });
-        goBackButton.addActionListener(e ->
-        {
+        goBackButton.addActionListener(e -> {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
                 frmSpecialistDashboard.getInstance().setVisible(true);
                 setVisible(false);
             }
         });
-        clearAllButton.addActionListener(e ->
-        {
+        clearAllButton.addActionListener(e -> {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
-                boolean[][] newButtonStates = {{true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true},
-                        {true, true, true, true}};
+                boolean[][] newButtonStates = {{true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}};
                 buttonStates = Arrays.copyOf(newButtonStates, newButtonStates.length);
                 answerAButton.setVisible(true);
                 answerBButton.setVisible(true);
@@ -285,13 +175,9 @@ public class frmTest extends JFrame {
             }
             testCombo.setEnabled(true);
         });
-        testCombo.addActionListener(a -> questionCombo.setModel(new
-                                                                        DefaultComboBoxModel(ConnectSQL.showQuestionQuery(testCombo.getSelectedItem().
-                                                                                        toString()).
-                                                                                toArray()) {
-                                                                        }));
-        questionCombo.addActionListener(e ->
-        {
+        testCombo.addActionListener(a -> questionCombo.setModel(new DefaultComboBoxModel(ConnectSQL.showQuestionQuery(Objects.requireNonNull(testCombo.getSelectedItem()).toString()).toArray()) {
+        }));
+        questionCombo.addActionListener(e -> {
             System.out.println(Objects.requireNonNull(questionCombo.getSelectedItem()));
             questionArea.setText(ConnectSQL.showQuestionContentQuery(Objects.requireNonNull(testCombo.getSelectedItem()).toString(), questionCombo.getSelectedItem().toString()));
             answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0]);

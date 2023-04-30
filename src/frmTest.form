@@ -40,7 +40,7 @@
             </constraints>
             <properties>
               <font name="Google Sans" size="20" style="0"/>
-              <text value="TEST"/>
+              <text value="TEST No."/>
             </properties>
           </component>
           <component id="909d4" class="javax.swing.JComboBox" binding="testCombo">
@@ -55,7 +55,7 @@
             </constraints>
             <properties>
               <font name="Google Sans" size="20" style="0"/>
-              <text value="QUESTION"/>
+              <text value="QUESTION No."/>
             </properties>
           </component>
           <component id="79b1a" class="javax.swing.JComboBox" binding="questionCombo">
@@ -141,7 +141,7 @@
         </constraints>
         <properties>
           <font name="Google Sans" size="18" style="1"/>
-          <text value="Go back"/>
+          <text value="GO BACK"/>
         </properties>
       </component>
       <component id="ce285" class="javax.swing.JLabel" binding="insLabel">

@@ -55,7 +55,7 @@
             </constraints>
             <properties>
               <font name="Google Sans" size="18" style="1"/>
-              <text value="Start SELF-DIAGNOSIS TEST"/>
+              <text value="SELF-DIAGNOSIS TEST"/>
             </properties>
           </component>
           <component id="3bb78" class="javax.swing.JButton" binding="bookButton">
@@ -64,7 +64,7 @@
             </constraints>
             <properties>
               <font name="Google Sans" size="18" style="1"/>
-              <text value="BOOK"/>
+              <text value="PLACE A BOOKING"/>
             </properties>
           </component>
           <scrollpane id="f74a3">

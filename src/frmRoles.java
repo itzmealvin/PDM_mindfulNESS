@@ -8,6 +8,7 @@ public class frmRoles extends JFrame {
     private JLabel titleLabel;
     private JPanel panel;
     private JButton goBackButton;
+    private JLabel copyrightLabel;
 
     private frmRoles() {
         setContentPane(panel);
@@ -15,21 +16,18 @@ public class frmRoles extends JFrame {
         setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        patientButton.addActionListener(
-                e -> {
-                    frmPatientSign.getInstance().setVisible(true);
-                    setVisible(false);
-                });
-        specialistButton.addActionListener(
-                e -> {
-                    frmSpecialistSign.getInstance().setVisible(true);
-                    setVisible(false);
-                });
-        goBackButton.addActionListener(
-                e -> {
-                    frmIndex.getInstance().setVisible(true);
-                    setVisible(false);
-                });
+        patientButton.addActionListener(e -> {
+            frmPatientSign.getInstance().setVisible(true);
+            setVisible(false);
+        });
+        specialistButton.addActionListener(e -> {
+            frmSpecialistSign.getInstance().setVisible(true);
+            setVisible(false);
+        });
+        goBackButton.addActionListener(e -> {
+            frmIndex.getInstance().setVisible(true);
+            setVisible(false);
+        });
     }
 
     public static synchronized frmRoles getInstance() {
