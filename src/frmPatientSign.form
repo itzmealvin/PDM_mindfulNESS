@@ -17,13 +17,13 @@
           <text value="mindfulNESS"/>
         </properties>
       </component>
-      <component id="e5417" class="javax.swing.JLabel" binding="lastNameLabel">
+      <component id="e5417" class="javax.swing.JLabel" binding="emailLabel">
         <constraints>
           <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="Google Sans" size="20" style="0"/>
-          <text value="last name"/>
+          <text value="email"/>
         </properties>
       </component>
       <component id="16f0" class="javax.swing.JLabel" binding="genderLabel">
@@ -44,7 +44,7 @@
           <text value="you're one step away from us!"/>
         </properties>
       </component>
-      <component id="53755" class="javax.swing.JTextField" binding="lastNameField">
+      <component id="53755" class="javax.swing.JTextField" binding="emailField">
         <constraints>
           <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -54,7 +54,7 @@
           <font name="Google Sans" size="20" style="0"/>
         </properties>
       </component>
-      <component id="fd546" class="javax.swing.JLabel" binding="firstNameLabel">
+      <component id="fd546" class="javax.swing.JLabel" binding="fullNameLabel">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="77" height="17"/>
@@ -62,10 +62,10 @@
         </constraints>
         <properties>
           <font name="Google Sans" size="20" style="0"/>
-          <text value="first name"/>
+          <text value="full name"/>
         </properties>
       </component>
-      <component id="bf388" class="javax.swing.JTextField" binding="firstNameField">
+      <component id="bf388" class="javax.swing.JTextField" binding="fullNameField">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>

@@ -1,10 +1,12 @@
-import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.*;
 import net.proteanit.sql.DbUtils;
 
+import javax.swing.*;
+import java.sql.*;
+import java.util.ArrayList;
+
 public class ConnectSQL {
-    static final String connectionUrl = "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=congbang0711_;user=congbang0711_;password=mindfulness;encrypt=true;trustServerCertificate=true;";
+    static final String connectionUrl =
+            "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=congbang0711_;user=congbang0711_;password=mindfulness;encrypt=true;trustServerCertificate=true;";
 
     public static void closeConnect(Connection con) {
         if (con != null) {
@@ -16,6 +18,154 @@ public class ConnectSQL {
         }
     }
 
+    public static void showQuery(String preparedQuery, JTable resultTable) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            stmt = con.prepareStatement(preparedQuery);
+            rs = stmt.executeQuery();
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Query return nothing! Please press clear all and do again!",
+                        "Message",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                resultTable.setModel(DbUtils.resultSetToTableModel(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+    }
+
+    public static String[] authenticateQuery(String accountTxt, String pwdTxt) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        String[] results = new String[2];
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery = """ 
+                     DECLARE @UserName AS VARCHAR(100)= ?
+                     DECLARE @Pwd AS VARCHAR(100)= ?
+                     
+                     SELECT DISTINCT A.User_ID AS ID,
+                                     CASE
+                                         WHEN A.User_ID = P.UserID THEN 'Patient'
+                                         WHEN A.User_ID = S.UserID THEN 'Specialist'
+                                         END AS Role
+                     FROM [Account].[Account] A
+                              FULL JOIN [Account].[Patient] P ON A.User_ID = P.UserID
+                              FULL JOIN [Account].[Specialist] S ON A.User_ID = S.UserID
+                     WHERE A.User_name = @UserName AND A.Hash = HASHBYTES('SHA1', CONCAT(@Pwd,(SELECT A.Salt FROM [Account].[Account] A WHERE A.User_name = @UserName)))
+                    """;
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, accountTxt);
+            stmt.setString(2, pwdTxt);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                results[0] = rs.getString(1);
+                results[1] = rs.getString(2);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return results;
+    }
+
+    public static boolean submitUser(String accTxt, String pwdTxt) {
+        Connection con = null;
+        PreparedStatement stmt;
+        int rs;
+        boolean isUpdated = false;
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            con.setAutoCommit(false);
+            String updateString = """
+
+                    """;
+            stmt = con.prepareStatement(updateString);
+            stmt.setString(1, oldPwd);
+            stmt.setString(2, newPwd);
+            rs = stmt.executeUpdate();
+            if (rs > 0) {
+                isUpdated = true;
+            }
+            con.commit();
+        } catch (SQLException e) {
+            return isUpdated;
+        } finally {
+            closeConnect(con);
+        }
+        return isUpdated;
+    }
+
+    public static boolean signUpPatientQuery(String acc) {
+        Connection con = null;
+        PreparedStatement stmt;
+        int rs;
+        boolean isUpdated = false;
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            con.setAutoCommit(false);
+            String updateString = """
+
+                    """;
+            stmt = con.prepareStatement(updateString);
+            stmt.setString(1, oldPwd);
+            stmt.setString(2, newPwd);
+            rs = stmt.executeUpdate();
+            if (rs > 0) {
+                isUpdated = true;
+            }
+            con.commit();
+        } catch (SQLException e) {
+            return isUpdated;
+        } finally {
+            closeConnect(con);
+        }
+        return isUpdated;
+    }
+    // signUpSpecialist
+
+    public static boolean changePwd(String userID, String oldPwd, String newPwd) {
+        Connection con = null;
+        PreparedStatement stmt;
+        int rs;
+        boolean isUpdated = false;
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            con.setAutoCommit(false);
+            String updateString = """
+
+                    """;
+            stmt = con.prepareStatement(updateString);
+            stmt.setString(1, oldPwd);
+            stmt.setString(2, newPwd);
+            rs = stmt.executeUpdate();
+            if (rs > 0) {
+                isUpdated = true;
+            }
+            con.commit();
+        } catch (SQLException e) {
+            return isUpdated;
+        } finally {
+            closeConnect(con);
+        }
+        return isUpdated;
+    }
+
     public static String showSearchQuery(String txtQuery) {
         Connection con = null;
         PreparedStatement stmt;
@@ -24,19 +174,25 @@ public class ConnectSQL {
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    SELECT TOP 5 S.Name AS symptom, So.Name AS solution, So.Platform, So.Description FROM [Disease].[Disease] D INNER JOIN [Disease].[DiseaseSymptom] DS ON D.Disease_ID = DS.DiseaseID
-                    INNER JOIN [Disease].[Symptom] S ON DS.SymptomID = S.Symptom_ID
-                    INNER JOIN [Solution].[CureOneByOne] C ON S.Symptom_ID = C.SymptomID
-                    INNER JOIN [Solution].[Solution] So ON C.SolutionID = So.Solution_ID  WHERE D.Name = ?\s""";
+            String preparedQuery =
+                    """
+                            SELECT S.Name AS symptom, So.Name AS solution, So.Platform, So.Description FROM [Disease].[Disease] D INNER JOIN [Disease].[DiseaseSymptom] DS ON D.Disease_ID = DS.DiseaseID
+                            INNER JOIN [Disease].[Symptom] S ON DS.SymptomID = S.Symptom_ID
+                            INNER JOIN [Solution].[CureOneByOne] C ON S.Symptom_ID = C.SymptomID
+                            INNER JOIN [Solution].[Solution] So ON C.SolutionID = So.Solution_ID  WHERE D.Name = ?\s""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, txtQuery);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                result.append("Possible symptom: ").append(rs.getString("symptom"))
-                        .append(" has the solution of: ").append(rs.getString("solution"))
-                        .append(". Please see at: ").append(rs.getString("platform"))
-                        .append(", more details: ").append(rs.getString("description"))
+                result
+                        .append("Possible symptom: ")
+                        .append(rs.getString("symptom"))
+                        .append(" has the solution of: ")
+                        .append(rs.getString("solution"))
+                        .append(". Please see at: ")
+                        .append(rs.getString("platform"))
+                        .append(", more details: ")
+                        .append(rs.getString("description"))
                         .append("\n\n");
             }
         } catch (SQLException e) {
@@ -45,7 +201,6 @@ public class ConnectSQL {
             closeConnect(con);
         }
         return result.toString();
-
     }
 
     public static String showPatientBooking(String patientID) {
@@ -56,24 +211,34 @@ public class ConnectSQL {
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    SELECT CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date , H.Place, S.FullName, S.Phone
-                    FROM [Account].[Specialist] S
-                    INNER JOIN [Booking].[HealingInformation] H
-                    ON S.Specialist_ID = H.SpecialistID
-                    INNER JOIN [Booking].[Booking] B
-                    ON H.HealingInformation_ID = B.HealingInformationID
-                    INNER JOIN [Account].[Patient] P
-                    ON B.PatientID = P.Patient_ID
-                    WHERE P.Patient_ID = ? ORDER BY H.Date""";
+            String preparedQuery =
+                    """
+                            SELECT CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS DATE , H.Place, S.FullName, S.Phone
+                            FROM [Account].[Specialist] S
+                            INNER JOIN [Booking].[HealingInformation] H
+                            ON S.Specialist_ID = H.SpecialistID
+                            INNER JOIN [Booking].[Booking] B
+                            ON H.HealingInformation_ID = B.HealingInformationID
+                            INNER JOIN [Account].[Patient] P
+                            ON B.PatientID = P.Patient_ID
+                            WHERE P.Patient_ID = ? ORDER BY H.Date""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, patientID);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                result.append("Date: ").append(rs.getString("date")).append("\n")
-                        .append("Place: ").append(rs.getString("place")).append("\n")
-                        .append("Specialist name: ").append(rs.getString("fullname")).append("\n")
-                        .append("Phone: ").append(rs.getString("phone")).append("\n")
+                result
+                        .append("Date: ")
+                        .append(rs.getString("date"))
+                        .append("\n")
+                        .append("Place: ")
+                        .append(rs.getString("place"))
+                        .append("\n")
+                        .append("Specialist name: ")
+                        .append(rs.getString("fullname"))
+                        .append("\n")
+                        .append("Phone: ")
+                        .append(rs.getString("phone"))
+                        .append("\n")
                         .append("\n");
             }
         } catch (SQLException e) {
@@ -82,6 +247,39 @@ public class ConnectSQL {
             closeConnect(con);
         }
         return result.toString();
+    }
+
+    public static void showAvailableBooking(JTable resultTable) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery =
+                    """
+                            SELECT H.HealingInformation_ID AS ID, H.Date, H.Place, CAST(H.Fee AS INT) AS Fee, S.FullName, S.Sex
+                            FROM [Booking].[HealingInformation] H
+                            INNER JOIN [Account].[Specialist] S
+                            ON S.Specialist_ID = H.SpecialistID
+                            WHERE H.HealingInformation_ID NOT IN (SELECT DISTINCT B.HealingInformationID
+                            FROM [Booking].[Booking] B) ORDER BY H.Date""";
+            stmt = con.prepareStatement(preparedQuery);
+            rs = stmt.executeQuery();
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No available booking found! Please try again later",
+                        "Message",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                resultTable.setModel(DbUtils.resultSetToTableModel(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
     }
 
     public static boolean submitBooking(String patientID, String healingID) {
@@ -93,11 +291,46 @@ public class ConnectSQL {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
             con.setAutoCommit(false);
-            String updateString = "INSERT INTO [Booking].[Booking] ([PatientID], [HealingInformationID])\n" +
-                    "     VALUES (?,?)";
+            String updateString = """
+                    INSERT INTO [Booking].[Booking] ([PatientID], [HealingInformationID]) 
+                    VALUES (?,?)
+                    """;
             stmt = con.prepareStatement(updateString);
             stmt.setString(1, patientID);
             stmt.setString(2, healingID);
+            rs = stmt.executeUpdate();
+            if (rs > 0) {
+                isUpdated = true;
+            }
+            con.commit();
+        } catch (SQLException e) {
+            return isUpdated;
+        } finally {
+            closeConnect(con);
+        }
+        return isUpdated;
+    }
+
+    public static boolean submitHealing(
+            String specialistID, String place, String date, String fee, String desc, String extra) {
+        Connection con = null;
+        PreparedStatement stmt;
+        int rs;
+        boolean isUpdated = false;
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            con.setAutoCommit(false);
+            String updateString = """
+                    INSERT INTO [Booking].[HealingInformation] ([SpecialistID], [Place], [DATE], [Fee], [Description], [Extra_Information]) 
+                    VALUES (?,?,?,?,?,?)""";
+            stmt = con.prepareStatement(updateString);
+            stmt.setString(1, specialistID);
+            stmt.setString(2, place);
+            stmt.setString(3, date);
+            stmt.setString(4, fee);
+            stmt.setString(5, desc);
+            stmt.setString(6, extra);
             rs = stmt.executeUpdate();
             if (rs > 0) {
                 isUpdated = true;
@@ -119,27 +352,43 @@ public class ConnectSQL {
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    SELECT H.HealingInformation_ID AS ID, CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS Date, H.Place, H.Fee, P.FullName, P.Sex, P.Email
-                    FROM [Account].[Specialist] S
-                    INNER JOIN [Booking].[HealingInformation] H
-                    ON S.Specialist_ID = H.SpecialistID
-                    INNER JOIN [Booking].[Booking] B
-                    ON H.HealingInformation_ID = B.HealingInformationID
-                    INNER JOIN [Account].[Patient] P
-                    ON B.PatientID = P.Patient_ID
-                    WHERE S.[Specialist_ID] = ? ORDER BY H.Date""";
+            String preparedQuery =
+                    """
+                            SELECT H.HealingInformation_ID AS ID, CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS DATE, H.Place, H.Fee, P.FullName, P.Sex, P.Email
+                            FROM [Account].[Specialist] S
+                            INNER JOIN [Booking].[HealingInformation] H
+                            ON S.Specialist_ID = H.SpecialistID
+                            INNER JOIN [Booking].[Booking] B
+                            ON H.HealingInformation_ID = B.HealingInformationID
+                            INNER JOIN [Account].[Patient] P
+                            ON B.PatientID = P.Patient_ID
+                            WHERE S.[Specialist_ID] = ? ORDER BY H.Date""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, specialistID);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                result.append("ID: ").append(rs.getString("id")).append("\n")
-                        .append("Date: ").append(rs.getString("date")).append("\n")
-                        .append("Place: ").append(rs.getString("place")).append("\n")
-                        .append("Fee: ").append(rs.getString("fee")).append("\n")
-                        .append("Patient name: ").append(rs.getString("fullname")).append("\n")
-                        .append("Sex: ").append(rs.getString("sex")).append("\n")
-                        .append("Email: ").append(rs.getString("email")).append("\n")
+                result
+                        .append("ID: ")
+                        .append(rs.getString("id"))
+                        .append("\n")
+                        .append("Date: ")
+                        .append(rs.getString("date"))
+                        .append("\n")
+                        .append("Place: ")
+                        .append(rs.getString("place"))
+                        .append("\n")
+                        .append("Fee: ")
+                        .append(rs.getString("fee"))
+                        .append("\n")
+                        .append("Patient name: ")
+                        .append(rs.getString("fullname"))
+                        .append("\n")
+                        .append("Sex: ")
+                        .append(rs.getString("sex"))
+                        .append("\n")
+                        .append("Email: ")
+                        .append(rs.getString("email"))
+                        .append("\n")
                         .append("\n");
             }
         } catch (SQLException e) {
@@ -150,65 +399,6 @@ public class ConnectSQL {
         return result.toString();
     }
 
-    public static boolean submitHealing(String specialistID, String place, String date, String fee, String desc, String extra) {
-        Connection con = null;
-        PreparedStatement stmt;
-        int rs;
-        boolean isUpdated = false;
-        try {
-            con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
-            con.setAutoCommit(false);
-            String updateString = "INSERT INTO [Booking].[HealingInformation] ([SpecialistID], [Place], [Date], [Fee], [Description], [Extra_Information])\n" +
-                    "     VALUES (?,?,?,?,?,?)";
-            stmt = con.prepareStatement(updateString);
-            stmt.setString(1, specialistID);
-            stmt.setString(2, place);
-            stmt.setString(3, date);
-            stmt.setString(4, fee);
-            stmt.setString(5, desc);
-            stmt.setString(6, extra);
-            rs = stmt.executeUpdate();
-            if (rs > 0) {
-                isUpdated = true;
-            }
-            con.commit();
-        } catch (SQLException e) {
-            return isUpdated;
-        } finally {
-            closeConnect(con);
-        }
-        return isUpdated;
-    }
-
-    public static void showAvailableBooking(JTable resultTable) {
-        Connection con = null;
-        PreparedStatement stmt;
-        ResultSet rs;
-        try {
-            con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    SELECT H.HealingInformation_ID AS ID, H.Date, H.Place, CAST(H.Fee AS INT) AS Fee, S.FullName, S.Sex
-                    FROM [Booking].[HealingInformation] H
-                    INNER JOIN [Account].[Specialist] S
-                    \tON S.Specialist_ID = H.SpecialistID
-                    WHERE H.HealingInformation_ID NOT IN (SELECT DISTINCT B.HealingInformationID
-                    FROM [Booking].[Booking] B) ORDER BY H.Date""";
-            stmt = con.prepareStatement(preparedQuery);
-            rs = stmt.executeQuery();
-            if (!rs.next()) {
-                JOptionPane.showMessageDialog(null, "No available booking found! Please try again later", "Message", JOptionPane.WARNING_MESSAGE);
-            } else {
-                resultTable.setModel(DbUtils.resultSetToTableModel(rs));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            closeConnect(con);
-        }
-    }
-
     public static ArrayList<Integer> showTestQuery() {
         Connection con = null;
         PreparedStatement stmt;
@@ -217,9 +407,10 @@ public class ConnectSQL {
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    SELECT DISTINCT TestID
-                    FROM [Test].[Question]""";
+            String preparedQuery =
+                    """
+                            SELECT DISTINCT TestID
+                            FROM [Test].[Question]""";
             stmt = con.prepareStatement(preparedQuery);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -241,10 +432,11 @@ public class ConnectSQL {
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    SELECT Question_ID AS questionID
-                    FROM [Test].[Question]
-                    WHERE TestID = ?""";
+            String preparedQuery =
+                    """
+                            SELECT Question_ID AS questionID
+                            FROM [Test].[Question]
+                            WHERE TestID = ?""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, testID);
             rs = stmt.executeQuery();
@@ -267,10 +459,11 @@ public class ConnectSQL {
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    SELECT Title
-                    FROM [Test].[Question]\s
-                    WHERE TestID = ? AND Question_ID = ?""";
+            String preparedQuery =
+                    """
+                            SELECT Title
+                            FROM [Test].[Question]\s
+                            WHERE TestID = ? AND Question_ID = ?""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, testID);
             stmt.setString(2, questionID);
@@ -286,5 +479,36 @@ public class ConnectSQL {
         return result;
     }
 
+    public static ArrayList<String> showAnswerContentQuery(String questionID) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        ArrayList<String> results = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery =
+                    """
+                            SELECT A.Title
+                            FROM [Test].[Question] Q
+                                     INNER JOIN [Test].[AnswerSet] ASET
+                                                ON Q.AnswerSetID = ASET.AnswerSet_ID
+                                     INNER JOIN [Test].[AnswerSetContent] ASCon
+                                                ON ASET.AnswerSet_ID = ASCon.AnswerSetID
+                                     INNER JOIN [Test].[Answer] A
+                                                ON ASCon.AnswerID = A.Answer_ID
+                            WHERE Q.Question_ID = ?""";
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, questionID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                results.add(rs.getString("title"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return results;
+    }
 }
-

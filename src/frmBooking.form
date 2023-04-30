@@ -44,7 +44,7 @@
           <text value="LOG OUT"/>
         </properties>
       </component>
-      <component id="ba9aa" class="javax.swing.JLabel" binding="clinicLabel">
+      <component id="ba9aa" class="javax.swing.JLabel" binding="availableLabel">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
