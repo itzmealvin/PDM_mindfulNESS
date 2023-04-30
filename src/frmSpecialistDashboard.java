@@ -158,7 +158,9 @@ public class frmSpecialistDashboard extends JFrame {
                         protected Void doInBackground() {
                             if (ConnectSQL.delistHealingUpdate(frmIndex.getInstance().getID(), idHeal)) {
                                 JOptionPane.showMessageDialog(null, "Healing with ID: " + idHeal + " delisted!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                                ConnectSQL.showPatientBookingQuery(frmIndex.getInstance().getID());
+                                recentArea.selectAll();
+                                recentArea.replaceSelection("");
+                                recentArea.setText(ConnectSQL.showSpecialistBookingQuery(frmIndex.getInstance().getID()));
                             } else {
                                 JOptionPane.showMessageDialog(null, "Cannot delist healing with ID: " + idHeal + " . Please try again later!", "Warning", JOptionPane.WARNING_MESSAGE);
                             }

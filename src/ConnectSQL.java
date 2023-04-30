@@ -29,7 +29,7 @@ public class ConnectSQL {
                     INNER JOIN [Account].[Specialist] S
                     ON S.Specialist_ID = H.SpecialistID
                     WHERE H.HealingInformation_ID NOT IN (SELECT DISTINCT B.HealingInformationID
-                    FROM [Booking].[Booking] B) AND H.Date >= CAST( GETDATE() AS DATE ) ORDER BY H.Date""";
+                    FROM [Booking].[Booking] B) AND H.Date >= CAST(GETDATE() AS DATE ) ORDER BY H.Date""";
             stmt = con.prepareStatement(preparedQuery);
             rs = stmt.executeQuery();
             if (!rs.next()) {
@@ -240,7 +240,7 @@ public class ConnectSQL {
         try {
             con = DriverManager.getConnection(connectionUrl);
             String preparedQuery = """
-                    SELECT H.ID AS ID, CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS DATE , H.Place, S.FullName, S.Phone
+                    SELECT H.HealingInformation_ID AS ID, CONCAT(DAY(H.Date), ' / ' , MONTH(H.Date)) AS DATE , H.Place, S.FullName, S.Phone
                     FROM [Account].[Specialist] S
                     INNER JOIN [Booking].[HealingInformation] H
                     ON S.Specialist_ID = H.SpecialistID
@@ -357,7 +357,7 @@ public class ConnectSQL {
             con = DriverManager.getConnection(connectionUrl);
             con.setAutoCommit(false);
             String updateString = """
-                    INSERT INTO [Booking].[HealingInformation] ([SpecialistID], [Place], [DATE], [Fee], [Description], [Extra_Information])
+                    INSERT INTO [Booking].[HealingInformation] ([SpecialistID], [Place], [Date], [Fee], [Description], [Extra_Information])
                     VALUES (?,?,?,?,?,?)""";
             stmt = con.prepareStatement(updateString);
             stmt.setString(1, specialistTxt);
