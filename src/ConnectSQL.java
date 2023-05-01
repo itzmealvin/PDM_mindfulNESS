@@ -520,7 +520,6 @@ public class ConnectSQL {
         ArrayList<Integer> results = new ArrayList<>();
         try {
             con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
             String preparedQuery = """
                     SELECT DISTINCT TestID
                     FROM [Test].[Question]""";
@@ -544,7 +543,6 @@ public class ConnectSQL {
         ArrayList<Integer> results = new ArrayList<>();
         try {
             con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
             String preparedQuery = """
                     SELECT Question_ID AS questionID
                     FROM [Test].[Question]
@@ -570,7 +568,6 @@ public class ConnectSQL {
         String result = "";
         try {
             con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
             String preparedQuery = """
                     SELECT Title
                     FROM [Test].[Question]\s
@@ -597,7 +594,6 @@ public class ConnectSQL {
         ArrayList<String> results = new ArrayList<>();
         try {
             con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
             String preparedQuery = """
                     SELECT A.Title
                     FROM [Test].[Question] Q
@@ -629,7 +625,6 @@ public class ConnectSQL {
         int result = 0;
         try {
             con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
             String preparedQuery = """
                     SELECT Total
                     FROM [Test].[Test]
@@ -655,7 +650,6 @@ public class ConnectSQL {
         ArrayList<Integer> results = new ArrayList<>();
         try {
             con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
             String preparedQuery = """
                     SELECT A.Weight
                     FROM [Test].[Question] Q
@@ -686,7 +680,6 @@ public class ConnectSQL {
         String[] results = new String[2];
         try {
             con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
             String preparedQuery = """
                     DECLARE @TestID AS INT = ?
                     DECLARE @Weight AS INT = ?
@@ -721,7 +714,6 @@ public class ConnectSQL {
         PreparedStatement stmt;
         try {
             con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
             con.setAutoCommit(false);
             String updateString = """
                     INSERT INTO [Account].[PatientRecord]

@@ -252,8 +252,8 @@ public class frmTest extends JFrame {
                 threshold = (totalWeight * 100) / maxScoreInt;
                 if (threshold <= 70) {
                     JOptionPane.showMessageDialog(null, "Your mental health is normal! No need to worry.", "Message", JOptionPane.INFORMATION_MESSAGE);
-                    frmPatientDashboard.getInstance().setVisible(true);
                     setVisible(false);
+                    frmPatientDashboard.getInstance().setVisible(true);
                 } else if (threshold < 90) {
                     String[] results = ConnectSQL.showSolutionQuery(Objects.requireNonNull(testCombo.getSelectedItem()).toString(), 80);
                     JOptionPane.showMessageDialog(null, "Your mental health is quite bad", "Message", JOptionPane.INFORMATION_MESSAGE);
@@ -261,15 +261,13 @@ public class frmTest extends JFrame {
                     ConnectSQL.submitRecordUpdate(frmIndex.getInstance().getID()[0], results[0]);
                     setVisible(false);
                     frmPatientDashboard.getInstance().setVisible(true);
-
                 } else {
                     String[] results = ConnectSQL.showSolutionQuery(Objects.requireNonNull(testCombo.getSelectedItem()).toString(), 80);
                     int choice = JOptionPane.showConfirmDialog(null, "Your result is extremely bad! Do you want to make an appointment with specialists?", "Recommendation", JOptionPane.YES_NO_OPTION);
                     if (choice == JOptionPane.YES_OPTION) {
                         frmBooking booking = new frmBooking();
-                        setVisible(false);
                         booking.setVisible(true);
-
+                        setVisible(false);
                     } else {
                         JOptionPane.showMessageDialog(null, results[1], "Temporary solution", JOptionPane.INFORMATION_MESSAGE);
                         setVisible(false);

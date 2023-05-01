@@ -58,7 +58,7 @@ public class frmSpecialistSign extends JFrame {
         });
         confirmButton.addActionListener(e -> {
             if (fullNameField.getText().isEmpty() || emailField.getText().isEmpty() || dobField.getText().isEmpty() || String.valueOf(genderField.getSelectedItem()).equals("<please choose>") || idField.getText().length() != 12 || graduateField.getText().isEmpty() || phoneField.getText().length() != 10) {
-                JOptionPane.showMessageDialog(null, "Field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Field(s) are empty or incorrect format!", "Warning", JOptionPane.WARNING_MESSAGE);
                 confirmButton.setEnabled(true);
                 return;
             }
