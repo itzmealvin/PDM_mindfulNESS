@@ -179,7 +179,7 @@ public class frmTest extends JFrame {
 
                 @Override
                 protected void done() {
-                    questionCombo.setEnabled(true); // Re-enable the button after the background process is done
+                    questionCombo.setEnabled(true);
                 }
             };
             worker.execute(); // Start the background process
@@ -221,7 +221,6 @@ public class frmTest extends JFrame {
             answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
             answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
             answerEButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][4] = false);
-            answerDButton.setEnabled(false);
         });
         answerEButton.addActionListener(e -> {
             buttonEntered(answerEButton);
@@ -287,9 +286,7 @@ public class frmTest extends JFrame {
                     ConnectSQL.submitRecordUpdate(frmIndex.getInstance().getID()[0], results[0]);
                 }
             }
-            countAnswer = 0;
-            totalWeight = 0;
         }
-        
+
     }
 }
