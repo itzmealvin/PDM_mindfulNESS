@@ -18,7 +18,7 @@ public class frmSpecialistSign extends JFrame {
     private JLabel genderLabel;
     private JLabel idLabel;
     private JLabel graduateLabel;
-    private JTextField genderField;
+    private JComboBox<String> genderField;
     private JButton clearAllButton;
     private JLabel phoneLabel;
     private JTextField phoneField;
@@ -40,7 +40,7 @@ public class frmSpecialistSign extends JFrame {
                         fullNameField.setText("");
                         emailField.setText("");
                         dobField.setText("");
-                        genderField.setText("");
+                        genderField.setSelectedItem("<please choose>");
                         idField.setText("");
                         graduateField.setText("");
                         phoneField.setText("");
@@ -57,7 +57,7 @@ public class frmSpecialistSign extends JFrame {
 
         });
         confirmButton.addActionListener(e -> {
-            if (fullNameField.getText().isEmpty() || emailField.getText().isEmpty() || dobField.getText().isEmpty() || genderField.getText().isEmpty() || idField.getText().isEmpty() || graduateField.getText().isEmpty() || phoneField.getText().isEmpty()) {
+            if (fullNameField.getText().isEmpty() || emailField.getText().isEmpty() || dobField.getText().isEmpty() || String.valueOf(genderField.getSelectedItem()).equals("<please choose>") || idField.getText().length() != 12 || graduateField.getText().isEmpty() || phoneField.getText().length() != 10) {
                 JOptionPane.showMessageDialog(null, "Field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
                 confirmButton.setEnabled(true);
                 return;
@@ -68,7 +68,7 @@ public class frmSpecialistSign extends JFrame {
                 SwingWorker<Void, Void> worker = new SwingWorker<>() {
                     @Override
                     protected Void doInBackground() {
-                        if (ConnectSQL.submitSpecialistUser(frmIndex.getInstance().getCredentials()[0], frmIndex.getInstance().getCredentials()[1], fullNameField.getText(), dobField.getText(), genderField.getText(), emailField.getText(), phoneField.getText(), idField.getText(), graduateField.getText())) {
+                        if (ConnectSQL.submitSpecialistUser(frmIndex.getInstance().getCredentials()[0], frmIndex.getInstance().getCredentials()[1], fullNameField.getText(), dobField.getText(), String.valueOf(genderField.getSelectedItem()), emailField.getText(), phoneField.getText(), idField.getText(), graduateField.getText())) {
                             JOptionPane.showMessageDialog(null, "Account: " + frmIndex.getInstance().getCredentials()[0] + " registered successfully. Thank you!", "Success!", JOptionPane.INFORMATION_MESSAGE);
                             frmSignDone.getInstance().setVisible(true);
                             setVisible(false);
@@ -123,7 +123,7 @@ public class frmSpecialistSign extends JFrame {
             fullNameField.setText("");
             emailField.setText("");
             dobField.setText("");
-            genderField.setText("");
+            genderField.setSelectedItem("<please choose>");
             idField.setText("");
             graduateField.setText("");
             phoneField.setText("");

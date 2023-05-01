@@ -118,7 +118,7 @@ public class frmSpecialistDashboard extends JFrame {
         });
         postButton.addActionListener(e -> {
             postButton.setEnabled(false);
-            if (placeField.getText().isEmpty() || dateField.getText().isEmpty() || feeField.getText().isEmpty() || descField.getText().isEmpty() || extraField.getText().isEmpty()) {
+            if (placeField.getText().isEmpty() || dateField.getText().isEmpty() || feeField.getText().isEmpty() || descField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
                 postButton.setEnabled(true);
                 return;
@@ -128,11 +128,11 @@ public class frmSpecialistDashboard extends JFrame {
                 SwingWorker<Void, Void> worker = new SwingWorker<>() {
                     @Override
                     protected Void doInBackground() {
-                        if (ConnectSQL.submitHealingUpdate(frmIndex.getInstance().getID(), placeField.getText(), dateField.getText(), feeField.getText(), descField.getText(), extraField.getText())) {
+                        if (ConnectSQL.submitHealingUpdate(frmIndex.getInstance().getID()[0], placeField.getText(), dateField.getText(), feeField.getText(), descField.getText(), extraField.getText())) {
                             JOptionPane.showMessageDialog(null, "Healing information posted! Please check the nearby box for confirmation", "Warning", JOptionPane.WARNING_MESSAGE);
                             recentArea.selectAll();
                             recentArea.replaceSelection("");
-                            recentArea.setText(ConnectSQL.showSpecialistBookingQuery(frmIndex.getInstance().getID()));
+                            recentArea.setText(ConnectSQL.showSpecialistBookingQuery(frmIndex.getInstance().getID()[0]));
                         } else {
                             JOptionPane.showMessageDialog(null, "Something went wrong! Please try again", "Warning", JOptionPane.WARNING_MESSAGE);
                         }
@@ -148,19 +148,19 @@ public class frmSpecialistDashboard extends JFrame {
             }
         });
         delistHealingButton.addActionListener(e -> {
-            delistHealingButton.setEnabled(false);
             String idHeal = JOptionPane.showInputDialog(null, "Enter the healing ID you want to delist: ", "Cancellation", JOptionPane.INFORMATION_MESSAGE);
-            if (!idHeal.isEmpty()) {
-                int option = JOptionPane.showConfirmDialog(null, "Confirm delist healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (idHeal != null && !idHeal.isBlank()) {
+                int option = JOptionPane.showConfirmDialog(null, "Confirm delist healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.QUESTION_MESSAGE);
                 if (option == JOptionPane.YES_OPTION) {
+                    delistHealingButton.setEnabled(false);
                     SwingWorker<Void, Void> worker = new SwingWorker<>() {
                         @Override
                         protected Void doInBackground() {
-                            if (ConnectSQL.delistHealingUpdate(frmIndex.getInstance().getID(), idHeal)) {
-                                JOptionPane.showMessageDialog(null, "Healing with ID: " + idHeal + " delisted!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                            if (ConnectSQL.delistHealingUpdate(frmIndex.getInstance().getID()[0], idHeal)) {
+                                JOptionPane.showMessageDialog(null, "Healing with ID: " + idHeal + " delisted. Check the above box for confirmation!", "Success!", JOptionPane.INFORMATION_MESSAGE);
                                 recentArea.selectAll();
                                 recentArea.replaceSelection("");
-                                recentArea.setText(ConnectSQL.showSpecialistBookingQuery(frmIndex.getInstance().getID()));
+                                recentArea.setText(ConnectSQL.showSpecialistBookingQuery(frmIndex.getInstance().getID()[0]));
                             } else {
                                 JOptionPane.showMessageDialog(null, "Cannot delist healing with ID: " + idHeal + " . Please try again later!", "Warning", JOptionPane.WARNING_MESSAGE);
                             }
@@ -174,6 +174,8 @@ public class frmSpecialistDashboard extends JFrame {
                     };
                     worker.execute();
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Nothing to delisted!", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         });
     }
@@ -189,10 +191,10 @@ public class frmSpecialistDashboard extends JFrame {
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (isVisible()) {
-            insLabel.setText("Welcome back, " + ConnectSQL.showNameQuery(frmIndex.getInstance().getID()) + "!");
+            insLabel.setText("Welcome back, " + ConnectSQL.showNameQuery(frmIndex.getInstance().getID()[0], frmIndex.getInstance().getID()[1]) + "!");
             recentArea.selectAll();
             recentArea.replaceSelection("");
-            recentArea.setText(ConnectSQL.showSpecialistBookingQuery(frmIndex.getInstance().getID()));
+            recentArea.setText(ConnectSQL.showSpecialistBookingQuery(frmIndex.getInstance().getID()[0]));
             recentArea.setEditable(false);
         }
     }

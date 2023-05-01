@@ -100,26 +100,32 @@ public class ConnectSQL {
         try {
             con = DriverManager.getConnection(connectionUrl);
             String preparedQuery = """ 
-                     DECLARE @UserName AS VARCHAR(50) = ?
-                     DECLARE @Pwd AS VARCHAR(30) = ?
-                     
-                     SELECT A.User_ID AS ID,
-                                     CASE
-                                         WHEN A.User_ID = P.UserID THEN 'Patient'
-                                         WHEN A.User_ID = S.UserID THEN 'Specialist'
-                                         END AS Role
-                     FROM [Account].[Account] A
-                              FULL JOIN [Account].[Patient] P ON A.User_ID = P.UserID
-                              FULL JOIN [Account].[Specialist] S ON A.User_ID = S.UserID
-                     WHERE A.User_name = @UserName AND A.Password = HASHBYTES('SHA1', CONCAT(@Pwd,(SELECT A.Salt FROM [Account].[Account] A WHERE A.User_name = @UserName)))
+                    DECLARE @UserName AS VARCHAR(50) = ?
+                    DECLARE @Pwd AS VARCHAR(30) = ?
+                                        
+                    SELECT
+                           CASE
+                               WHEN A.User_ID = P.UserID AND P.UserID IS NOT NULL THEN 'Patient'
+                               WHEN A.User_ID = S.UserID AND S.UserID IS NOT NULL THEN 'Specialist'
+                               ELSE NULL
+                               END AS Role,
+                           CASE
+                               WHEN A.User_ID = P.UserID AND P.UserID IS NOT NULL THEN P.Patient_ID
+                               WHEN A.User_ID = S.UserID AND S.UserID IS NOT NULL THEN S.Specialist_ID
+                               ELSE NULL
+                               END AS ID
+                    FROM [Account].[Account] A
+                             FULL JOIN [Account].[Patient] P ON A.User_ID = P.UserID
+                             FULL JOIN [Account].[Specialist] S ON A.User_ID = S.UserID
+                    WHERE A.User_name = @UserName AND A.Password = HASHBYTES('SHA1', CONCAT(@Pwd, (SELECT A.Salt FROM [Account].[Account] A WHERE A.User_name = @UserName)))           
                     """;
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, accountTxt);
             stmt.setString(2, pwdTxt);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                results[0] = rs.getString(1);
-                results[1] = rs.getString(2);
+                results[0] = rs.getString("ID");
+                results[1] = rs.getString("Role");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -129,7 +135,7 @@ public class ConnectSQL {
         return results;
     }
 
-    public static String showNameQuery(String userTxt) {
+    public static String showNameQuery(String userTxt, String roleTxt) {
         Connection con = null;
         PreparedStatement stmt;
         ResultSet rs;
@@ -137,19 +143,24 @@ public class ConnectSQL {
         try {
             con = DriverManager.getConnection(connectionUrl);
             String preparedQuery = """ 
-                     DECLARE @UserID AS INT = ?
-                     SELECT P.FullName
-                     FROM [Account].[Account] A
-                              INNER JOIN [Account].[Patient] P ON A.User_ID = P.UserID
-                     WHERE A.User_ID = @UserID
-                     UNION
-                     SELECT S.FullName
-                     FROM [Account].[Account] A
-                              INNER JOIN [Account].[Specialist] S ON A.User_ID = S.UserID
-                     WHERE A.User_ID = @UserID
-                    """;
+                    DECLARE @UserID AS INT = ?
+                    DECLARE @Role AS VARCHAR(30) = ?
+                    SELECT FullName
+                    FROM (
+                             SELECT
+                                 CASE
+                                     WHEN @UserID = P.Patient_ID AND @Role = 'Patient' THEN P.FullName
+                                     WHEN @UserID = S.Specialist_ID AND @Role = 'Specialist' THEN S.FullName
+                                     END AS FullName
+                             FROM [Account].[Account] A
+                                      FULL JOIN [Account].[Patient] P ON A.User_ID = P.UserID
+                                      FULL JOIN [Account].[Specialist] S ON A.User_ID = S.UserID
+                         ) AS SUBQUERY
+                    WHERE FullName IS NOT NULL
+                                        """;
             stmt = con.prepareStatement(preparedQuery);
             stmt.setInt(1, Integer.parseInt(userTxt));
+            stmt.setString(2, roleTxt);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 result = rs.getString("fullname");
@@ -362,7 +373,7 @@ public class ConnectSQL {
             stmt = con.prepareStatement(updateString);
             stmt.setString(1, specialistTxt);
             stmt.setString(2, placeTxt);
-            stmt.setString(3, dateTxt);
+            stmt.setDate(3, java.sql.Date.valueOf(dateTxt));
             stmt.setString(4, feeTxt);
             stmt.setString(5, descTxt);
             stmt.setString(6, extraTxt);
@@ -393,10 +404,10 @@ public class ConnectSQL {
                     	ELSE 'VACANT'
                     END AS State
                     FROM [Account].[Specialist] S
-                    INNER JOIN [Booking].[HealingInformation] H ON S.Specialist_ID = H.SpecialistID
-                    INNER JOIN [Booking].[Booking] B ON H.HealingInformation_ID = B.HealingInformationID
-                    INNER JOIN [Account].[Patient] P ON B.PatientID = P.Patient_ID
-                    WHERE S.[Specialist_ID] = 1 AND H.Date >= CAST( GETDATE() AS DATE ) ORDER BY H.Date""";
+                    FULL JOIN [Booking].[HealingInformation] H ON S.Specialist_ID = H.SpecialistID
+                    FULL JOIN [Booking].[Booking] B ON H.HealingInformation_ID = B.HealingInformationID
+                    FULL JOIN [Account].[Patient] P ON B.PatientID = P.Patient_ID
+                    WHERE S.[Specialist_ID] = ? AND H.Date >= CAST( GETDATE() AS DATE ) ORDER BY H.Date""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, specialistTxt);
             rs = stmt.executeQuery();
@@ -483,7 +494,7 @@ public class ConnectSQL {
             stmt2 = con.prepareStatement(updateString2);
             stmt2.setString(1, accountTxt);
             stmt2.setString(2, nameTxt);
-            stmt2.setString(3, dobTxt);
+            stmt2.setDate(3, java.sql.Date.valueOf(dobTxt));
             stmt2.setString(4, sexTxt);
             stmt2.setString(5, emailTxt);
             stmt2.setString(6, phoneTxt);
@@ -637,36 +648,175 @@ public class ConnectSQL {
         return result;
     }
 
-    public static String[] showSolutionQuery(String testTxt, int weight) {
+    //    public static String[] showSolutionQuery(String testTxt, int weight) {
+    //        Connection con = null;
+    //        PreparedStatement stmt;
+    //        ResultSet rs;
+    //        StringBuilder result = new StringBuilder();
+    //        String[] results = new String[2];
+    //        try {
+    //            con = DriverManager.getConnection(connectionUrl);
+    //            System.out.println("Connected to the Database");
+    //            String preparedQuery = """
+    //                    DECLARE @TestID AS INT = ?
+    //                    DECLARE @Weight AS INT = ?
+    //                    SELECT R.Result_ID AS ID, S.Name, S.Benefit, S.Platform, S.Description
+    //                    FROM [Test].[Result] R
+    //                             INNER JOIN [Solution].[Recommendation] Re
+    //                                        ON R.Result_ID = Re.ResultID
+    //                             INNER JOIN [Solution].[Solution] S
+    //                                        ON Re.SolutionID = S.Solution_ID
+    //                    WHERE R.TestID = @TestID AND R.Weight= @Weight AND R.Result_ID IN (SELECT R.Result_ID
+    //                                                                           FROM [Test].[Result] R
+    //                                                                           WHERE TestID = @TestID AND Weight = @Weight)""";
+    //            stmt = con.prepareStatement(preparedQuery);
+    //            stmt.setString(1, testTxt);
+    //            stmt.setInt(2, weight);
+    //            rs = stmt.executeQuery();
+    //            while (rs.next()) {
+    //                result.append("Possible solution: ").append(rs.getString("name")).append(" has the benefit of: ").append(rs.getString("benefit")).append(". Please see at: ").append(rs.getString("platform")).append(", more details: ").append(rs.getString("description")).append("\n\n");
+    //                results[0] = rs.getString("id");
+    //            }
+    //            results[1] = result.toString();
+    //        } catch (SQLException e) {
+    //            throw new RuntimeException(e);
+    //        } finally {
+    //            closeConnect(con);
+    //        }
+    //        return results;
+    //    }
+    public static String showResultQuery(String testID, String weight) {
         Connection con = null;
         PreparedStatement stmt;
         ResultSet rs;
-        StringBuilder result = new StringBuilder();
-        String[] results = new String[2];
+        String result = "";
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
             String preparedQuery = """
-                    DECLARE @TestID AS INT = ?
-                    DECLARE @Weight AS INT = ?
-                    SELECT R.Result_ID AS ID, S.Name, S.Benefit, S.Platform, S.Description
-                    FROM [Test].[Result] R
-                             INNER JOIN [Solution].[Recommendation] Re
-                                        ON R.Result_ID = Re.ResultID
-                             INNER JOIN [Solution].[Solution] S
-                                        ON Re.SolutionID = S.Solution_ID
-                    WHERE R.TestID = @TestID AND R.Weight= @Weight AND R.Result_ID IN (SELECT R.Result_ID
-                                                                           FROM [Test].[Result] R
-                                                                           WHERE TestID = @TestID AND Weight = @Weight)""";
+                    Select R.Result_ID
+                    From [Test].[Result] R
+                    Where TestID = ? AND Weight = ? """;
             stmt = con.prepareStatement(preparedQuery);
-            stmt.setString(1, testTxt);
-            stmt.setInt(2, weight);
+            stmt.setString(1, testID);
+            stmt.setString(2, weight);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                result.append("Possible solution: ").append(rs.getString("name")).append(" has the benefit of: ").append(rs.getString("benefit")).append(". Please see at: ").append(rs.getString("platform")).append(", more details: ").append(rs.getString("description")).append("\n\n");
-                results[0] = rs.getString("id");
+                result += rs.getString("Result_ID");
             }
-            results[1] = result.toString();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return result;
+    }
+
+    public static String showSolutionQuery(String resultID, String weight) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        StringBuilder result = new StringBuilder();
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery = """
+                    Select S.Name, S.Benefit, S.Platform, S.Description
+                    From [Test].[Result] R
+                    INNER JOIN [Solution].[Recommendation] Re
+                        ON R.Result_ID = Re.ResultID
+                        INNER JOIN [Solution].[Solution] S
+                            ON Re.SolutionID = S.Solution_ID
+                    Where R.Result_ID = ? AND R.Weight = ?""";
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, resultID);
+            stmt.setString(2, weight);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.append("Possible solution: ").append(rs.getString("name")).append("\nBenefit: ").append(rs.getString("benefit")).append("\nPlease see at: ").append(rs.getString("platform")).append("\nMore details: ").append(rs.getString("description")).append("\n\n");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return result.toString();
+    }
+
+    public static String getMaxScoreQuery(String testID) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        String result = "";
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery = """
+                    Select Total MaxScore
+                    From [Test].[Test] T
+                    Where Test_ID = ? """;
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, testID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                result += rs.getString("MaxScore");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return result;
+    }
+
+    public static String getNumberOfQuestionQuery(String testID) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        String result = "";
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery = """
+                    Select No_question NumberOfQuestion
+                    From [Test].[Test] T
+                    Where Test_ID = ?""";
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, testID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                result += rs.getString("NumberOfQuestion");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return result;
+    }
+
+    public static ArrayList<Integer> getWeightQuery(String testID, String questionID) {
+        Connection con = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        ArrayList<Integer> results = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery = """
+                    SELECT A.Weight
+                    FROM [Test].[Question] Q
+                    INNER JOIN [Test].[AnswerSet] ASET ON Q.AnswerSetID = ASET.AnswerSet_ID
+                    INNER JOIN [Test].[AnswerSetContent] ASCon ON ASCon.AnswerSetID = ASET.AnswerSet_ID
+                    INNER JOIN [Test].[Answer] A ON ASCon.AnswerID = A.Answer_ID
+                    WHERE Q.Question_ID = ?
+                    """;
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, questionID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                results.add(rs.getInt("weight"));
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -703,6 +853,4 @@ public class ConnectSQL {
         }
         return isUpdated;
     }
-
-
 }

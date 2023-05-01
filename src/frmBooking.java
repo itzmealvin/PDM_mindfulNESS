@@ -95,7 +95,7 @@ public class frmBooking extends JFrame {
                 SwingWorker<Void, Void> worker = new SwingWorker<>() {
                     @Override
                     protected Void doInBackground() {
-                        if (ConnectSQL.submitPatientHealingUpdate(frmIndex.getInstance().getID(), idField.getText())) {
+                        if (ConnectSQL.submitPatientHealingUpdate(frmIndex.getInstance().getID()[0], idField.getText())) {
                             JOptionPane.showMessageDialog(null, "Healing with ID: " + idField.getText() + " is confirmed! Please come on time.", "Success!", JOptionPane.INFORMATION_MESSAGE);
                             idField.setText("");
                             ConnectSQL.showAvailableHealingQuery(resultTable);

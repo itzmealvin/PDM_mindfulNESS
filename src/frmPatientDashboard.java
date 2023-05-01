@@ -118,9 +118,9 @@ public class frmPatientDashboard extends JFrame {
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
-                    frmTest frmTest = new frmTest();
-                    frmTest.setVisible(true);
-                    setVisible(false);
+                    //                    frmTest frmTest = new frmTest();
+                    //                    frmTest.setVisible(true);
+                    //                    setVisible(false);
                     return null;
                 }
 
@@ -150,19 +150,19 @@ public class frmPatientDashboard extends JFrame {
             worker.execute();
         });
         cancelHealingButton.addActionListener(e -> {
-            cancelHealingButton.setEnabled(false);
             String idHeal = JOptionPane.showInputDialog(null, "Enter the healing ID you want to cancel: ", "Cancellation", JOptionPane.INFORMATION_MESSAGE);
-            if (!idHeal.isBlank()) {
-                int option = JOptionPane.showConfirmDialog(null, "Confirm cancel healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (idHeal != null && !idHeal.isBlank()) {
+                int option = JOptionPane.showConfirmDialog(null, "Confirm cancel healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.QUESTION_MESSAGE);
                 if (option == JOptionPane.YES_OPTION) {
+                    cancelHealingButton.setEnabled(false);
                     SwingWorker<Void, Void> worker = new SwingWorker<>() {
                         @Override
                         protected Void doInBackground() {
-                            if (ConnectSQL.cancelHealingUpdate(frmIndex.getInstance().getID(), idHeal)) {
-                                JOptionPane.showMessageDialog(null, "Healing with ID: " + idHeal + " cancelled!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                            if (ConnectSQL.cancelHealingUpdate(frmIndex.getInstance().getID()[0], idHeal)) {
+                                JOptionPane.showMessageDialog(null, "Healing with ID: " + idHeal + " cancelled. Check the above box for confirmation!", "Success!", JOptionPane.INFORMATION_MESSAGE);
                                 recentArea.selectAll();
                                 recentArea.replaceSelection("");
-                                recentArea.setText(ConnectSQL.showPatientBookingQuery(frmIndex.getInstance().getID()));
+                                recentArea.setText(ConnectSQL.showPatientBookingQuery(frmIndex.getInstance().getID()[0]));
                             } else {
                                 JOptionPane.showMessageDialog(null, "Cannot cancel healing with ID: " + idHeal + " . Please try again later!", "Warning", JOptionPane.WARNING_MESSAGE);
                             }
@@ -176,6 +176,8 @@ public class frmPatientDashboard extends JFrame {
                     };
                     worker.execute();
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Nothing to cancel!", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         });
     }
@@ -191,10 +193,10 @@ public class frmPatientDashboard extends JFrame {
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (isVisible()) {
-            insLabel.setText("Welcome back, " + ConnectSQL.showNameQuery(frmIndex.getInstance().getID()) + "!");
+            insLabel.setText("Welcome back, " + ConnectSQL.showNameQuery(frmIndex.getInstance().getID()[0], frmIndex.getInstance().getID()[1]) + "!");
             recentArea.selectAll();
             recentArea.replaceSelection("");
-            recentArea.setText(ConnectSQL.showPatientBookingQuery(frmIndex.getInstance().getID()));
+            recentArea.setText(ConnectSQL.showPatientBookingQuery(frmIndex.getInstance().getID()[0]));
             recentArea.setEditable(false);
         }
     }

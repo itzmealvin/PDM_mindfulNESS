@@ -109,8 +109,8 @@ public class frmIndex extends JFrame {
         return instance;
     }
 
-    public String getID() {
-        return results[0];
+    public String[] getID() {
+        return results;
     }
 
     public String[] getCredentials() {

@@ -14,9 +14,9 @@ public class frmPatientSign extends JFrame {
     private JLabel fullNameLabel;
     private JLabel dobLabel;
     private JPanel panel;
-    private JTextField genderField;
     private JButton clearAllButton;
     private JLabel copyrightLabel;
+    private JComboBox<String> genderField;
 
     private frmPatientSign() {
         setContentPane(panel);
@@ -34,7 +34,7 @@ public class frmPatientSign extends JFrame {
                         fullNameField.setText("");
                         emailField.setText("");
                         dobField.setText("");
-                        genderField.setText("");
+                        genderField.setSelectedItem("<please choose>");
                         return null;
                     }
 
@@ -47,7 +47,7 @@ public class frmPatientSign extends JFrame {
             }
         });
         confirmButton.addActionListener(e -> {
-            if (fullNameField.getText().isEmpty() || emailField.getText().isEmpty() || dobField.getText().isEmpty() || genderField.getText().isEmpty()) {
+            if (fullNameField.getText().isEmpty() || emailField.getText().isEmpty() || dobField.getText().isEmpty() || String.valueOf(genderField.getSelectedItem()).equals("<please choose>")) {
                 JOptionPane.showMessageDialog(null, "Field(s) are empty!", "Warning", JOptionPane.WARNING_MESSAGE);
                 confirmButton.setEnabled(true);
                 return;
@@ -55,11 +55,10 @@ public class frmPatientSign extends JFrame {
             int option = JOptionPane.showConfirmDialog(null, "Please check the information carefully!", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
                 confirmButton.setEnabled(false);
-                System.out.println(frmIndex.getInstance().getCredentials()[0] + frmIndex.getInstance().getCredentials()[1] + fullNameField.getText() + dobField.getText() + genderField.getText() + emailField.getText());
                 SwingWorker<Void, Void> worker = new SwingWorker<>() {
                     @Override
                     protected Void doInBackground() {
-                        if (ConnectSQL.submitPatientUser(frmIndex.getInstance().getCredentials()[0], frmIndex.getInstance().getCredentials()[1], fullNameField.getText(), dobField.getText(), genderField.getText(), emailField.getText())) {
+                        if (ConnectSQL.submitPatientUser(frmIndex.getInstance().getCredentials()[0], frmIndex.getInstance().getCredentials()[1], fullNameField.getText(), dobField.getText(), String.valueOf(genderField.getSelectedItem()), emailField.getText())) {
                             JOptionPane.showMessageDialog(null, "Account: " + frmIndex.getInstance().getCredentials()[0] + " registered successfully. Thank you!", "Success!", JOptionPane.INFORMATION_MESSAGE);
                             frmSignDone.getInstance().setVisible(true);
                             setVisible(false);
@@ -115,7 +114,7 @@ public class frmPatientSign extends JFrame {
             fullNameField.setText("");
             emailField.setText("");
             dobField.setText("");
-            genderField.setText("");
+            genderField.setSelectedItem("<please choose>");
         }
     }
 }
