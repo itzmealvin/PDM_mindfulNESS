@@ -228,7 +228,7 @@ public class ConnectSQL {
                     SELECT S.Name AS symptom, So.Name AS solution, So.Platform, So.Description FROM [Disease].[Disease] D INNER JOIN [Disease].[DiseaseSymptom] DS ON D.Disease_ID = DS.DiseaseID
                     INNER JOIN [Disease].[Symptom] S ON DS.SymptomID = S.Symptom_ID
                     INNER JOIN [Solution].[CureOneByOne] C ON S.Symptom_ID = C.SymptomID
-                    INNER JOIN [Solution].[Solution] So ON C.SolutionID = So.Solution_ID  WHERE D.Name = ?\s""";
+                    INNER JOIN [Solution].[Solution] So ON C.SolutionID = So.Solution_ID  WHERE D.Name = ?""";
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, queryTxt);
             rs = stmt.executeQuery();
