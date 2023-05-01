@@ -1,8 +1,11 @@
 import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class ConnectSQL {
     static final String connectionUrl = "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=congbang0711_;user=congbang0711_;password=mindfulness;encrypt=true;trustServerCertificate=true;";
@@ -35,12 +38,49 @@ public class ConnectSQL {
             if (!rs.next()) {
                 JOptionPane.showMessageDialog(null, "No available healing found! Please try again later", "Message", JOptionPane.WARNING_MESSAGE);
             } else {
-                resultTable.setModel(DbUtils.resultSetToTableModel(rs));
+                resultTable.setModel(resultSetToTableModel(rs));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             closeConnect(con);
+        }
+    }
+
+    private static TableModel resultSetToTableModel(ResultSet var0) {
+        try {
+            ResultSetMetaData var1 = var0.getMetaData();
+            int var2 = var1.getColumnCount();
+            Vector var3 = new Vector();
+
+            for(int var4 = 0; var4 < var2; ++var4) {
+                var3.addElement(var1.getColumnLabel(var4 + 1));
+            }
+
+            Vector var8 = new Vector();
+
+            while(var0.next()) {
+                Vector var5 = new Vector();
+
+                for(int var6 = 1; var6 <= var2; ++var6) {
+                    var5.addElement(var0.getObject(var6));
+                }
+
+                var8.addElement(var5);
+            }
+
+            DefaultTableModel tableModel = new DefaultTableModel(var8, var3) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
+
+            return tableModel;
+        } catch (Exception var7) {
+            var7.printStackTrace();
+            return null;
         }
     }
 

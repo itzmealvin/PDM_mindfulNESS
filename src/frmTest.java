@@ -143,21 +143,36 @@ public class frmTest extends JFrame {
         });
         questionCombo.addActionListener(e -> {
             questionCombo.setEnabled(false);
-            answerAButton.setVisible(false);
-            answerBButton.setVisible(false);
-            answerCButton.setVisible(false);
-            answerDButton.setVisible(false);
-            answerEButton.setVisible(false);
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
                     questionArea.setText(ConnectSQL.showQuestionContentQuery(Objects.requireNonNull(testCombo.getSelectedItem()).toString(), Objects.requireNonNull(questionCombo.getSelectedItem()).toString()));
                     answers = ConnectSQL.showAnswerContentQuery(questionCombo.getSelectedItem().toString());
+
                     answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0]);
                     answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1]);
                     answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2]);
                     answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3]);
                     answerEButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][4]);
+
+                    boolean answered = false;
+                    for (int i = 0; i < 5; i++)
+                        answered = answered || !buttonStates[questionCombo.getSelectedIndex()][i];
+
+                    if (answered) {
+                        answerAButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][0]);
+                        answerBButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][1]);
+                        answerCButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][2]);
+                        answerDButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][3]);
+                        answerEButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][4]);
+                    } else {
+                        answerAButton.setEnabled(true);
+                        answerBButton.setEnabled(true);
+                        answerCButton.setEnabled(true);
+                        answerDButton.setEnabled(true);
+                        answerEButton.setEnabled(true);
+                    }
+
                     answerAButton.setText(answers.get(0));
                     answerBButton.setText(answers.get(1));
                     answerCButton.setText(answers.get(2));
@@ -168,27 +183,10 @@ public class frmTest extends JFrame {
 
                 @Override
                 protected void done() {
-                    questionCombo.setEnabled(true); // Re-enable the button after the background process is done
+                    questionCombo.setEnabled(true);
                 }
             };
             worker.execute(); // Start the background process
-            boolean answered = false;
-            for (int i = 0; i < 5; i++)
-                answered = answered || !buttonStates[questionCombo.getSelectedIndex()][i];
-            if (answered) {
-                answerAButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][0]);
-                answerBButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][1]);
-                answerCButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][2]);
-                answerDButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][3]);
-                answerEButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][4]);
-            } else {
-                answerAButton.setEnabled(true);
-                answerBButton.setEnabled(true);
-                answerCButton.setEnabled(true);
-                answerDButton.setEnabled(true);
-                answerEButton.setEnabled(true);
-            }
-
         });
         answerAButton.addActionListener(e -> {
             buttonEntered(answerAButton);
@@ -207,23 +205,23 @@ public class frmTest extends JFrame {
         answerCButton.addActionListener(e -> {
             buttonEntered(answerCButton);
             answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0] = false);
-            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
+            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1] = false);
             answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
             answerEButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][4] = false);
         });
         answerDButton.addActionListener(e -> {
             buttonEntered(answerDButton);
             answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0] = false);
-            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
-            answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
+            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1] = false);
+            answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
             answerEButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][4] = false);
         });
         answerEButton.addActionListener(e -> {
             buttonEntered(answerEButton);
             answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0] = false);
-            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
-            answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
-            answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][4] = false);
+            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1] = false);
+            answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2] = false);
+            answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3] = false);
         });
     }
 
@@ -250,7 +248,7 @@ public class frmTest extends JFrame {
         main.setEnabled(false);
         countAnswer++;
         if (countAnswer == numberOfQuestionInt) {
-            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(null, "Your score is: " + totalWeight, "Message", JOptionPane.INFORMATION_MESSAGE);
                 int threshold;

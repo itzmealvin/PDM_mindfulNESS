@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class frmBooking extends JFrame {
     private JButton logOutButton;
@@ -13,6 +14,7 @@ public class frmBooking extends JFrame {
     private JLabel idLabel;
     private JLabel availableLabel;
     private JLabel copyrightLabel;
+    private JScrollPane listBookingArea;
 
     public frmBooking() {
         setContentPane(panel);
@@ -20,6 +22,7 @@ public class frmBooking extends JFrame {
         setSize(1200, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         logOutButton.addActionListener(e -> {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (option == JOptionPane.YES_OPTION) {
