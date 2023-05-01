@@ -143,6 +143,11 @@ public class frmTest extends JFrame {
         });
         questionCombo.addActionListener(e -> {
             questionCombo.setEnabled(false);
+            answerAButton.setVisible(false);
+            answerBButton.setVisible(false);
+            answerCButton.setVisible(false);
+            answerDButton.setVisible(false);
+            answerEButton.setVisible(false);
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
@@ -158,41 +163,32 @@ public class frmTest extends JFrame {
                     answerCButton.setText(answers.get(2));
                     answerDButton.setText(answers.get(3));
                     answerEButton.setText(answers.get(4));
-                    boolean answered = false;
-                    for (int i = 0; i < 4; i++)
-                        answered = answered || !buttonStates[questionCombo.getSelectedIndex()][i];
-                    if (answered) {
-                        answerAButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][0]);
-                        answerBButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][1]);
-                        answerCButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][2]);
-                        answerDButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][3]);
-                        answerEButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][4]);
-                    } else {
-                        answerAButton.setEnabled(true);
-                        answerBButton.setEnabled(true);
-                        answerCButton.setEnabled(true);
-                        answerDButton.setEnabled(true);
-                        answerEButton.setEnabled(true);
-                    }
                     return null;
                 }
 
                 @Override
                 protected void done() {
-                    questionCombo.setEnabled(true);
+                    questionCombo.setEnabled(true); // Re-enable the button after the background process is done
                 }
             };
             worker.execute(); // Start the background process
-            answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0]);
-            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1]);
-            answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2]);
-            answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3]);
-            answerEButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][4]);
-            answerAButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][0]);
-            answerBButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][1]);
-            answerCButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][2]);
-            answerDButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][3]);
-            answerEButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][4]);
+            boolean answered = false;
+            for (int i = 0; i < 5; i++)
+                answered = answered || !buttonStates[questionCombo.getSelectedIndex()][i];
+            if (answered) {
+                answerAButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][0]);
+                answerBButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][1]);
+                answerCButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][2]);
+                answerDButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][3]);
+                answerEButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][4]);
+            } else {
+                answerAButton.setEnabled(true);
+                answerBButton.setEnabled(true);
+                answerCButton.setEnabled(true);
+                answerDButton.setEnabled(true);
+                answerEButton.setEnabled(true);
+            }
+
         });
         answerAButton.addActionListener(e -> {
             buttonEntered(answerAButton);
