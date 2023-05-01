@@ -183,7 +183,16 @@ public class frmTest extends JFrame {
                 }
             };
             worker.execute(); // Start the background process
-
+            answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0]);
+            answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1]);
+            answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2]);
+            answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3]);
+            answerEButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][4]);
+            answerAButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][0]);
+            answerBButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][1]);
+            answerCButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][2]);
+            answerDButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][3]);
+            answerEButton.setEnabled(buttonStates[questionCombo.getSelectedIndex()][4]);
         });
         answerAButton.addActionListener(e -> {
             buttonEntered(answerAButton);
@@ -243,6 +252,7 @@ public class frmTest extends JFrame {
         } else if (main == answerEButton) {
             totalWeight += weightE;
         }
+        main.setEnabled(false);
         countAnswer++;
         if (countAnswer == numberOfQuestionInt) {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -280,6 +290,6 @@ public class frmTest extends JFrame {
             countAnswer = 0;
             totalWeight = 0;
         }
-        main.setEnabled(false);
+        
     }
 }
