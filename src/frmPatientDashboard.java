@@ -118,9 +118,9 @@ public class frmPatientDashboard extends JFrame {
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
-                    //                    frmTest frmTest = new frmTest();
-                    //                    frmTest.setVisible(true);
-                    //                    setVisible(false);
+                    frmTest frmTest = new frmTest();
+                    frmTest.setVisible(true);
+                    setVisible(false);
                     return null;
                 }
 
@@ -152,7 +152,7 @@ public class frmPatientDashboard extends JFrame {
         cancelHealingButton.addActionListener(e -> {
             String idHeal = JOptionPane.showInputDialog(null, "Enter the healing ID you want to cancel: ", "Cancellation", JOptionPane.INFORMATION_MESSAGE);
             if (idHeal != null && !idHeal.isBlank()) {
-                int option = JOptionPane.showConfirmDialog(null, "Confirm cancel healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.QUESTION_MESSAGE);
+                int option = JOptionPane.showConfirmDialog(null, "Confirm cancel healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (option == JOptionPane.YES_OPTION) {
                     cancelHealingButton.setEnabled(false);
                     SwingWorker<Void, Void> worker = new SwingWorker<>() {

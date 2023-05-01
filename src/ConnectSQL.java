@@ -99,7 +99,7 @@ public class ConnectSQL {
         String[] results = new String[2];
         try {
             con = DriverManager.getConnection(connectionUrl);
-            String preparedQuery = """ 
+            String preparedQuery = """
                     DECLARE @UserName AS VARCHAR(50) = ?
                     DECLARE @Pwd AS VARCHAR(30) = ?
                                         
@@ -117,7 +117,7 @@ public class ConnectSQL {
                     FROM [Account].[Account] A
                              FULL JOIN [Account].[Patient] P ON A.User_ID = P.UserID
                              FULL JOIN [Account].[Specialist] S ON A.User_ID = S.UserID
-                    WHERE A.User_name = @UserName AND A.Password = HASHBYTES('SHA1', CONCAT(@Pwd, (SELECT A.Salt FROM [Account].[Account] A WHERE A.User_name = @UserName)))           
+                    WHERE A.User_name = @UserName AND A.Password = HASHBYTES('SHA1', CONCAT(@Pwd, (SELECT A.Salt FROM [Account].[Account] A WHERE A.User_name = @UserName)))
                     """;
             stmt = con.prepareStatement(preparedQuery);
             stmt.setString(1, accountTxt);
@@ -648,154 +648,7 @@ public class ConnectSQL {
         return result;
     }
 
-    //    public static String[] showSolutionQuery(String testTxt, int weight) {
-    //        Connection con = null;
-    //        PreparedStatement stmt;
-    //        ResultSet rs;
-    //        StringBuilder result = new StringBuilder();
-    //        String[] results = new String[2];
-    //        try {
-    //            con = DriverManager.getConnection(connectionUrl);
-    //            System.out.println("Connected to the Database");
-    //            String preparedQuery = """
-    //                    DECLARE @TestID AS INT = ?
-    //                    DECLARE @Weight AS INT = ?
-    //                    SELECT R.Result_ID AS ID, S.Name, S.Benefit, S.Platform, S.Description
-    //                    FROM [Test].[Result] R
-    //                             INNER JOIN [Solution].[Recommendation] Re
-    //                                        ON R.Result_ID = Re.ResultID
-    //                             INNER JOIN [Solution].[Solution] S
-    //                                        ON Re.SolutionID = S.Solution_ID
-    //                    WHERE R.TestID = @TestID AND R.Weight= @Weight AND R.Result_ID IN (SELECT R.Result_ID
-    //                                                                           FROM [Test].[Result] R
-    //                                                                           WHERE TestID = @TestID AND Weight = @Weight)""";
-    //            stmt = con.prepareStatement(preparedQuery);
-    //            stmt.setString(1, testTxt);
-    //            stmt.setInt(2, weight);
-    //            rs = stmt.executeQuery();
-    //            while (rs.next()) {
-    //                result.append("Possible solution: ").append(rs.getString("name")).append(" has the benefit of: ").append(rs.getString("benefit")).append(". Please see at: ").append(rs.getString("platform")).append(", more details: ").append(rs.getString("description")).append("\n\n");
-    //                results[0] = rs.getString("id");
-    //            }
-    //            results[1] = result.toString();
-    //        } catch (SQLException e) {
-    //            throw new RuntimeException(e);
-    //        } finally {
-    //            closeConnect(con);
-    //        }
-    //        return results;
-    //    }
-    public static String showResultQuery(String testID, String weight) {
-        Connection con = null;
-        PreparedStatement stmt;
-        ResultSet rs;
-        String result = "";
-        try {
-            con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    Select R.Result_ID
-                    From [Test].[Result] R
-                    Where TestID = ? AND Weight = ? """;
-            stmt = con.prepareStatement(preparedQuery);
-            stmt.setString(1, testID);
-            stmt.setString(2, weight);
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                result += rs.getString("Result_ID");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            closeConnect(con);
-        }
-        return result;
-    }
-
-    public static String showSolutionQuery(String resultID, String weight) {
-        Connection con = null;
-        PreparedStatement stmt;
-        ResultSet rs;
-        StringBuilder result = new StringBuilder();
-        try {
-            con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    Select S.Name, S.Benefit, S.Platform, S.Description
-                    From [Test].[Result] R
-                    INNER JOIN [Solution].[Recommendation] Re
-                        ON R.Result_ID = Re.ResultID
-                        INNER JOIN [Solution].[Solution] S
-                            ON Re.SolutionID = S.Solution_ID
-                    Where R.Result_ID = ? AND R.Weight = ?""";
-            stmt = con.prepareStatement(preparedQuery);
-            stmt.setString(1, resultID);
-            stmt.setString(2, weight);
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                result.append("Possible solution: ").append(rs.getString("name")).append("\nBenefit: ").append(rs.getString("benefit")).append("\nPlease see at: ").append(rs.getString("platform")).append("\nMore details: ").append(rs.getString("description")).append("\n\n");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            closeConnect(con);
-        }
-        return result.toString();
-    }
-
-    public static String getMaxScoreQuery(String testID) {
-        Connection con = null;
-        PreparedStatement stmt;
-        ResultSet rs;
-        String result = "";
-        try {
-            con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    Select Total MaxScore
-                    From [Test].[Test] T
-                    Where Test_ID = ? """;
-            stmt = con.prepareStatement(preparedQuery);
-            stmt.setString(1, testID);
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                result += rs.getString("MaxScore");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            closeConnect(con);
-        }
-        return result;
-    }
-
-    public static String getNumberOfQuestionQuery(String testID) {
-        Connection con = null;
-        PreparedStatement stmt;
-        ResultSet rs;
-        String result = "";
-        try {
-            con = DriverManager.getConnection(connectionUrl);
-            System.out.println("Connected to the Database");
-            String preparedQuery = """
-                    Select No_question NumberOfQuestion
-                    From [Test].[Test] T
-                    Where Test_ID = ?""";
-            stmt = con.prepareStatement(preparedQuery);
-            stmt.setString(1, testID);
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                result += rs.getString("NumberOfQuestion");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            closeConnect(con);
-        }
-        return result;
-    }
-
-    public static ArrayList<Integer> getWeightQuery(String testID, String questionID) {
+    public static ArrayList<Integer> showWeightQuery(String questionID) {
         Connection con = null;
         PreparedStatement stmt;
         ResultSet rs;
@@ -825,11 +678,47 @@ public class ConnectSQL {
         return results;
     }
 
-    public static boolean submitRecordUpdate(String patientTxt, String resultTxt) {
+    public static String[] showSolutionQuery(String testTxt, int weight) {
         Connection con = null;
         PreparedStatement stmt;
-        int rs;
-        boolean isUpdated = false;
+        ResultSet rs;
+        StringBuilder result = new StringBuilder();
+        String[] results = new String[2];
+        try {
+            con = DriverManager.getConnection(connectionUrl);
+            System.out.println("Connected to the Database");
+            String preparedQuery = """
+                    DECLARE @TestID AS INT = ?
+                    DECLARE @Weight AS INT = ?
+                    SELECT R.Result_ID AS ID, S.Name, S.Benefit, S.Platform, S.Description
+                    FROM [Test].[Result] R
+                             INNER JOIN [Solution].[Recommendation] Re
+                                        ON R.Result_ID = Re.ResultID
+                             INNER JOIN [Solution].[Solution] S
+                                        ON Re.SolutionID = S.Solution_ID
+                    WHERE R.TestID = @TestID AND R.Weight= @Weight AND R.Result_ID IN (SELECT R.Result_ID
+                                                                           FROM [Test].[Result] R
+                                                                           WHERE TestID = @TestID AND Weight = @Weight)""";
+            stmt = con.prepareStatement(preparedQuery);
+            stmt.setString(1, testTxt);
+            stmt.setInt(2, weight);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.append("Possible solution: ").append(rs.getString("name")).append(" has the benefit of: ").append(rs.getString("benefit")).append(". Please see at: ").append(rs.getString("platform")).append(", more details: ").append(rs.getString("description")).append("\n\n");
+                results[0] = rs.getString("id");
+            }
+            results[1] = result.toString();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnect(con);
+        }
+        return results;
+    }
+
+    public static void submitRecordUpdate(String patientTxt, String resultTxt) {
+        Connection con = null;
+        PreparedStatement stmt;
         try {
             con = DriverManager.getConnection(connectionUrl);
             System.out.println("Connected to the Database");
@@ -841,16 +730,12 @@ public class ConnectSQL {
             stmt = con.prepareStatement(updateString);
             stmt.setString(1, patientTxt);
             stmt.setString(2, resultTxt);
-            rs = stmt.executeUpdate();
-            if (rs > 0) {
-                isUpdated = true;
-            }
+            stmt.executeUpdate();
             con.commit();
         } catch (SQLException e) {
-            return isUpdated;
+            throw new RuntimeException(e);
         } finally {
             closeConnect(con);
         }
-        return isUpdated;
     }
 }

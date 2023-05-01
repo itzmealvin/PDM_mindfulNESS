@@ -150,7 +150,7 @@ public class frmSpecialistDashboard extends JFrame {
         delistHealingButton.addActionListener(e -> {
             String idHeal = JOptionPane.showInputDialog(null, "Enter the healing ID you want to delist: ", "Cancellation", JOptionPane.INFORMATION_MESSAGE);
             if (idHeal != null && !idHeal.isBlank()) {
-                int option = JOptionPane.showConfirmDialog(null, "Confirm delist healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.QUESTION_MESSAGE);
+                int option = JOptionPane.showConfirmDialog(null, "Confirm delist healing with ID: " + idHeal + " ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (option == JOptionPane.YES_OPTION) {
                     delistHealingButton.setEnabled(false);
                     SwingWorker<Void, Void> worker = new SwingWorker<>() {
