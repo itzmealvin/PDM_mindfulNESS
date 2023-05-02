@@ -24,27 +24,35 @@ public class frmPatientSign extends JFrame {
         setSize(700, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        clearAllButton.addActionListener(e -> {
-            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all field(s)?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (option == JOptionPane.YES_OPTION) {
-                clearAllButton.setEnabled(false);
-                SwingWorker<Void, Void> worker = new SwingWorker<>() {
-                    @Override
-                    protected Void doInBackground() {
-                        fullNameField.setText("");
-                        emailField.setText("");
-                        dobField.setText("");
-                        genderField.setSelectedItem("<please choose>");
-                        return null;
-                    }
+    clearAllButton.addActionListener(
+        e -> {
+          int option =
+              JOptionPane.showConfirmDialog(
+                  null,
+                  "Are you sure you want to clear all field(s)?",
+                  "Confirmation",
+                  JOptionPane.YES_NO_OPTION,
+                  JOptionPane.WARNING_MESSAGE);
+          if (option == JOptionPane.YES_OPTION) {
+            clearAllButton.setEnabled(false);
+            SwingWorker<Void, Void> worker =
+                new SwingWorker<>() {
+                  @Override
+                  protected Void doInBackground() {
+                    fullNameField.setText("");
+                    emailField.setText("");
+                    dobField.setText("");
+                    genderField.setSelectedItem("<please choose>");
+                    return null;
+                  }
 
-                    @Override
-                    protected void done() {
-                        clearAllButton.setEnabled(true);
-                    }
+                  @Override
+                  protected void done() {
+                    clearAllButton.setEnabled(true);
+                  }
                 };
-                worker.execute();
-            }
+            worker.execute();
+          }
         });
         confirmButton.addActionListener(e -> {
             if (fullNameField.getText().isEmpty() || emailField.getText().isEmpty() || dobField.getText().isEmpty() || String.valueOf(genderField.getSelectedItem()).equals("<please choose>")) {

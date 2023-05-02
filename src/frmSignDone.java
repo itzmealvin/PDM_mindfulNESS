@@ -1,43 +1,44 @@
 import javax.swing.*;
 
 public class frmSignDone extends JFrame {
-    private static frmSignDone instance;
-    private JButton goToLogInButton;
-    private JLabel titleLabel;
-    private JLabel insLabel;
-    private JPanel panel;
-    private JLabel copyrightLabel;
+  private static frmSignDone instance;
+  private JButton goToLogInButton;
+  private JLabel titleLabel;
+  private JLabel insLabel;
+  private JPanel panel;
+  private JLabel copyrightLabel;
 
-    private frmSignDone() {
-        setContentPane(panel);
-        setTitle("mindfulNESS - Sign-up completion");
-        setSize(500, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        goToLogInButton.addActionListener(e -> {
-            goToLogInButton.setEnabled(false);
-            SwingWorker<Void, Void> worker = new SwingWorker<>() {
+  private frmSignDone() {
+    setContentPane(panel);
+    setTitle("mindfulNESS - Sign-up completion");
+    setSize(500, 500);
+    setLocationRelativeTo(null);
+    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    goToLogInButton.addActionListener(
+        e -> {
+          goToLogInButton.setEnabled(false);
+          SwingWorker<Void, Void> worker =
+              new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
-                    frmIndex.getInstance().setVisible(true);
-                    setVisible(false);
-                    return null;
+                  frmIndex.getInstance().setVisible(true);
+                  setVisible(false);
+                  return null;
                 }
 
                 @Override
                 protected void done() {
-                    goToLogInButton.setEnabled(true);
+                  goToLogInButton.setEnabled(true);
                 }
-            };
-            worker.execute();
-
+              };
+          worker.execute();
         });
-    }
+  }
 
-    public static synchronized frmSignDone getInstance() {
-        if (instance == null) {
-            instance = new frmSignDone();
-        }
-        return instance;
+  public static synchronized frmSignDone getInstance() {
+    if (instance == null) {
+      instance = new frmSignDone();
     }
+    return instance;
+  }
 }
