@@ -57,6 +57,8 @@ public class frmTest extends JFrame {
     setSize(1200, 800);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    questionArea.setEditable(false);
+
     logOutButton.addActionListener(
         e -> {
           int option =
@@ -217,14 +219,36 @@ public class frmTest extends JFrame {
                   numberOfQuestionInt = questions.length;
                   questionCombo.setModel(new DefaultComboBoxModel<>(questions));
                   questionCombo.setEnabled(true);
-                  weightIntList =
-                      ConnectSQL.showWeightQuery(
-                          Objects.requireNonNull(questionCombo.getSelectedItem()).toString());
+                  weightIntList = ConnectSQL.showWeightQuery(Objects.requireNonNull(questionCombo.getSelectedItem()).toString());
                   weightA = weightIntList.get(0);
                   weightB = weightIntList.get(1);
                   weightC = weightIntList.get(2);
                   weightD = weightIntList.get(3);
                   weightE = weightIntList.get(4);
+
+                  if(weightIntList.size() <=2) {
+                      answerAButton.setEnabled(true);
+                      answerBButton.setEnabled(true);
+
+                      answerCButton.setVisible(false);
+                      answerDButton.setVisible(false);
+                      answerEButton.setVisible(false);
+                  }
+                  else if(weightIntList.size() >=3) {
+                      answerAButton.setEnabled(true);
+                      answerBButton.setEnabled(true);
+                      answerCButton.setEnabled(true);
+                      answerDButton.setEnabled(true);
+
+                      answerEButton.setVisible(false);
+                  }
+                  else if(weightIntList.size() >=5) {
+                      answerAButton.setEnabled(true);
+                      answerBButton.setEnabled(true);
+                      answerCButton.setEnabled(true);
+                      answerDButton.setEnabled(true);
+                      answerEButton.setEnabled(true);
+                  }
                   return null;
                 }
 
@@ -236,6 +260,7 @@ public class frmTest extends JFrame {
                   answerCButton.setEnabled(true);
                   answerDButton.setEnabled(true);
                   answerEButton.setEnabled(true);
+
                 }
               };
           worker.execute();
@@ -255,14 +280,17 @@ public class frmTest extends JFrame {
                   questionArea.setText(
                       ConnectSQL.showQuestionContentQuery(
                           Objects.requireNonNull(testCombo.getSelectedItem()).toString(),
-                          Objects.requireNonNull(questionCombo.getSelectedItem()).toString()));
-                  answers =
-                      ConnectSQL.showAnswerContentQuery(questionCombo.getSelectedItem().toString());
+                          Objects.requireNonNull(questionCombo.getSelectedItem()).toString())
+                      );
+
+
+                  answers = ConnectSQL.showAnswerContentQuery(questionCombo.getSelectedItem().toString());
                   answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0]);
                   answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1]);
                   answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2]);
                   answerDButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][3]);
                   answerEButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][4]);
+
                   boolean answered = false;
                   for (int i = 0; i < 5; i++)
                     answered = answered || !buttonStates[questionCombo.getSelectedIndex()][i];
@@ -272,7 +300,8 @@ public class frmTest extends JFrame {
                     answerCButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][2]);
                     answerDButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][3]);
                     answerEButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][4]);
-                  } else {
+                  }
+                  else {
                     answerAButton.setEnabled(true);
                     answerBButton.setEnabled(true);
                     answerCButton.setEnabled(true);
