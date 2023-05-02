@@ -63,19 +63,6 @@ public class frmExplorer extends JFrame {
                 @Override
                 protected Void doInBackground() {
                   ConnectSQL.showQuery(queryField.getText(), resultTable);
-                  if (resultTable.getColumnCount() == 0 || resultTable.getRowCount() == 0) {
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "No result found, check your query again!",
-                        "Warning",
-                        JOptionPane.WARNING_MESSAGE);
-                  } else {
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Run query successfully!",
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE);
-                  }
                   return null;
                 }
 

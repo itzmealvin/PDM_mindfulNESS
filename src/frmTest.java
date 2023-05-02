@@ -27,6 +27,7 @@ public class frmTest extends JFrame {
   private JLabel questionLabel;
   private JComboBox<Object> testCombo;
   private JLabel testLabel;
+  private JLabel copyrightLabel;
   private int weightA;
   private int weightB;
   private int weightC;

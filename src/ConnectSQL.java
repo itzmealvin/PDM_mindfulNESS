@@ -119,17 +119,20 @@ public class ConnectSQL {
       con = DriverManager.getConnection(connectionUrl);
       stmt = con.prepareStatement(queryTxt);
       rs = stmt.executeQuery();
-      if (!rs.next()) {
+      if (!rs.next())
         JOptionPane.showMessageDialog(
             null,
             "Query return nothing! Please press clear all and do again!",
             "Message",
             JOptionPane.WARNING_MESSAGE);
-      } else {
+      else {
+        JOptionPane.showMessageDialog(
+            null, "Run query successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
         resultTable.setModel(DbUtils.resultSetToTableModel(rs));
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      JOptionPane.showMessageDialog(
+          null, "The database return error: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
     } finally {
       closeConnect(con);
     }

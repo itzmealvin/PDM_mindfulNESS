@@ -26,22 +26,42 @@ public class frmRoles extends JFrame {
                   JOptionPane.YES_NO_OPTION,
                   JOptionPane.QUESTION_MESSAGE);
           if (option == JOptionPane.YES_OPTION) {
-            patientButton.setEnabled(false);
-            SwingWorker<Void, Void> worker =
-                new SwingWorker<>() {
-                  @Override
-                  protected Void doInBackground() {
-                    frmPatientSign.getInstance().setVisible(true);
-                    setVisible(false);
-                    return null;
-                  }
+            JPasswordField inputPwd = new JPasswordField();
+            Object[] message = {"Re-enter your password: ", inputPwd};
+            int option2 =
+                JOptionPane.showConfirmDialog(
+                    null,
+                    message,
+                    "Password Verification",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            if (option2 == JOptionPane.YES_OPTION) {
+              if (String.valueOf(inputPwd.getPassword())
+                  .equals(frmIndex.getInstance().getCredentials()[1])) {
+                patientButton.setEnabled(false);
+                SwingWorker<Void, Void> worker =
+                    new SwingWorker<>() {
+                      @Override
+                      protected Void doInBackground() {
+                        frmPatientSign.getInstance().setVisible(true);
+                        setVisible(false);
+                        return null;
+                      }
 
-                  @Override
-                  protected void done() {
-                    patientButton.setEnabled(true);
-                  }
-                };
-            worker.execute();
+                      @Override
+                      protected void done() {
+                        patientButton.setEnabled(true);
+                      }
+                    };
+                worker.execute();
+              } else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Passwords are not identical! Try again, or go back and change password.",
+                    "Failed to verify",
+                    JOptionPane.WARNING_MESSAGE);
+              }
+            }
           }
         });
     specialistButton.addActionListener(
@@ -54,22 +74,43 @@ public class frmRoles extends JFrame {
                   JOptionPane.YES_NO_OPTION,
                   JOptionPane.QUESTION_MESSAGE);
           if (option == JOptionPane.YES_OPTION) {
-            specialistButton.setEnabled(false);
-            SwingWorker<Void, Void> worker =
-                new SwingWorker<>() {
-                  @Override
-                  protected Void doInBackground() {
-                    frmSpecialistSign.getInstance().setVisible(true);
-                    setVisible(false);
-                    return null;
-                  }
+            JPasswordField inputPwd = new JPasswordField();
+            Object[] message = {"Re-enter your password: ", inputPwd};
+            int option2 =
+                JOptionPane.showConfirmDialog(
+                    null,
+                    message,
+                    "Password Verification",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            if (option2 == JOptionPane.YES_OPTION) {
+              if (String.valueOf(inputPwd.getPassword())
+                  .equals(frmIndex.getInstance().getCredentials()[1])) {
 
-                  @Override
-                  protected void done() {
-                    patientButton.setEnabled(true);
-                  }
-                };
-            worker.execute();
+                specialistButton.setEnabled(false);
+                SwingWorker<Void, Void> worker =
+                    new SwingWorker<>() {
+                      @Override
+                      protected Void doInBackground() {
+                        frmSpecialistSign.getInstance().setVisible(true);
+                        setVisible(false);
+                        return null;
+                      }
+
+                      @Override
+                      protected void done() {
+                        specialistButton.setEnabled(true);
+                      }
+                    };
+                worker.execute();
+              } else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Passwords are not identical! Try again, or go back and change password.",
+                    "Failed to verify",
+                    JOptionPane.WARNING_MESSAGE);
+              }
+            }
           }
         });
     goBackButton.addActionListener(
