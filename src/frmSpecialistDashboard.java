@@ -28,7 +28,7 @@ public class frmSpecialistDashboard extends JFrame {
 
   private frmSpecialistDashboard() {
     setContentPane(panel);
-    setTitle("mindfulNESS - Dashboard");
+    setTitle("mindfulNESS - Specialist Dashboard");
     setSize(1200, 800);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -51,8 +51,8 @@ public class frmSpecialistDashboard extends JFrame {
                       setVisible(false);
                       JOptionPane.showMessageDialog(
                           null,
-                          "Logged out! See you again",
-                          "Success!",
+                          "Logged out! See you again.",
+                          "Success",
                           JOptionPane.WARNING_MESSAGE);
                       Thread.sleep(1000);
                       System.exit(0);
@@ -79,7 +79,7 @@ public class frmSpecialistDashboard extends JFrame {
               JOptionPane.showConfirmDialog(
                   null,
                   message,
-                  "Changing Password!",
+                  "Changing Password",
                   JOptionPane.YES_NO_OPTION,
                   JOptionPane.QUESTION_MESSAGE);
           if (option == JOptionPane.YES_OPTION) {
@@ -95,7 +95,7 @@ public class frmSpecialistDashboard extends JFrame {
                       JOptionPane.showMessageDialog(
                           null,
                           "Password changed successfully!",
-                          "Success!",
+                          "Success",
                           JOptionPane.INFORMATION_MESSAGE);
                       oldPwd.setText("");
                       newPwd.setText("");
@@ -185,9 +185,9 @@ public class frmSpecialistDashboard extends JFrame {
                         extraField.getText())) {
                       JOptionPane.showMessageDialog(
                           null,
-                          "Healing information posted! Please check the nearby box for confirmation",
-                          "Warning",
-                          JOptionPane.WARNING_MESSAGE);
+                          "Healing information posted! Please check the nearby box.",
+                          "Success",
+                          JOptionPane.INFORMATION_MESSAGE);
                       recentArea.selectAll();
                       recentArea.replaceSelection("");
                       recentArea.setText(
@@ -195,7 +195,7 @@ public class frmSpecialistDashboard extends JFrame {
                     } else {
                       JOptionPane.showMessageDialog(
                           null,
-                          "Something went wrong! Please try again",
+                          "Healing information posting error. Please try again!",
                           "Warning",
                           JOptionPane.WARNING_MESSAGE);
                     }
@@ -222,7 +222,7 @@ public class frmSpecialistDashboard extends JFrame {
             int option =
                 JOptionPane.showConfirmDialog(
                     null,
-                    "Confirm delist healing with ID: " + idHeal + " ?",
+                    "Confirm delist healing with ID: " + idHeal + "?",
                     "Confirmation",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
@@ -239,7 +239,7 @@ public class frmSpecialistDashboard extends JFrame {
                             "Healing with ID: "
                                 + idHeal
                                 + " delisted. Check the above box for confirmation!",
-                            "Success!",
+                            "Success",
                             JOptionPane.INFORMATION_MESSAGE);
                         recentArea.selectAll();
                         recentArea.replaceSelection("");
@@ -251,7 +251,8 @@ public class frmSpecialistDashboard extends JFrame {
                             null,
                             "Cannot delist healing with ID: "
                                 + idHeal
-                                + " . Please try again later!",
+                                + """
+                                . Please only input "vacant" ID!""",
                             "Warning",
                             JOptionPane.WARNING_MESSAGE);
                       }

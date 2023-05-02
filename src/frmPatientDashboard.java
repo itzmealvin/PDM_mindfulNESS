@@ -21,7 +21,7 @@ public class frmPatientDashboard extends JFrame {
 
   private frmPatientDashboard() {
     setContentPane(panel);
-    setTitle("mindfulNESS - Dashboard");
+    setTitle("mindfulNESS - Patient Dashboard");
     setSize(1200, 800);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -45,8 +45,8 @@ public class frmPatientDashboard extends JFrame {
                       setVisible(false);
                       JOptionPane.showMessageDialog(
                           null,
-                          "Logged out! See you again",
-                          "Success!",
+                          "Logged out! See you again.",
+                          "Success",
                           JOptionPane.INFORMATION_MESSAGE);
                       Thread.sleep(1000);
                       System.exit(0);
@@ -73,7 +73,7 @@ public class frmPatientDashboard extends JFrame {
               JOptionPane.showConfirmDialog(
                   null,
                   message,
-                  "Changing Password!",
+                  "Changing Password",
                   JOptionPane.YES_NO_OPTION,
                   JOptionPane.QUESTION_MESSAGE);
           if (option == JOptionPane.YES_OPTION) {
@@ -89,7 +89,7 @@ public class frmPatientDashboard extends JFrame {
                       JOptionPane.showMessageDialog(
                           null,
                           "Password changed successfully!",
-                          "Success!",
+                          "Success",
                           JOptionPane.INFORMATION_MESSAGE);
                       oldPwd.setText("");
                       newPwd.setText("");
@@ -206,7 +206,7 @@ public class frmPatientDashboard extends JFrame {
             int option =
                 JOptionPane.showConfirmDialog(
                     null,
-                    "Confirm cancel healing with ID: " + idHeal + " ?",
+                    "Confirm cancel healing with ID: " + idHeal + "?",
                     "Confirmation",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
@@ -223,7 +223,7 @@ public class frmPatientDashboard extends JFrame {
                             "Healing with ID: "
                                 + idHeal
                                 + " cancelled. Check the above box for confirmation!",
-                            "Success!",
+                            "Success",
                             JOptionPane.INFORMATION_MESSAGE);
                         recentArea.selectAll();
                         recentArea.replaceSelection("");
@@ -234,7 +234,7 @@ public class frmPatientDashboard extends JFrame {
                             null,
                             "Cannot cancel healing with ID: "
                                 + idHeal
-                                + " . Please try again later!",
+                                + ". Please try again later!",
                             "Warning",
                             JOptionPane.WARNING_MESSAGE);
                       }

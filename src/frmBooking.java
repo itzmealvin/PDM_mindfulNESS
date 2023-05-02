@@ -17,7 +17,7 @@ public class frmBooking extends JFrame {
 
   public frmBooking() {
     setContentPane(panel);
-    setTitle("mindfulNESS - Make a booking");
+    setTitle("mindfulNESS - Book a healing");
     setSize(1200, 800);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -40,8 +40,8 @@ public class frmBooking extends JFrame {
                       setVisible(false);
                       JOptionPane.showMessageDialog(
                           null,
-                          "Logged out! See you again",
-                          "Success!",
+                          "Logged out! See you again.",
+                          "Success",
                           JOptionPane.INFORMATION_MESSAGE);
                       Thread.sleep(1000);
                       System.exit(0);
@@ -70,7 +70,7 @@ public class frmBooking extends JFrame {
                   JOptionPane.showMessageDialog(
                       null,
                       "Refreshed available healing successfully!",
-                      "Success!",
+                      "Success",
                       JOptionPane.INFORMATION_MESSAGE);
                   return null;
                 }
@@ -114,13 +114,13 @@ public class frmBooking extends JFrame {
         e -> {
           if (idField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(
-                null, "Healing ID field is empty", "Warning", JOptionPane.WARNING_MESSAGE);
+                null, "Healing ID field is empty!", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
           }
           int option =
               JOptionPane.showConfirmDialog(
                   null,
-                  "Confirm healing with ID: " + idField.getText() + " ?",
+                  "Confirm healing with ID: " + idField.getText() + "?",
                   "Confirmation",
                   JOptionPane.YES_NO_OPTION,
                   JOptionPane.QUESTION_MESSAGE);
@@ -137,7 +137,7 @@ public class frmBooking extends JFrame {
                           "Healing with ID: "
                               + idField.getText()
                               + " is confirmed! Please come on time.",
-                          "Success!",
+                          "Success",
                           JOptionPane.INFORMATION_MESSAGE);
                       idField.setText("");
                       ConnectSQL.showAvailableHealingQuery(resultTable);
@@ -146,7 +146,7 @@ public class frmBooking extends JFrame {
                           null,
                           "Healing with ID: "
                               + idField.getText()
-                              + " is already booked! Please try again",
+                              + " is already booked! Please try again.",
                           "Warning",
                           JOptionPane.WARNING_MESSAGE);
                       idField.setText("");

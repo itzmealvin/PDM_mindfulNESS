@@ -20,7 +20,7 @@ public class frmPatientSign extends JFrame {
 
     private frmPatientSign() {
         setContentPane(panel);
-        setTitle("mindfulNESS - Patient signup");
+        setTitle("mindfulNESS - Patient sign-up");
         setSize(700, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -67,7 +67,7 @@ public class frmPatientSign extends JFrame {
                     @Override
                     protected Void doInBackground() {
                         if (ConnectSQL.submitPatientUser(frmIndex.getInstance().getCredentials()[0], frmIndex.getInstance().getCredentials()[1], fullNameField.getText(), dobField.getText(), String.valueOf(genderField.getSelectedItem()), emailField.getText())) {
-                            JOptionPane.showMessageDialog(null, "Account: " + frmIndex.getInstance().getCredentials()[0] + " registered successfully. Thank you!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Account: " + frmIndex.getInstance().getCredentials()[0] + " registered successfully. Thank you!", "Success", JOptionPane.INFORMATION_MESSAGE);
                             frmSignDone.getInstance().setVisible(true);
                             setVisible(false);
                         } else {

@@ -28,7 +28,7 @@ public class frmIndex extends JFrame {
           if (accField.getText().isEmpty() || String.valueOf(pwdField.getPassword()).isEmpty()) {
             JOptionPane.showMessageDialog(
                 null,
-                "Either account or password is empty!",
+                "Either account or password field(s) are empty!",
                 "Warning",
                 JOptionPane.WARNING_MESSAGE);
             logInButton.setEnabled(true);

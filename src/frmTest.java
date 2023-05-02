@@ -52,7 +52,7 @@ public class frmTest extends JFrame {
 
   public frmTest() {
     setContentPane(panel);
-    setTitle("mindfulNESS - Testing in progress");
+    setTitle("mindfulNESS - Self-diagnosis test");
     setSize(1200, 800);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -76,7 +76,7 @@ public class frmTest extends JFrame {
                       JOptionPane.showMessageDialog(
                           null,
                           "Logged out! See you again",
-                          "Success!",
+                          "Success",
                           JOptionPane.INFORMATION_MESSAGE);
                       Thread.sleep(1000);
                       System.exit(0);
@@ -155,13 +155,32 @@ public class frmTest extends JFrame {
                       {true, true, true, true, true}
                     };
                     buttonStates = Arrays.copyOf(newButtonStates, newButtonStates.length);
+
                     answerAButton.setVisible(true);
                     answerBButton.setVisible(true);
                     answerCButton.setVisible(true);
                     answerDButton.setVisible(true);
                     answerEButton.setVisible(true);
+
+                    answerAButton.setEnabled(true);
+                    answerBButton.setEnabled(true);
+                    answerCButton.setEnabled(true);
+                    answerDButton.setEnabled(true);
+                    answerEButton.setEnabled(true);
+
+                    answerAButton.setText(answers.get(0));
+                    answerBButton.setText(answers.get(1));
+                    answerCButton.setText(answers.get(2));
+                    answerDButton.setText(answers.get(3));
+                    answerEButton.setText(answers.get(4));
+
                     totalWeight = 0;
                     countAnswer = 0;
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "The test has been reset!",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
                     return null;
                   }
 
@@ -176,6 +195,12 @@ public class frmTest extends JFrame {
     testCombo.addActionListener(
         e -> {
           testCombo.setEnabled(false);
+          answerAButton.setEnabled(false);
+          answerBButton.setEnabled(false);
+          answerCButton.setEnabled(false);
+          answerDButton.setEnabled(false);
+          answerEButton.setEnabled(false);
+
           SwingWorker<Void, Void> worker =
               new SwingWorker<>() {
                 @Override
@@ -205,6 +230,11 @@ public class frmTest extends JFrame {
                 @Override
                 protected void done() {
                   testCombo.setEnabled(true);
+                  answerAButton.setEnabled(true);
+                  answerBButton.setEnabled(true);
+                  answerCButton.setEnabled(true);
+                  answerDButton.setEnabled(true);
+                  answerEButton.setEnabled(true);
                 }
               };
           worker.execute();
@@ -212,6 +242,11 @@ public class frmTest extends JFrame {
     questionCombo.addActionListener(
         e -> {
           questionCombo.setEnabled(false);
+          answerAButton.setEnabled(false);
+          answerBButton.setEnabled(false);
+          answerCButton.setEnabled(false);
+          answerDButton.setEnabled(false);
+          answerEButton.setEnabled(false);
           SwingWorker<Void, Void> worker =
               new SwingWorker<>() {
                 @Override
@@ -326,20 +361,20 @@ public class frmTest extends JFrame {
       int option =
           JOptionPane.showConfirmDialog(
               null,
-              "Are you sure you want to submit ?",
+              "Are you sure you want to submit?",
               "Confirmation",
               JOptionPane.YES_NO_OPTION,
               JOptionPane.QUESTION_MESSAGE);
       if (option == JOptionPane.YES_OPTION) {
         JOptionPane.showMessageDialog(
-            null, "Your score is: " + totalWeight, "Message", JOptionPane.INFORMATION_MESSAGE);
+            null, "Your score is: " + totalWeight + "!", "Result", JOptionPane.INFORMATION_MESSAGE);
         int threshold;
         threshold = (totalWeight * 100) / maxScoreInt;
         if (threshold <= 70) {
           JOptionPane.showMessageDialog(
               null,
               "Your mental health is normal! No need to worry.",
-              "Message",
+              "Result",
               JOptionPane.INFORMATION_MESSAGE);
           setVisible(false);
           frmPatientDashboard.getInstance().setVisible(true);
@@ -348,7 +383,7 @@ public class frmTest extends JFrame {
               ConnectSQL.showSolutionQuery(
                   Objects.requireNonNull(testCombo.getSelectedItem()).toString(), 80);
           JOptionPane.showMessageDialog(
-              null, "Your mental health is quite bad", "Message", JOptionPane.INFORMATION_MESSAGE);
+              null, "Your mental health is quite bad!", "Result", JOptionPane.INFORMATION_MESSAGE);
           JOptionPane.showMessageDialog(
               null, results[1], "Solution", JOptionPane.INFORMATION_MESSAGE);
           ConnectSQL.submitRecordUpdate(frmIndex.getInstance().getID()[0], results[0]);
@@ -361,8 +396,8 @@ public class frmTest extends JFrame {
           int choice =
               JOptionPane.showConfirmDialog(
                   null,
-                  "Your result is extremely bad! Do you want to make an appointment with specialists?",
-                  "Recommendation",
+                  "Your result is extremely bad! Do you want to consult with a specialists?",
+                  "Result",
                   JOptionPane.YES_NO_OPTION);
           if (choice == JOptionPane.YES_OPTION) {
             frmBooking booking = new frmBooking();
@@ -370,7 +405,7 @@ public class frmTest extends JFrame {
             setVisible(false);
           } else {
             JOptionPane.showMessageDialog(
-                null, results[1], "Temporary solution", JOptionPane.INFORMATION_MESSAGE);
+                null, results[1], "TEMPORARY SOLUTION ONLY", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
             frmPatientDashboard.getInstance().setVisible(true);
           }

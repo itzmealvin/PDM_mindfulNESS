@@ -69,6 +69,12 @@ public class frmExplorer extends JFrame {
                         "No result found, check your query again!",
                         "Warning",
                         JOptionPane.WARNING_MESSAGE);
+                  } else {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Run query successfully!",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
                   }
                   return null;
                 }

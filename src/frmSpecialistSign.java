@@ -26,7 +26,7 @@ public class frmSpecialistSign extends JFrame {
 
   private frmSpecialistSign() {
     setContentPane(panel);
-    setTitle("mindfulNESS - Specialist signup");
+    setTitle("mindfulNESS - Specialist sign-up");
     setSize(800, 800);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -74,7 +74,7 @@ public class frmSpecialistSign extends JFrame {
               || phoneField.getText().length() != 10) {
             JOptionPane.showMessageDialog(
                 null,
-                "Field(s) are empty or incorrect format!",
+                "Field(s) are empty or in incorrect format!",
                 "Warning",
                 JOptionPane.WARNING_MESSAGE);
             confirmButton.setEnabled(true);
@@ -108,7 +108,7 @@ public class frmSpecialistSign extends JFrame {
                           "Account: "
                               + frmIndex.getInstance().getCredentials()[0]
                               + " registered successfully. Thank you!",
-                          "Success!",
+                          "Success",
                           JOptionPane.INFORMATION_MESSAGE);
                       frmSignDone.getInstance().setVisible(true);
                       setVisible(false);

@@ -10,7 +10,7 @@ public class frmSignDone extends JFrame {
 
   private frmSignDone() {
     setContentPane(panel);
-    setTitle("mindfulNESS - Sign-up completion");
+    setTitle("mindfulNESS - Sign-up complete");
     setSize(500, 500);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

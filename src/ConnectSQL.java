@@ -648,12 +648,12 @@ public class ConnectSQL {
       con = DriverManager.getConnection(connectionUrl);
       String preparedQuery =
           """
-                    SELECT TestID
+                    SELECT Test_ID AS ID
                     FROM [Test].[Test]""";
       stmt = con.prepareStatement(preparedQuery);
       rs = stmt.executeQuery();
       while (rs.next()) {
-        results.add(rs.getInt("testID"));
+        results.add(rs.getInt("id"));
       }
     } catch (SQLException e) {
       throw new RuntimeException(e);
