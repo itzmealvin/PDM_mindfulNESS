@@ -71,6 +71,7 @@
         </constraints>
         <properties>
           <font name="Google Sans" size="20" style="0"/>
+          <text value=""/>
         </properties>
       </component>
       <component id="7cb6e" class="javax.swing.JButton" binding="submitHealingButton">

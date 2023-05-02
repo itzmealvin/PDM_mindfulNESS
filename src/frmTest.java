@@ -169,19 +169,15 @@ public class frmTest extends JFrame {
                     answerDButton.setEnabled(true);
                     answerEButton.setEnabled(true);
 
-                    answerAButton.setText(answers.get(0));
-                    answerBButton.setText(answers.get(1));
-                    answerCButton.setText(answers.get(2));
-                    answerDButton.setText(answers.get(3));
-                    answerEButton.setText(answers.get(4));
+                    answerAButton.setText("");
+                    answerBButton.setText("");
+                    answerCButton.setText("");
+                    answerDButton.setText("");
+                    answerEButton.setText("");
 
                     totalWeight = 0;
                     countAnswer = 0;
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "The test has been reset!",
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE);
+
                     return null;
                   }
 
@@ -191,10 +187,17 @@ public class frmTest extends JFrame {
                   }
                 };
             worker.execute();
+            JOptionPane.showMessageDialog(
+                null, "The test has been reset!", "Success", JOptionPane.INFORMATION_MESSAGE);
           }
         });
     testCombo.addActionListener(
         e -> {
+          JOptionPane.showMessageDialog(
+              null,
+              "Detected change in Test Package. Be sure to press RESET ALL to avoid error!",
+              "Warning",
+              JOptionPane.WARNING_MESSAGE);
           testCombo.setEnabled(false);
           answerAButton.setEnabled(false);
           answerBButton.setEnabled(false);

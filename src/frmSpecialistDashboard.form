@@ -139,7 +139,7 @@
         </constraints>
         <properties>
           <font name="Google Sans" size="20" style="0"/>
-          <text value="Date"/>
+          <text value="Date (YYYY-MM-DD)"/>
         </properties>
       </component>
       <component id="88b93" class="javax.swing.JTextField" binding="dateField">

@@ -82,7 +82,9 @@ public class frmSpecialistDashboard extends JFrame {
                   "Changing Password",
                   JOptionPane.YES_NO_OPTION,
                   JOptionPane.QUESTION_MESSAGE);
-          if (option == JOptionPane.YES_OPTION) {
+          boolean conditionCheck =
+              !String.valueOf(oldPwd.getPassword()).equals(String.valueOf(newPwd.getPassword()));
+          if ((option == JOptionPane.YES_OPTION) && conditionCheck) {
             resetPwdButton.setEnabled(false);
             SwingWorker<Void, Void> worker =
                 new SwingWorker<>() {
@@ -119,6 +121,12 @@ public class frmSpecialistDashboard extends JFrame {
                   }
                 };
             worker.execute();
+          } else {
+            JOptionPane.showMessageDialog(
+                null,
+                "The new password must different from old one!",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
           }
         });
     clearAllButton.addActionListener(
@@ -238,7 +246,7 @@ public class frmSpecialistDashboard extends JFrame {
                             null,
                             "Healing with ID: "
                                 + idHeal
-                                + " delisted. Check the above box for confirmation!",
+                                + " delisted. Check the nearby box for confirmation!",
                             "Success",
                             JOptionPane.INFORMATION_MESSAGE);
                         recentArea.selectAll();
