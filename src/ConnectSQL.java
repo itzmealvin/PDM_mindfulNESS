@@ -702,7 +702,7 @@ public class ConnectSQL {
       String preparedQuery =
           """
                     SELECT Title
-                    FROM [Test].[Question]\s
+                    FROM [Test].[Question]
                     WHERE TestID = ? AND Question_ID = ?""";
       stmt = con.prepareStatement(preparedQuery);
       stmt.setString(1, testTxt);
