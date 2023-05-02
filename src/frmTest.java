@@ -96,11 +96,25 @@ public class frmTest extends JFrame {
                     protected Void doInBackground() {
                         boolean[][] newButtonStates = {{true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}, {true, true, true, true, true}};
                         buttonStates = Arrays.copyOf(newButtonStates, newButtonStates.length);
+
                         answerAButton.setVisible(true);
                         answerBButton.setVisible(true);
                         answerCButton.setVisible(true);
                         answerDButton.setVisible(true);
                         answerEButton.setVisible(true);
+
+                        answerAButton.setEnabled(true);
+                        answerBButton.setEnabled(true);
+                        answerCButton.setEnabled(true);
+                        answerDButton.setEnabled(true);
+                        answerEButton.setEnabled(true);
+
+                        answerAButton.setText(answers.get(0));
+                        answerBButton.setText(answers.get(1));
+                        answerCButton.setText(answers.get(2));
+                        answerDButton.setText(answers.get(3));
+                        answerEButton.setText(answers.get(4));
+
                         totalWeight = 0;
                         countAnswer = 0;
                         return null;
