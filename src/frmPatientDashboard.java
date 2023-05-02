@@ -76,7 +76,9 @@ public class frmPatientDashboard extends JFrame {
                   "Changing Password",
                   JOptionPane.YES_NO_OPTION,
                   JOptionPane.QUESTION_MESSAGE);
-          if (option == JOptionPane.YES_OPTION) {
+          boolean conditionCheck =
+              !String.valueOf(oldPwd.getPassword()).equals(String.valueOf(newPwd.getPassword()));
+          if ((option == JOptionPane.YES_OPTION) && conditionCheck) {
             resetPwdButton.setEnabled(false);
             SwingWorker<Void, Void> worker =
                 new SwingWorker<>() {
@@ -113,6 +115,12 @@ public class frmPatientDashboard extends JFrame {
                   }
                 };
             worker.execute();
+          } else {
+            JOptionPane.showMessageDialog(
+                null,
+                "The new password must different from old one!",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
           }
         });
     searchButton.addActionListener(
@@ -222,7 +230,7 @@ public class frmPatientDashboard extends JFrame {
                             null,
                             "Healing with ID: "
                                 + idHeal
-                                + " cancelled. Check the above box for confirmation!",
+                                + " cancelled. Check the nearby box for confirmation!",
                             "Success",
                             JOptionPane.INFORMATION_MESSAGE);
                         recentArea.selectAll();
