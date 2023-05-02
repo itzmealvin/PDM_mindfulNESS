@@ -105,21 +105,26 @@ public class frmIndex extends JFrame {
               new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
-                  String masterPassword =
-                      JOptionPane.showInputDialog(
+                  JPasswordField masterPwd = new JPasswordField();
+                  Object[] message = {"Master password: ", masterPwd};
+                  int option =
+                      JOptionPane.showConfirmDialog(
                           null,
-                          "Enter the master password to continue: ",
-                          "Master Password Required",
-                          JOptionPane.INFORMATION_MESSAGE);
-                  if (Objects.equals(masterPassword, "mindfulness")) {
-                    frmExplorer.getInstance().setVisible(true);
-                    setVisible(false);
-                  } else {
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Master Password not correct!",
-                        "Access Denied",
-                        JOptionPane.WARNING_MESSAGE);
+                          message,
+                          "Password Required",
+                          JOptionPane.YES_NO_OPTION,
+                          JOptionPane.QUESTION_MESSAGE);
+                  if (option == JOptionPane.YES_OPTION) {
+                    if (String.valueOf(masterPwd.getPassword()).equals("mindfulness")) {
+                      frmExplorer.getInstance().setVisible(true);
+                      setVisible(false);
+                    } else {
+                      JOptionPane.showMessageDialog(
+                          null,
+                          "Master Password not correct!",
+                          "Access Denied",
+                          JOptionPane.WARNING_MESSAGE);
+                    }
                   }
                   return null;
                 }
