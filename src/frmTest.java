@@ -229,27 +229,13 @@ public class frmTest extends JFrame {
                   weightD = weightIntList.get(3);
                   weightE = weightIntList.get(4);
 
-                  if(weightIntList.size() <=2) {
-                      answerAButton.setEnabled(true);
-                      answerBButton.setEnabled(true);
-
-                      answerCButton.setVisible(false);
-                      answerDButton.setVisible(false);
-                      answerEButton.setVisible(false);
-                  }
-                  else if(weightIntList.size() >=3) {
-                      answerAButton.setEnabled(true);
-                      answerBButton.setEnabled(true);
+                  answerAButton.setEnabled(true);
+                  answerBButton.setEnabled(true);
+                  if(weightIntList.size() >=3) {
                       answerCButton.setEnabled(true);
                       answerDButton.setEnabled(true);
-
-                      answerEButton.setVisible(false);
                   }
-                  else if(weightIntList.size() >=5) {
-                      answerAButton.setEnabled(true);
-                      answerBButton.setEnabled(true);
-                      answerCButton.setEnabled(true);
-                      answerDButton.setEnabled(true);
+                  if(weightIntList.size() >=5) {
                       answerEButton.setEnabled(true);
                   }
                   return null;
