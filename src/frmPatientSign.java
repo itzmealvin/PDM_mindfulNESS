@@ -20,31 +20,39 @@ public class frmPatientSign extends JFrame {
 
     private frmPatientSign() {
         setContentPane(panel);
-        setTitle("mindfulNESS - Patient signup");
+        setTitle("mindfulNESS - Patient sign-up");
         setSize(700, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        clearAllButton.addActionListener(e -> {
-            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all field(s)?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (option == JOptionPane.YES_OPTION) {
-                clearAllButton.setEnabled(false);
-                SwingWorker<Void, Void> worker = new SwingWorker<>() {
-                    @Override
-                    protected Void doInBackground() {
-                        fullNameField.setText("");
-                        emailField.setText("");
-                        dobField.setText("");
-                        genderField.setSelectedItem("<please choose>");
-                        return null;
-                    }
+    clearAllButton.addActionListener(
+        e -> {
+          int option =
+              JOptionPane.showConfirmDialog(
+                  null,
+                  "Are you sure you want to clear all field(s)?",
+                  "Confirmation",
+                  JOptionPane.YES_NO_OPTION,
+                  JOptionPane.WARNING_MESSAGE);
+          if (option == JOptionPane.YES_OPTION) {
+            clearAllButton.setEnabled(false);
+            SwingWorker<Void, Void> worker =
+                new SwingWorker<>() {
+                  @Override
+                  protected Void doInBackground() {
+                    fullNameField.setText("");
+                    emailField.setText("");
+                    dobField.setText("");
+                    genderField.setSelectedItem("<please choose>");
+                    return null;
+                  }
 
-                    @Override
-                    protected void done() {
-                        clearAllButton.setEnabled(true);
-                    }
+                  @Override
+                  protected void done() {
+                    clearAllButton.setEnabled(true);
+                  }
                 };
-                worker.execute();
-            }
+            worker.execute();
+          }
         });
         confirmButton.addActionListener(e -> {
             if (fullNameField.getText().isEmpty() || emailField.getText().isEmpty() || dobField.getText().isEmpty() || String.valueOf(genderField.getSelectedItem()).equals("<please choose>")) {
@@ -59,7 +67,7 @@ public class frmPatientSign extends JFrame {
                     @Override
                     protected Void doInBackground() {
                         if (ConnectSQL.submitPatientUser(frmIndex.getInstance().getCredentials()[0], frmIndex.getInstance().getCredentials()[1], fullNameField.getText(), dobField.getText(), String.valueOf(genderField.getSelectedItem()), emailField.getText())) {
-                            JOptionPane.showMessageDialog(null, "Account: " + frmIndex.getInstance().getCredentials()[0] + " registered successfully. Thank you!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Account: " + frmIndex.getInstance().getCredentials()[0] + " registered successfully. Thank you!", "Success", JOptionPane.INFORMATION_MESSAGE);
                             frmSignDone.getInstance().setVisible(true);
                             setVisible(false);
                         } else {
