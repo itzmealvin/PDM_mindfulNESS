@@ -120,7 +120,7 @@ GO
 CREATE TABLE [Account].[Account] ([User_ID] [bigint] IDENTITY(1, 1) NOT NULL,
 [User_name] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 [Salt] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[Password] [varbinary](20) NULL,
+[Password] [varbinary](20) NOT NULL,
 PRIMARY KEY CLUSTERED([User_ID] ASC)WITH(PAD_INDEX=OFF, STATISTICS_NORECOMPUTE=OFF, IGNORE_DUP_KEY=OFF, ALLOW_ROW_LOCKS= ON, ALLOW_PAGE_LOCKS=ON)ON [PRIMARY])ON [PRIMARY]
 GO
 /****** Object:  Table [Account].[Patient]    Script Date: 5/2/2023 11:00:24 PM ******/
