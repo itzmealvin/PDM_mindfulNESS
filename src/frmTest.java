@@ -112,8 +112,8 @@ public class frmTest extends JFrame {
                 new SwingWorker<>() {
                   @Override
                   protected Void doInBackground() {
-                    frmPatientDashboard.getInstance().setVisible(true);
                     setVisible(false);
+                    frmPatientDashboard.getInstance().setVisible(true);
                     return null;
                   }
 

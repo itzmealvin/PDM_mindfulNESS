@@ -100,6 +100,10 @@ public class frmPatientSign extends JFrame {
                           "Something went wrong. Check all the field(s) and try again!",
                           "Warning",
                           JOptionPane.WARNING_MESSAGE);
+                      fullNameField.setText("");
+                      emailField.setText("");
+                      dobField.setText("");
+                      genderField.setSelectedItem("<please choose>");
                     }
                     return null;
                   }

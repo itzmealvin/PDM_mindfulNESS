@@ -196,6 +196,11 @@ public class frmSpecialistDashboard extends JFrame {
                           "Healing information posted! Please check the nearby box.",
                           "Success",
                           JOptionPane.INFORMATION_MESSAGE);
+                      placeField.setText("");
+                      dateField.setText("");
+                      feeField.setText("");
+                      descField.setText("");
+                      extraField.setText("");
                       recentArea.selectAll();
                       recentArea.replaceSelection("");
                       recentArea.setText(

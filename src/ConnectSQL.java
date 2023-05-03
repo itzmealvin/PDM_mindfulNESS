@@ -126,9 +126,9 @@ public class ConnectSQL {
             "Message",
             JOptionPane.WARNING_MESSAGE);
       else {
+        resultTable.setModel(DbUtils.resultSetToTableModel(rs));
         JOptionPane.showMessageDialog(
             null, "Run query successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        resultTable.setModel(DbUtils.resultSetToTableModel(rs));
       }
     } catch (SQLException e) {
       JOptionPane.showMessageDialog(

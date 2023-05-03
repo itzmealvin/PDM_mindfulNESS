@@ -132,6 +132,8 @@ public class frmBooking extends JFrame {
                   protected Void doInBackground() {
                     if (ConnectSQL.submitPatientHealingUpdate(
                         frmIndex.getInstance().getID()[0], idField.getText())) {
+                      idField.setText("");
+                      ConnectSQL.showAvailableHealingQuery(resultTable);
                       JOptionPane.showMessageDialog(
                           null,
                           "Healing with ID: "
@@ -139,8 +141,6 @@ public class frmBooking extends JFrame {
                               + " is confirmed! Please come on time.",
                           "Success",
                           JOptionPane.INFORMATION_MESSAGE);
-                      idField.setText("");
-                      ConnectSQL.showAvailableHealingQuery(resultTable);
                     } else {
                       JOptionPane.showMessageDialog(
                           null,
