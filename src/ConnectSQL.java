@@ -29,12 +29,12 @@ public class ConnectSQL {
       con = DriverManager.getConnection(connectionUrl);
       String preparedQuery =
           """
-                    SELECT H.HealingInformation_ID AS ID, H.Date, H.Place, CAST(H.Fee AS INT) AS Fee, S.FullName, S.Sex
-                    FROM [Booking].[HealingInformation] H
-                    INNER JOIN [Account].[Specialist] S
-                    ON S.Specialist_ID = H.SpecialistID
-                    WHERE H.HealingInformation_ID NOT IN (SELECT DISTINCT B.HealingInformationID
-                    FROM [Booking].[Booking] B) AND H.Date >= CAST(GETDATE() AS DATE ) ORDER BY H.Date""";
+                  SELECT H.HealingInformation_ID AS ID, H.Date, H.Place, CAST(H.Fee AS INT) AS Fee, S.FullName, S.Sex
+                  FROM [Booking].[HealingInformation] H
+                  INNER JOIN [Account].[Specialist] S
+                  ON S.Specialist_ID = H.SpecialistID
+                  WHERE H.HealingInformation_ID NOT IN (SELECT DISTINCT B.HealingInformationID
+                  FROM [Booking].[Booking] B) AND H.Date >= CAST(GETDATE() AS DATE ) ORDER BY H.Date""";
       stmt = con.prepareStatement(preparedQuery);
       rs = stmt.executeQuery();
       if (!rs.next()) {

@@ -54,7 +54,7 @@ public class frmExplorer extends JFrame {
           runQueryButton.setEnabled(false);
           if (queryField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(
-                null, "Please do not left query blank!", "Warning", JOptionPane.WARNING_MESSAGE);
+                null, "Please do not leave query blank!", "Warning", JOptionPane.WARNING_MESSAGE);
             runQueryButton.setEnabled(true);
             return;
           }
