@@ -222,7 +222,9 @@ public class frmTest extends JFrame {
                   numberOfQuestionInt = questions.length;
                   questionCombo.setModel(new DefaultComboBoxModel<>(questions));
                   questionCombo.setEnabled(true);
-                  weightIntList = ConnectSQL.showWeightQuery(Objects.requireNonNull(questionCombo.getSelectedItem()).toString());
+                  weightIntList =
+                      ConnectSQL.showWeightQuery(
+                          Objects.requireNonNull(questionCombo.getSelectedItem()).toString());
                   weightA = weightIntList.get(0);
                   weightB = weightIntList.get(1);
                   weightC = weightIntList.get(2);
@@ -231,12 +233,12 @@ public class frmTest extends JFrame {
 
                   answerAButton.setEnabled(true);
                   answerBButton.setEnabled(true);
-                  if(weightIntList.size() >=3) {
-                      answerCButton.setEnabled(true);
-                      answerDButton.setEnabled(true);
+                  if (weightIntList.size() >= 3) {
+                    answerCButton.setEnabled(true);
+                    answerDButton.setEnabled(true);
                   }
-                  if(weightIntList.size() >=5) {
-                      answerEButton.setEnabled(true);
+                  if (weightIntList.size() >= 5) {
+                    answerEButton.setEnabled(true);
                   }
                   return null;
                 }
@@ -249,7 +251,6 @@ public class frmTest extends JFrame {
                   answerCButton.setEnabled(true);
                   answerDButton.setEnabled(true);
                   answerEButton.setEnabled(true);
-
                 }
               };
           worker.execute();
@@ -269,11 +270,10 @@ public class frmTest extends JFrame {
                   questionArea.setText(
                       ConnectSQL.showQuestionContentQuery(
                           Objects.requireNonNull(testCombo.getSelectedItem()).toString(),
-                          Objects.requireNonNull(questionCombo.getSelectedItem()).toString())
-                      );
+                          Objects.requireNonNull(questionCombo.getSelectedItem()).toString()));
 
-
-                  answers = ConnectSQL.showAnswerContentQuery(questionCombo.getSelectedItem().toString());
+                  answers =
+                      ConnectSQL.showAnswerContentQuery(questionCombo.getSelectedItem().toString());
                   answerAButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][0]);
                   answerBButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][1]);
                   answerCButton.setVisible(buttonStates[questionCombo.getSelectedIndex()][2]);
@@ -289,8 +289,7 @@ public class frmTest extends JFrame {
                     answerCButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][2]);
                     answerDButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][3]);
                     answerEButton.setEnabled(!buttonStates[questionCombo.getSelectedIndex()][4]);
-                  }
-                  else {
+                  } else {
                     answerAButton.setEnabled(true);
                     answerBButton.setEnabled(true);
                     answerCButton.setEnabled(true);
