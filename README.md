@@ -192,7 +192,7 @@ and known issues).
 <br />
 <br />
 
-# ENTITY RELATIONSHIP DIAGRAM (ERD)
+# ENTITY RELATIONSHIP DIAGRAM (ERD) 📚
 
 <br />
 <div align ="center">
