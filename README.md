@@ -1,5 +1,5 @@
 <div id="top" align="center">
-<img src="Resources/cover.png" alt="Banner">
+<img src="image/banner.png" alt="Banner">
 </div>
 <!-- PROJECT LOGO -->
 <div align="center">
@@ -18,7 +18,7 @@
 
 <!-- About -->
 
-# ABOUT
+# ABOUT 👀
 
 ## 1. Members
 
@@ -59,12 +59,10 @@
 - Library: [JavaSwing](https://openjfx.io)
 - Online database storage: [ASP hosting](http://freeasphosting.net/)
 
-<img src="Resources/center.png" alt="center">
-
 
 <!-- REASON -->
 
-# REASON
+# REASON 🩺
 
 ## 1. Motivation
 The global pandemic has profoundly impacted mental health, resulting in increased recognition of the importance of psychological therapy. However, accessing traditional therapy can still be challenging for many people due to factors such as long waitlists, high costs, and the enduring stigma associated with mental health 
@@ -95,7 +93,7 @@ and known issues).
 <!-- METHODOLOGY -->
 <br />
 
-# HOW TO USE
+# HOW TO USE 🧠
 
 - **Login page**: Require users to enter the correct account and password to log in for people who have used the system, sign up for first time users of the system, or explorer mode for system administrators
 <br />
@@ -215,7 +213,7 @@ and known issues).
 
 <!-- INSTALLATION -->
 
-# INSTALLATION
+# INSTALLATION 💊
 
 ### Required software
 
@@ -230,7 +228,7 @@ and known issues).
    git clone https://github.com/itzmealvin/PDM_mindfulNESS_PC
    ```
 2. Open in a Java IDE
-3. Choose mindfulNESS.java and click RUN to play the game
+3. Choose **mindfulNESS.java** and click RUN to play the game
 
 <br />
 <br />
@@ -238,7 +236,7 @@ and known issues).
 
 <!-- CONTRIBUTING -->
 
-# CONTRIBUTING
+# CONTRIBUTING 🌱
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any
 contributions you make are **greatly appreciated**.
@@ -258,7 +256,7 @@ Don't forget to give the project a star! Thanks again!
 
 <!-- ACKNOWLEDGMENTS -->
 
-# ACKNOWLEDGEMENTS
+# ACKNOWLEDGEMENTS ❤️
 
 We want to express our sincerest thanks to our lecturer and the people who have helped us to achieve this project's goals:
 - []()	Assoc. Nguyen Thi Thuy Loan
