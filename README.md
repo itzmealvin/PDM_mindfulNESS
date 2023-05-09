@@ -1,5 +1,7 @@
 <div id="top" align="center">
+
 <img src="image/mindfulness.png" alt="Banner">
+
 </div>
 <!-- PROJECT LOGO -->
 <div align="center">
@@ -21,7 +23,7 @@
 
 <!-- About -->
 
-# ABOUT
+# ABOUT 👀
 
 ## 1. The team behind it
 
@@ -57,6 +59,7 @@ To be short, the project aims to:
 
 ## 3. Task distribution
 
+
 | Order | Tasks                             |   Member   | Contribution |
 |:------|:----------------------------------|:----------:|:------------:|
 | 1     | Database Developer, Data Analyst  |   Anh Tu   |     20%      |
@@ -65,9 +68,10 @@ To be short, the project aims to:
 | 4     | Interface Developer               |  Minh Vu   |     20%      |
 | 5     | Interface Developer               | Tran Khanh |     20%      |
 
+
 <!-- REASON -->
 
-# REASON
+# REASON 🩺
 
 ## 1. Motivation
 
@@ -101,6 +105,7 @@ and known issues).
 <!-- METHODOLOGY -->
 <br />
 
+
 ## 4. Techniques
 
 Language: [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads), [Java](https://www.java.com/en/)
@@ -113,6 +118,8 @@ Language: [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-dow
 <img src="Resources/center.png" alt="center">
 
 # HOW TO USE
+
+
 
 - **Login page**: Require users to enter the correct account and password to log in for people who have used the system,
   sign up for first time users of the system, or explorer mode for system administrators
@@ -230,7 +237,7 @@ Language: [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-dow
 <br />
 <br />
 
-# ENTITY RELATIONSHIP DIAGRAM (ERD)
+# ENTITY RELATIONSHIP DIAGRAM (ERD) 📚
 
 <br />
 <div align ="center">
@@ -251,7 +258,7 @@ Language: [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-dow
 
 <!-- INSTALLATION -->
 
-# INSTALLATION
+# INSTALLATION 💊
 
 ### Required software
 
@@ -266,7 +273,7 @@ Language: [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-dow
    git clone https://github.com/itzmealvin/PDM_mindfulNESS_PC
    ```
 2. Open in a Java IDE
-3. Choose mindfulNESS.java and click RUN to play the game
+3. Choose **mindfulNESS.java** and click RUN to play the game
 
 <br />
 <br />
@@ -274,7 +281,7 @@ Language: [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-dow
 
 <!-- CONTRIBUTING -->
 
-# CONTRIBUTING
+# CONTRIBUTING 🌱
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any
 contributions you make are **greatly appreciated**.
@@ -299,7 +306,7 @@ Project Link: [https://github.com/itzmealvin/PDM_mindfulNESS_PC](https://github.
 
 <!-- ACKNOWLEDGMENTS -->
 
-# ACKNOWLEDGEMENTS
+# ACKNOWLEDGEMENTS 
 
 We want to express our sincerest thanks to our lecturer and the people who have helped us to achieve this project's
 goals:
